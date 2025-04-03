@@ -4,12 +4,14 @@ import json
 from dotenv import load_dotenv
 import os
 import time
+import logging
 from app.scrapers.base_scraper import BaseScraper
 
 #TODO: n1 EV charging prices
 
 class N1Scraper(BaseScraper):
     def __init__(self):
+        super().__init__()
         load_dotenv()
         self.api_url = os.getenv("N1_API_URL")
         self.contact_data = os.getenv("CONTACT")
@@ -32,15 +34,15 @@ class N1Scraper(BaseScraper):
             data = response.json()
 
             if data:
-                print(f"Coords for {address} found")
+                self.logger.info(f"Coords for {address} found")
                 return float(data[0]["lon"]), float(data[0]["lat"])
             else: 
-                print(f"ERROR, no coords found for {address}")
+                self.logger.warning(f"No coords found for {address}")
                 return None, None
 
 
         except Exception as e:
-            print(f"Geocodifying error '{address}: {e}")
+            self.logger.error(f"Geocodifying error '{address}: {e}")
 
     def get_static_info(self):
         response = requests.post(self.api_url)
@@ -65,7 +67,7 @@ class N1Scraper(BaseScraper):
                         "url": s["Url"],
                     })
             except Exception as e:
-                print(f"Error in station '{s.get('Name', '???')}': {e}")
+                self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
     
         self.save_to_json({"stations": stations}, "n1_static.json")  
@@ -86,7 +88,7 @@ class N1Scraper(BaseScraper):
             station_api_data = stations_aux.get(station["station"])
 
             if not station_api_data:
-                print(f"No data for {station['station']}")
+                self.logger.warning(f"No data for {station['station']}")
                 continue
 
             gas_price = float(station_api_data["GasPrice"].replace(",", ".")) if station_api_data.get("GasPrice") else None
@@ -113,10 +115,10 @@ class N1Scraper(BaseScraper):
             "stations": updated
         }, "n1_stations_prices.json")
 
-        print(f"Updated prices for {len(updated)} stations at {timestamp}")
+        self.logger.info(f"Updated prices for {len(updated)} stations at {timestamp}")
 
 
 if __name__ == "__main__":
     scraper = N1Scraper()
-    #scraper.get_static_info()
+    scraper.get_static_info()
     scraper.update_prices()

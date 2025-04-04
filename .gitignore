@@ -187,3 +187,5 @@ sketch
 #jsons with stationsdata(temporal)
 backend/n1_static.json
 backend/n1_stations_prices.json
+backend/atlantsolia_static.json
+backend/atlantsolia_prices.json

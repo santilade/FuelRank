@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dotenv import load_dotenv
 import json
 import logging
 import os
@@ -11,6 +12,7 @@ logging.basicConfig(
 
 class BaseScraper(ABC):
     def __init__(self):
+        load_dotenv()
         # Obtains module name per file:
         self.logger = logging.getLogger(self.__class__.__name__)
     

@@ -12,7 +12,6 @@ from app.scrapers.base_scraper import BaseScraper
 class N1Scraper(BaseScraper):
     def __init__(self):
         super().__init__()
-        load_dotenv()
         self.api_url = os.getenv("N1_API_URL")
         self.contact_data = os.getenv("CONTACT")
         
@@ -115,10 +114,10 @@ class N1Scraper(BaseScraper):
             "stations": updated
         }, "n1_stations_prices.json")
 
-        self.logger.info(f"Updated prices for {len(updated)} stations at {timestamp}")
+        self.logger.info(f"Updated prices for {len(updated)} N1 stations at {timestamp}")
 
 
 if __name__ == "__main__":
     scraper = N1Scraper()
-    scraper.get_static_info()
+    #scraper.get_static_info()
     scraper.update_prices()

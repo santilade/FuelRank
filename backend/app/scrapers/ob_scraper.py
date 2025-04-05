@@ -11,6 +11,33 @@ class ObScraper(BaseScraper):
         def __init__(self):
             super().__init__()
             self.api_url = os.getenv("OB_API_URL")
+            self.contact_data = os.getenv("CONTACT")
+        
+        def get_coordinates(self, location_data):
+            try:
+                params ={
+                    "q": f"OB gas station, {location_data}, Iceland",
+                    "format": "json",
+                    "limit": 1
+                }
+                headers = {
+                    "User-Agent": f"FuelRank ({self.contact_data})"
+                }
+
+                response = requests.get("https://nominatim.openstreetmap.org/search", params=params, headers=headers)
+                response.raise_for_status()
+
+                data = response.json()
+
+                if data:
+                    self.logger.info(f"Coords for {location_data} found")
+                    return float(data[0]["lon"]), float(data[0]["lat"])
+                else: 
+                    self.logger.warning(f"No coords found for {location_data}")
+                    return None, None
+            
+            except Exception as e:
+                self.logger.error(f"Geocodifying error '{location_data}: {e}")
 
         def get_static_info(self):
             response = requests.post(self.api_url)
@@ -22,11 +49,15 @@ class ObScraper(BaseScraper):
 
             for s in stations_raw:
                 try:
+                    #extracting coordinates
+                    longitude, latitude = self.get_coordinates(s["Name"])
+                    time.sleep(1)
+
                     stations.append({
                         "station": s["Name"],
                         "address": s["Name"],
-                        "longitude": None, #TODO: coords and address
-                        "latitude": None,
+                        "longitude": longitude,
+                        "latitude": latitude,
                         "region": None,
                         "url": None,
                     })

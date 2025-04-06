@@ -191,3 +191,5 @@ backend/atlantsolia_static.json
 backend/atlantsolia_prices.json
 backend/ob_static.json
 backend/ob_stations_prices.json
+backend/olis_static.json
+backend/olis_stations_prices.json

@@ -16,7 +16,7 @@ class N1Scraper(BaseScraper):
         self.contact_data = os.getenv("CONTACT")
         
     #TODO: normalize and fallback for get_coordinates
-    def get_coordinates(self, address):
+    def get_coordinates(self, address, counter):
         try:
             params ={
                 "q": address,
@@ -34,6 +34,7 @@ class N1Scraper(BaseScraper):
 
             if data:
                 self.logger.info(f"Coords for {address} found")
+                counter[0] += 1
                 return float(data[0]["lon"]), float(data[0]["lat"])
             else: 
                 self.logger.warning(f"No coords found for {address}")
@@ -50,11 +51,12 @@ class N1Scraper(BaseScraper):
         stations_raw = response.json()
 
         stations = []
+        counter = [0]
 
         for s in stations_raw:
             try:
                 #extracting coordinates
-                longitude, latitude = self.get_coordinates(s["Location"])
+                longitude, latitude = self.get_coordinates(s["Location"], counter)
                 time.sleep(1)
                 
                 stations.append({
@@ -68,7 +70,8 @@ class N1Scraper(BaseScraper):
             except Exception as e:
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
-    
+                
+        print(f"{counter[0]} stations found")
         self.save_to_json({"stations": stations}, "n1_static.json")  
 
     def update_prices(self, static_filename="n1_static.json"):
@@ -119,5 +122,5 @@ class N1Scraper(BaseScraper):
 
 if __name__ == "__main__":
     scraper = N1Scraper()
-    #scraper.get_static_info()
+    scraper.get_static_info()
     scraper.update_prices()

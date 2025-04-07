@@ -1,33 +1,30 @@
 import requests
 from datetime import datetime, timezone
 import json
-from dotenv import load_dotenv
 import os
 import time
-import logging
 from app.scrapers.base_scraper import BaseScraper
 
-#TODO: n1 EV charging prices
+# TODO: n1 EV charging prices
+
 
 class N1Scraper(BaseScraper):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("N1_API_URL")
         self.contact_data = os.getenv("CONTACT")
-        
-    #TODO: normalize and fallback for get_coordinates
+
+    # TODO: normalize and fallback for get_coordinates
     def get_coordinates(self, address, counter):
         try:
-            params ={
-                "q": address,
-                "format": "json",
-                "limit": 1
-            }
-            headers = {
-                "User-Agent": f"FuelRank ({self.contact_data})"
-            }
+            params = {"q": address, "format": "json", "limit": 1}
+            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
 
-            response = requests.get("https://nominatim.openstreetmap.org/search", params=params, headers=headers)
+            response = requests.get(
+                "https://nominatim.openstreetmap.org/search",
+                params=params,
+                headers=headers,
+            )
             response.raise_for_status()
 
             data = response.json()
@@ -36,10 +33,9 @@ class N1Scraper(BaseScraper):
                 self.logger.info(f"Coords for {address} found")
                 counter[0] += 1
                 return float(data[0]["lon"]), float(data[0]["lat"])
-            else: 
+            else:
                 self.logger.warning(f"No coords found for {address}")
                 return None, None
-
 
         except Exception as e:
             self.logger.error(f"Geocodifying error '{address}: {e}")
@@ -55,29 +51,31 @@ class N1Scraper(BaseScraper):
 
         for s in stations_raw:
             try:
-                #extracting coordinates
-                longitude, latitude = self.get_coordinates(s["Location"], counter)
+                # extracting coordinates
+                lon, lat = self.get_coordinates(s["Location"], counter)
                 time.sleep(1)
-                
-                stations.append({
+
+                stations.append(
+                    {
                         "station": s["Name"],
                         "address": s["Location"],
-                        "longitude": longitude,
-                        "latitude": latitude,
+                        "longitude": lon,
+                        "latitude": lat,
                         "region": s["Region"],
                         "url": s["Url"],
-                    })
+                    }
+                )
             except Exception as e:
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
-                
-        print(f"{counter[0]} stations found")
-        self.save_to_json({"stations": stations}, "n1_static.json")  
 
-    def update_prices(self, static_filename="n1_static.json"):
-        with open(static_filename, "r", encoding="utf-8") as f:
+        print(f"{counter[0]} stations found")
+        self.save_to_json({"stations": stations}, "n1_static.json")
+
+    def update_prices(self, static_file="n1_static.json"):
+        with open(static_file, "r", encoding="utf-8") as f:
             static_data = json.load(f)
-        
+
         response = requests.post(self.api_url)
         response.raise_for_status()
         stations_dynamic = response.json()
@@ -93,31 +91,43 @@ class N1Scraper(BaseScraper):
                 self.logger.warning(f"No data for {station['station']}")
                 continue
 
-            gas_price = float(station_api_data["GasPrice"].replace(",", ".")) if station_api_data.get("GasPrice") else None
-            diesel_price = float(station_api_data["DiselPrice"].replace(",", ".")) if station_api_data.get("DiselPrice") else None
-            colored_disel_price = float(station_api_data["ColoredDiselPrice"].replace(",", ".")) if station_api_data.get("ColoredDiselPrice") else None
+            price_gas = (
+                float(station_api_data["GasPrice"].replace(",", "."))
+                if station_api_data.get("GasPrice")
+                else None
+            )
+            price_diesel = (
+                float(station_api_data["DiselPrice"].replace(",", "."))
+                if station_api_data.get("DiselPrice")
+                else None
+            )
+            price_diesel_c = (
+                float(station_api_data["ColoredDiselPrice"].replace(",", "."))
+                if station_api_data.get("ColoredDiselPrice")
+                else None
+            )
 
-            station.update({
-                "gas_price": gas_price,
-                "diesel_price": diesel_price,
-                "colored_disel_price": colored_disel_price,
-                "shipping_fuel_price": None,
-                "gas_discount": None,
-                "diesel_discount": None,
-                "colored_diesel_discount": None,
-                "shipping_fuel_discount": None
-            })
+            station.update(
+                {
+                    "gas_price": price_gas,
+                    "diesel_price": price_diesel,
+                    "colored_disel_price": price_diesel_c,
+                    "shipping_fuel_price": None,
+                    "gas_discount": None,
+                    "diesel_discount": None,
+                    "colored_diesel_discount": None,
+                    "shipping_fuel_discount": None,
+                }
+            )
 
             updated.append(station)
 
-        timestamp = datetime.now(timezone.utc).isoformat()
-        
-        self.save_to_json({
-            "timestamp": timestamp,
-            "stations": updated
-        }, "n1_stations_prices.json")
+        ts = datetime.now(timezone.utc).isoformat()
+        data = {"timestamp": ts, "stations": updated}
 
-        self.logger.info(f"Updated prices for {len(updated)} N1 stations at {timestamp}")
+        self.save_to_json(data, "n1_stations_prices.json")
+
+        self.logger.info(f"{len(updated)} stations prices updated {ts}")
 
 
 if __name__ == "__main__":

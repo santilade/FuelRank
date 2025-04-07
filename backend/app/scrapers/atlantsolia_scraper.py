@@ -9,16 +9,20 @@ class AtlansoliaScraper(BaseScraper):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("ATLANSOLIA_API_URL")
+        self.api_data = None
 
-    def get_static_info(self):
+    def fetch_api_data(self):
         response = requests.get(self.api_url)
         response.raise_for_status()
+        self.api_data = response.json()
 
-        stations_raw = response.json()
+    def get_static_info(self):
+        if self.api_data is None:
+            self.fetch_api_data()
 
         stations = []
 
-        for s in stations_raw:
+        for s in self.api_data:
             try:
                 stations.append(
                     {
@@ -37,15 +41,15 @@ class AtlansoliaScraper(BaseScraper):
 
         self.save_to_json({"stations": stations}, "atlantsolia_static.json")
 
-    def update_prices(self, static_filename="atlantsolia_static.json"):
-        with open(static_filename, "r", encoding="utf-8") as f:
+    def update_prices(self, static_file="atlantsolia_static.json"):
+
+        if self.api_data is None:
+            self.fetch_api_data()
+
+        stations_aux = {s["Name"]: s for s in self.api_data}
+
+        with open(static_file, "r", encoding="utf-8") as f:
             static_data = json.load(f)
-
-        response = requests.get(self.api_url)
-        response.raise_for_status()
-        stations_dynamic = response.json()
-
-        stations_aux = {s["Name"]: s for s in stations_dynamic}
 
         updated = []
 

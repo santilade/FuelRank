@@ -13,7 +13,7 @@ class OlisObscraper(BaseScraper):
         self.contact_data = os.getenv("CONTACT")
 
     def fetch_api_data(self):
-        response = requests.post(self.api_url)
+        response = requests.get(self.api_url)
         response.raise_for_status()
         self.api_data = response.json()
 

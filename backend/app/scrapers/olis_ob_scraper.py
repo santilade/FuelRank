@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, timezone
 import json
 import os
+import time
 from app.scrapers.base_scraper import BaseScraper
 
 
@@ -17,6 +18,31 @@ class OlisObscraper(BaseScraper):
         response.raise_for_status()
         self.api_data = response.json()
 
+    def get_coordinates(self, address, counter):
+        try:
+            params = {"q": address, "format": "json", "limit": 1}
+            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
+
+            response = requests.get(
+                "https://nominatim.openstreetmap.org/search",
+                params=params,
+                headers=headers,
+            )
+            response.raise_for_status()
+
+            data = response.json()
+
+            if data:
+                self.logger.info(f"Coords for {address} found")
+                counter[0] += 1
+                return float(data[0]["lon"]), float(data[0]["lat"])
+            else:
+                self.logger.warning(f"No coords found for {address}")
+                return None, None
+
+        except Exception as e:
+            self.logger.error(f"Geocodifying error '{address}: {e}")
+
     def get_static_info(self):
 
         if self.api_data is None:
@@ -24,32 +50,28 @@ class OlisObscraper(BaseScraper):
 
         olis_stations = []
         ob_stations = []
+        counter = [0]
 
         for s in self.api_data["Items"]:
             try:
-                if s["Type"] == 0:
-                    olis_stations.append(
-                        {
-                            "station": s["Name"],
-                            "address": s["Name"],
-                            "longitude": None,
-                            "latitude": None,
-                            "region": None,
-                            "url": None,
-                        }
-                    )
+                brand = "Olis" if s["Type"] == 0 else "Ob"
+                search_data = f"{brand} {s['Name']}"
+                lon, lat = self.get_coordinates(search_data, counter)
+                time.sleep(1)
 
+                station_data = {
+                    "station": s["Name"],
+                    "address": s["Name"],
+                    "longitude": lon,
+                    "latitude": lat,
+                    "region": None,
+                    "url": None,
+                }
+
+                if brand == "Olis":
+                    olis_stations.append(station_data)
                 else:
-                    ob_stations.append(
-                        {
-                            "station": s["Name"],
-                            "address": s["Name"],
-                            "longitude": None,
-                            "latitude": None,
-                            "region": None,
-                            "url": None,
-                        }
-                    )
+                    ob_stations.append(station_data)
 
             except Exception as e:
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")

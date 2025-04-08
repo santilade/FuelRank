@@ -73,8 +73,9 @@ class N1Scraper(BaseScraper):
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
 
-        print(f"{counter[0]} stations found")
         self.save_to_json({"stations": stations}, "n1_static.json")
+        self.logger.info(f"{len(stations)} stations from api")
+        self.logger.info(f"geocoords for {counter} stations")
 
     def update_prices(self, static_file="n1_static.json"):
 

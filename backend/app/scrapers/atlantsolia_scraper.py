@@ -40,6 +40,7 @@ class AtlansoliaScraper(BaseScraper):
                 continue
 
         self.save_to_json({"stations": stations}, "atlantsolia_static.json")
+        self.logger.info(f"{len(stations)} stations from api")
 
     def update_prices(self, static_file="atlantsolia_static.json"):
 

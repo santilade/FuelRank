@@ -193,3 +193,5 @@ backend/ob_static.json
 backend/ob_stations_prices.json
 backend/olis_static.json
 backend/olis_stations_prices.json
+backend/orkan_static.json
+backend/orkan_prices.json

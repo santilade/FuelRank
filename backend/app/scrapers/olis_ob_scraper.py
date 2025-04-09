@@ -171,9 +171,3 @@ class OlisObscraper(BaseScraper):
             type_filter=1,
             output_file="ob_stations_prices.json",
         )
-
-
-if __name__ == "__main__":
-    scraper = OlisObscraper()
-    scraper.get_static_info()
-    scraper.update_prices()

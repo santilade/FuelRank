@@ -133,9 +133,3 @@ class N1Scraper(BaseScraper):
         self.save_to_json(data, "n1_stations_prices.json")
 
         self.logger.info(f"{len(updated)} stations prices updated {ts}")
-
-
-if __name__ == "__main__":
-    scraper = N1Scraper()
-    scraper.get_static_info()
-    scraper.update_prices()

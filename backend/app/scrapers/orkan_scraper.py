@@ -138,9 +138,3 @@ class OrkanScraper(BaseScraper):
 
         self.save_to_json(data, "orkan_prices.json")
         self.logger.info(f"{len(updated)} stations prices updated {ts}")
-
-
-if __name__ == "__main__":
-    scraper = OrkanScraper()
-    scraper.get_static_info()
-    scraper.update_prices()

@@ -185,13 +185,13 @@ sketch
 .ionide
 
 #jsons with stationsdata(temporal)
-backend/n1_static.json
-backend/n1_stations_prices.json
-backend/atlantsolia_static.json
-backend/atlantsolia_prices.json
-backend/ob_static.json
-backend/ob_stations_prices.json
-backend/olis_static.json
-backend/olis_stations_prices.json
-backend/orkan_static.json
-backend/orkan_prices.json
+backend/data/n1_static.json
+backend/data/n1_stations_prices.json
+backend/data/atlantsolia_static.json
+backend/data/atlantsolia_prices.json
+backend/data/ob_static.json
+backend/data/ob_stations_prices.json
+backend/data/olis_static.json
+backend/data/olis_stations_prices.json
+backend/data/orkan_static.json
+backend/data/orkan_prices.json

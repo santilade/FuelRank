@@ -41,7 +41,8 @@ class OrkanScraper(BaseScraper):
                 return None, None
 
         except Exception as e:
-            self.logger.error(f"Geocodifying error '{address}: {e}")
+            self.logger.error(f"Geocodifying error '{address}': {e}")
+            return None, None
 
     def get_static_info(self):
 
@@ -75,7 +76,7 @@ class OrkanScraper(BaseScraper):
         self.logger.info(f"{len(stations)} stations fetched from api")
         self.logger.info(f"geocoords for {counter} stations")
 
-    def update_prices(self, static_file="orkan_static.json"):
+    def update_prices(self, static_filename="orkan_static.json"):
 
         if self.api_data is None:
             self.fetch_api_data()
@@ -83,6 +84,7 @@ class OrkanScraper(BaseScraper):
         stations_aux = {
             s["name"]: s for s in self.api_data["value"]["priceList"]["price"]
         }
+        static_file = self.data_dir / static_filename
 
         with open(static_file, "r", encoding="utf-8") as f:
             static_data = json.load(f)

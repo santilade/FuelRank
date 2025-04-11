@@ -42,6 +42,7 @@ class OlisObscraper(BaseScraper):
 
         except Exception as e:
             self.logger.error(f"Geocodifying error '{address}: {e}")
+            return None, None
 
     def get_static_info(self):
 
@@ -80,7 +81,7 @@ class OlisObscraper(BaseScraper):
         self.save_to_json({"stations": olis_stations}, "olis_static.json")
         self.save_to_json({"stations": ob_stations}, "ob_static.json")
 
-    def update_single_brand(self, static_file, type_filter, output_file):
+    def update_single_brand(self, static_filename, type_filter, output_file):
         """
         Updates fuel prices for a specific brand (Olís or ÓB), based on type.
         Parameters:
@@ -96,6 +97,7 @@ class OlisObscraper(BaseScraper):
             s for s in self.api_data["Items"] if s["Type"] == type_filter
         ]
         stations_aux = {s["Name"]: s for s in stations_dynamic}
+        static_file = self.data_dir / static_filename
 
         with open(static_file, "r", encoding="utf-8") as f:
             static_data = json.load(f)
@@ -162,12 +164,12 @@ class OlisObscraper(BaseScraper):
         """
 
         self.update_single_brand(
-            static_file="olis_static.json",
+            static_filename="olis_static.json",
             type_filter=0,
             output_file="olis_stations_prices.json",
         )
         self.update_single_brand(
-            static_file="ob_static.json",
+            static_filename="ob_static.json",
             type_filter=1,
             output_file="ob_stations_prices.json",
         )

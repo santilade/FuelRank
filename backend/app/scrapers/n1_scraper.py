@@ -45,6 +45,7 @@ class N1Scraper(BaseScraper):
 
         except Exception as e:
             self.logger.error(f"Geocodifying error '{address}: {e}")
+            return None, None
 
     def get_static_info(self):
         if self.api_data is None:
@@ -77,12 +78,13 @@ class N1Scraper(BaseScraper):
         self.logger.info(f"{len(stations)} stations from api")
         self.logger.info(f"geocoords for {counter} stations")
 
-    def update_prices(self, static_file="n1_static.json"):
+    def update_prices(self, static_filename="n1_static.json"):
 
         if self.api_data is None:
             self.fetch_api_data()
 
         stations_aux = {s["Name"]: s for s in self.api_data}
+        static_file = self.data_dir / static_filename
 
         with open(static_file, "r", encoding="utf-8") as f:
             static_data = json.load(f)

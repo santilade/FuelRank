@@ -72,7 +72,7 @@ class OrkanScraper(BaseScraper):
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
 
-        self.save_to_json({"stations": stations}, "orkan_static.json")
+        self.update_json_static({"stations": stations}, "orkan_static.json")
         self.logger.info(f"{len(stations)} stations fetched from api")
         self.logger.info(f"geocoords for {counter} stations")
 
@@ -140,3 +140,9 @@ class OrkanScraper(BaseScraper):
 
         self.save_to_json(data, "orkan_prices.json")
         self.logger.info(f"{len(updated)} stations prices updated {ts}")
+
+
+if __name__ == "__main__":
+    scraper = OrkanScraper()
+    scraper.get_static_info()
+    scraper.update_prices()

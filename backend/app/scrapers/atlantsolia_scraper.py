@@ -39,7 +39,8 @@ class AtlansoliaScraper(BaseScraper):
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
 
-        self.save_to_json({"stations": stations}, "atlantsolia_static.json")
+        static_filename = "atlantsolia_static.json"
+        self.update_json_static({"stations": stations}, static_filename)
         self.logger.info(f"{len(stations)} stations from api")
 
     def update_prices(self, static_filename="atlantsolia_static.json"):

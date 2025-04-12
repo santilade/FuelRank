@@ -6,7 +6,7 @@ import time
 from app.scrapers.base_scraper import BaseScraper
 
 
-class OlisObscraper(BaseScraper):
+class OlisObScraper(BaseScraper):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("OLIS_OB_API_URL")
@@ -78,8 +78,11 @@ class OlisObscraper(BaseScraper):
                 self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
                 continue
 
-        self.save_to_json({"stations": olis_stations}, "olis_static.json")
-        self.save_to_json({"stations": ob_stations}, "ob_static.json")
+        olis_filename = "olis_static.json"
+        ob_filename = "ob_static.json"
+
+        self.update_json_static({"stations": olis_stations}, olis_filename)
+        self.update_json_static({"stations": ob_stations}, ob_filename)
 
     def update_single_brand(self, static_filename, type_filter, output_file):
         """

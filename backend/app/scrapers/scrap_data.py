@@ -1,13 +1,13 @@
 from app.scrapers.atlantsolia_scraper import AtlansoliaScraper
 from app.scrapers.n1_scraper import N1Scraper
-from app.scrapers.olis_ob_scraper import OlisObscraper
+from app.scrapers.olis_ob_scraper import OlisObScraper
 from app.scrapers.orkan_scraper import OrkanScraper
 import logging
 
 SCRAPERS = [
     AtlansoliaScraper(),
     N1Scraper(),
-    OlisObscraper(),
+    OlisObScraper(),
     OrkanScraper(),
 ]
 

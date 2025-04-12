@@ -33,3 +33,22 @@ class BaseScraper(ABC):
         filepath = self.data_dir / filename
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
+
+    def update_json_static(self, data, filename):
+        filepath = self.data_dir / filename
+
+        if filepath.exists():
+            with open(filepath, "r", encoding="utf-8") as f:
+                existing_data = json.load(f)
+        else:
+            existing_data = {"stations": []}
+
+        existing_stations = {s["station"] for s in existing_data["stations"]}
+
+        for station in data.get("stations", []):
+            if station["station"] not in existing_stations:
+                existing_data["stations"].append(station)
+                self.logger.info(f"New station '{station['station']}' added!")
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(existing_data, f, indent=2, ensure_ascii=False)

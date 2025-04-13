@@ -66,7 +66,7 @@ class OrkanScraper(BaseScraper):
                 stations.append(
                     {
                         "id": station_id,
-                        "station": s["name"],
+                        "name": s["name"],
                         "address": s["name"],
                         "longitude": lon,
                         "latitude": lat,
@@ -98,10 +98,10 @@ class OrkanScraper(BaseScraper):
         updated = []
 
         for station in static_data["stations"]:
-            station_api_data = stations_aux.get(station["station"])
+            station_api_data = stations_aux.get(station["name"])
 
             if not station_api_data:
-                self.logger.warning(f"No data for {station['station']}")
+                self.logger.warning(f"No data for {station['name']}")
                 continue
 
             price_gas = (

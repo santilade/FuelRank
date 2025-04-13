@@ -44,12 +44,12 @@ class BaseScraper(ABC):
         else:
             existing_data = {"stations": []}
 
-        existing_stations = {s["station"] for s in existing_data["stations"]}
+        existing_stations = {s["name"] for s in existing_data["stations"]}
 
         for station in data.get("stations", []):
-            if station["station"] not in existing_stations:
+            if station["name"] not in existing_stations:
                 existing_data["stations"].append(station)
-                self.logger.info(f"New station '{station['station']}' added!")
+                self.logger.info(f"New station '{station['name']}' added!")
 
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(existing_data, f, indent=2, ensure_ascii=False)

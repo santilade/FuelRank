@@ -30,7 +30,7 @@ class AtlansoliaScraper(BaseScraper):
                 stations.append(
                     {
                         "id": station_id,
-                        "station": s["Name"],
+                        "name": s["Name"],
                         "address": s["Address"],
                         "longitude": s["Longitude"],
                         "latitude": s["Latitude"],
@@ -62,10 +62,10 @@ class AtlansoliaScraper(BaseScraper):
         updated = []
 
         for station in static_data["stations"]:
-            station_api_data = stations_aux.get(station["station"])
+            station_api_data = stations_aux.get(station["name"])
 
             if not station_api_data:
-                self.logger.warning(f"No data for {station['station']}")
+                self.logger.warning(f"No data for {station['name']}")
                 continue
 
             price_gas = (

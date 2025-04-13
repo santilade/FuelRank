@@ -65,7 +65,7 @@ class OlisObScraper(BaseScraper):
 
                 station_data = {
                     "id": station_id,
-                    "station": s["Name"],
+                    "name": s["Name"],
                     "address": s["Name"],
                     "longitude": lon,
                     "latitude": lat,
@@ -112,10 +112,10 @@ class OlisObScraper(BaseScraper):
         updated = []
 
         for station in static_data["stations"]:
-            station_data = stations_aux.get(station["station"])
+            station_data = stations_aux.get(station["name"])
 
             if not station_data:
-                self.logger.warning(f"No data for {station['station']}")
+                self.logger.warning(f"No data for {station['name']}")
                 continue
 
             price_gas = (

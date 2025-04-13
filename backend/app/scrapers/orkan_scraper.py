@@ -56,16 +56,18 @@ class OrkanScraper(BaseScraper):
             try:
 
                 name = s["name"]
+                brand = "orkan"
 
                 # extracting coordinates
                 lon, lat = self.get_coordinates(name, counter)
                 time.sleep(1)
 
-                station_id = self.generate_station_id("orkan", name)
+                station_id = self.generate_station_id(brand, name)
 
                 stations.append(
                     {
                         "id": station_id,
+                        "brand": brand,
                         "name": s["name"],
                         "address": s["name"],
                         "longitude": lon,

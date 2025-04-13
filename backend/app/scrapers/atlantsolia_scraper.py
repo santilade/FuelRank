@@ -25,11 +25,13 @@ class AtlansoliaScraper(BaseScraper):
         for s in self.api_data:
             try:
                 name = s["Name"]
-                station_id = self.generate_station_id("atlantsolia", name)
+                brand = "atlantsolia"
+                station_id = self.generate_station_id(brand, name)
 
                 stations.append(
                     {
                         "id": station_id,
+                        "brand": brand,
                         "name": s["Name"],
                         "address": s["Address"],
                         "longitude": s["Longitude"],

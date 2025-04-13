@@ -65,6 +65,7 @@ class OlisObScraper(BaseScraper):
 
                 station_data = {
                     "id": station_id,
+                    "brand": brand,
                     "name": s["Name"],
                     "address": s["Name"],
                     "longitude": lon,

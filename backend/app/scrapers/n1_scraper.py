@@ -61,11 +61,13 @@ class N1Scraper(BaseScraper):
                 time.sleep(1)
 
                 name = s["Name"]
-                station_id = self.generate_station_id("n1", name)
+                brand = "n1"
+                station_id = self.generate_station_id(brand, name)
 
                 stations.append(
                     {
                         "id": station_id,
+                        "brand": brand,
                         "name": s["Name"],
                         "address": s["Location"],
                         "longitude": lon,

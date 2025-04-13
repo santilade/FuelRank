@@ -1,4 +1,4 @@
-from .db import db
+from app import db
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy import NUMERIC, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship

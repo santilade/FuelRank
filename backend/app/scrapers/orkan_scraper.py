@@ -54,12 +54,18 @@ class OrkanScraper(BaseScraper):
 
         for s in self.api_data["value"]["priceList"]["price"]:
             try:
+
+                name = s["name"]
+
                 # extracting coordinates
-                lon, lat = self.get_coordinates(s["name"], counter)
+                lon, lat = self.get_coordinates(name, counter)
                 time.sleep(1)
+
+                station_id = self.generate_station_id("orkan", name)
 
                 stations.append(
                     {
+                        "id": station_id,
                         "station": s["name"],
                         "address": s["name"],
                         "longitude": lon,

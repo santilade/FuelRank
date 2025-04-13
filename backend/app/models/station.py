@@ -27,5 +27,7 @@ class Station(db.Model):
             "lat": float(self.lat) if self.lat else None,
             "long": float(self.long) if self.long else None,
             "url": self.url,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "created_at": (
+                self.created_at.isoformat() if self.created_at else None
+            ),
         }

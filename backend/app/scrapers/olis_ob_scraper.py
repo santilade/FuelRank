@@ -60,7 +60,11 @@ class OlisObScraper(BaseScraper):
                 lon, lat = self.get_coordinates(search_data, counter)
                 time.sleep(1)
 
+                name = s["Name"]
+                station_id = self.generate_station_id(brand, name)
+
                 station_data = {
+                    "id": station_id,
                     "station": s["Name"],
                     "address": s["Name"],
                     "longitude": lon,

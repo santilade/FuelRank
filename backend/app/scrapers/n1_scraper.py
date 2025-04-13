@@ -60,8 +60,12 @@ class N1Scraper(BaseScraper):
                 lon, lat = self.get_coordinates(s["Location"], counter)
                 time.sleep(1)
 
+                name = s["Name"]
+                station_id = self.generate_station_id("n1", name)
+
                 stations.append(
                     {
+                        "id": station_id,
                         "station": s["Name"],
                         "address": s["Location"],
                         "longitude": lon,

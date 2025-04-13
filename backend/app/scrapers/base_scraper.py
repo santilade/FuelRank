@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import json
 import logging
 from pathlib import Path
+import hashlib
 
 logging.basicConfig(
     level=logging.INFO,
@@ -52,3 +53,9 @@ class BaseScraper(ABC):
 
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(existing_data, f, indent=2, ensure_ascii=False)
+
+    def generate_station_id(self, brand, name):
+        prefix = brand[:2].upper() 
+        hash_bytes = hashlib.sha256(name.encode()).digest()
+        suffix = int.from_bytes(hash_bytes[:2], 'big') % 10000
+        return f"{prefix}{suffix:04d}"

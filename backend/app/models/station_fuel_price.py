@@ -11,7 +11,7 @@ class StationFuelPrice(db.Model):
     id_station = db.Column(
         db.String, db.ForeignKey("stations.id"), nullable=False
     )  # noqa: E731
-    id_fuel = db.Column(db.string, db.ForeignKey("fuel.id"), nullable=False)
+    id_fuel = db.Column(db.String, db.ForeignKey("fuel.id"), nullable=False)
     price = db.Column(NUMERIC(6, 2), nullable=False)
     discount = db.Column(NUMERIC(6, 2), nullable=True)
 

@@ -21,7 +21,7 @@ def load_static_data(filepath):
             long=entry.get("longitude"),
             url=entry.get("url"),
             region=entry.get("region"),
-            created_at=datetime.now(timezone.utc)
+            created_at=datetime.now(timezone.utc),
         )
 
         db.session.merge(station)

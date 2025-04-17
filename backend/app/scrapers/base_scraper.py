@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 import hashlib
 
+# TODO: send logging config to file apart to do import later
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",

@@ -146,5 +146,11 @@ class OrkanScraper(BaseScraper):
             ts = datetime.now(timezone.utc).isoformat()
             data = {"timestamp": ts, "stations": updated}
 
-        self.save_to_json(data, "orkan_prices.json")
+        self.save_to_json(data, "orkan_stations_prices.json")
         self.logger.info(f"{len(updated)} stations prices updated {ts}")
+
+
+if __name__ == "__main__":
+    scraper = OrkanScraper()
+    scraper.get_static_info()
+    scraper.update_prices()

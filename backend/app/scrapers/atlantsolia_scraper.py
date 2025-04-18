@@ -130,6 +130,6 @@ class AtlansoliaScraper(BaseScraper):
         ts = datetime.now(timezone.utc).isoformat()
         data = {"timestamp": ts, "stations": updated}
 
-        self.save_to_json(data, "atlantsolia_prices.json")
+        self.save_to_json(data, "atlantsolia_stations_prices.json")
 
         self.logger.info(f"{len(updated)} stations prices updated {ts}")

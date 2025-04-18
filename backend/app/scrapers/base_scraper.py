@@ -1,23 +1,16 @@
 from abc import ABC, abstractmethod
 from dotenv import load_dotenv
-import json
-import logging
 from pathlib import Path
+from app.utils.logger import get_logger
+import json
 import hashlib
-
-# TODO: send logging config to file apart to do import later
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
 
 
 class BaseScraper(ABC):
     def __init__(self):
         load_dotenv()
         # Obtains module name per file:
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = get_logger(self.__class__.__name__)
 
         self.base_dir = Path(__file__).resolve().parents[2]
         self.data_dir = self.base_dir / "data"
@@ -56,7 +49,7 @@ class BaseScraper(ABC):
             json.dump(existing_data, f, indent=2, ensure_ascii=False)
 
     def generate_station_id(self, brand, name):
-        prefix = brand[:2].upper() 
+        prefix = brand[:2].upper()
         hash_bytes = hashlib.sha256(name.encode()).digest()
-        suffix = int.from_bytes(hash_bytes[:2], 'big') % 10000
+        suffix = int.from_bytes(hash_bytes[:2], "big") % 10000
         return f"{prefix}{suffix:04d}"

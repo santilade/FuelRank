@@ -2,7 +2,7 @@ from app import create_app
 from app.db import db
 from pathlib import Path
 from app.utils.static_loader import load_static_data
-import logging
+from app.utils.logger import get_logger
 
 
 STATIC_FILES = [
@@ -13,13 +13,7 @@ STATIC_FILES = [
     "orkan_static.json",
 ]
 
-# TODO: send logging basic config out
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-logger = logging.getLogger("init_db")
+logger = get_logger("init_db")
 
 app = create_app()
 

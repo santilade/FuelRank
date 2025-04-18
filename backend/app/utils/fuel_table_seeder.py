@@ -4,7 +4,7 @@ from app.models.fuel import Fuel
 FUEL_TYPES = {
     "GAS": "Gasoline",
     "DIESEL": "Diesel",
-    "COLDIESEL": "Colored Diesel",
+    "COLORED_DIESEL": "Colored Diesel",
     "SHIPPING": "Shipping Fuel",
     "METAN": "Methane",
     "ELECTRIC": "Electricity",

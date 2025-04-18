@@ -3,6 +3,7 @@ from app.db import db
 from pathlib import Path
 from app.utils.static_loader import load_static_data
 from app.utils.fuel_table_seeder import seed_fuel_table
+from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 
 
@@ -45,7 +46,8 @@ def load_static_files():
         for file in STATIC_FILES:
             path = Path(__file__).resolve().parents[1] / "data" / f"{file}"
             count = load_static_data(path)
-            logger.info(f"Loaded {count} stations {file}")
+            brand_name = file.split("_")[0]
+            logger.info(f"Loaded {count} {brand_name} stations")
 
     except Exception as e:
         logger.error(f"Error loading static data: {e}")
@@ -60,11 +62,25 @@ def seed_fuel_ids():
         logger.error(f"Error seeding Fuel Table: {e}")
 
 
+def load_prices():
+    try:
+        for file in PRICES_FILES:
+            path = Path(__file__).resolve().parents[1] / "data" / f"{file}"
+            inserted, skiped = load_prices_data(path)
+            brand_name = file.split("_")[0]
+            logger.info(
+                f"{inserted} prices inserted for {brand_name}, unchanged: {skiped}"
+            )
+    except Exception as e:
+        logger.error(f"Error loading prices: {e}")
+
+
 def initialize_db():
     with app.app_context():
         create_db()
         load_static_files()
         seed_fuel_ids()
+        load_prices()
 
 
 if __name__ == "__main__":

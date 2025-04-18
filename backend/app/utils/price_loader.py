@@ -20,7 +20,7 @@ DISCOUNT_MAPPING = {
 }
 
 
-def load_prices_from_json(file_path: Path) -> tuple[int, int]:
+def load_prices_data(file_path: Path) -> tuple[int, int]:
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 

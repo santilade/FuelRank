@@ -44,6 +44,11 @@ def load_prices_data(file_path: Path) -> tuple[int, int]:
             ).first()
 
             if existing:
+                """
+                # TODO: normalize before comparing, sometimes detects
+                diferents prices due to diferences in precision
+                (in DB 288.8 being compared against an 288.80000001)
+                """
                 if (
                     float(existing.price) == float(price)
                     and existing.discount == discount

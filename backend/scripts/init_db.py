@@ -66,10 +66,10 @@ def load_prices():
     try:
         for file in PRICES_FILES:
             path = Path(__file__).resolve().parents[1] / "data" / f"{file}"
-            inserted, skiped = load_prices_data(path)
+            inserted, skipped = load_prices_data(path)
             brand_name = file.split("_")[0]
             logger.info(
-                f"{inserted} prices inserted for {brand_name}, unchanged: {skiped}"
+                f"{inserted} prices inserted for {brand_name}, unchanged: {skipped}"
             )
     except Exception as e:
         logger.error(f"Error loading prices: {e}")

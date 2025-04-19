@@ -8,9 +8,7 @@ class StationFuelPrice(db.Model):
     __tablename__ = "station_fuel_price"
 
     update_date = db.Column(TIMESTAMP(timezone=True), nullable=False)
-    id_station = db.Column(
-        db.String, db.ForeignKey("stations.id"), nullable=False
-    )  # noqa: E731
+    id_station = db.Column(db.String, db.ForeignKey("stations.id"), nullable=False)
     id_fuel = db.Column(db.String, db.ForeignKey("fuel.id"), nullable=False)
     price = db.Column(NUMERIC(6, 2), nullable=False)
     discount = db.Column(NUMERIC(6, 2), nullable=True)

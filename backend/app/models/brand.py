@@ -1,7 +1,7 @@
 from app import db
 
 
-class Brands(db.Model):
+class Brand(db.Model):
     __tablename__ = "brands"
 
     id = db.Column(db.String(10), primary_key=True)
@@ -10,7 +10,7 @@ class Brands(db.Model):
     stations = db.relationship("Station", back_populates="brand")
 
     def __repr__(self):
-        return f"<Brand {self.name})"
+        return f"<Brand {self.name}>"
 
     def to_dict(self):
         return {"id": self.id, "name": self.name}

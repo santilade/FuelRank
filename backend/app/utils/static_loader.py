@@ -1,5 +1,5 @@
 from app.models.station import Station
-from app.models.brands import Brands
+from app.models.brand import Brand
 from app.db import db
 from datetime import datetime, timezone
 from app.utils.logger import get_logger
@@ -34,7 +34,7 @@ def load_static_data(filepath):
             )
             continue
 
-        brand = db.session.get(Brands, brand_id)
+        brand = db.session.get(Brand, brand_id)
         if not brand:
             logger.error(f"Brand {brand_id} not found in table brands. Skipping")
             continue

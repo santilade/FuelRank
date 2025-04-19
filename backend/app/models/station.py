@@ -17,10 +17,10 @@ class Station(db.Model):
     region = db.Column(db.String(50), nullable=True)
     created_at = db.Column(TIMESTAMP(timezone=True), nullable=False)
 
-    brand = relationship("Brands", back_populates="stations")
+    brand = relationship("Brand", back_populates="stations")
 
     def __repr__(self):
-        return f"<Station {self.name} ({self.id_brand})"
+        return f"<Station {self.name} ({self.id_brand}>"
 
     def to_dict(self):
         return {

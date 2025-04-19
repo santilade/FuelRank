@@ -3,6 +3,7 @@ from app.db import db
 from pathlib import Path
 from app.utils.static_loader import load_static_data
 from app.utils.fuel_table_seeder import seed_fuel_table
+from app.utils.brands_table_seeder import seed_brands_table
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 
@@ -62,6 +63,14 @@ def seed_fuel_ids():
         logger.error(f"Error seeding Fuel Table: {e}")
 
 
+def seed_brands_id():
+    try:
+        count = seed_brands_table()
+        logger.info(f"{count} Brands IDs seeded in Brands table")
+    except Exception as e:
+        logger.error(f"Error seeding Brands table: {e}")
+
+
 def load_prices():
     try:
         for file in PRICES_FILES:
@@ -78,8 +87,9 @@ def load_prices():
 def initialize_db():
     with app.app_context():
         create_db()
-        load_static_files()
+        seed_brands_id()
         seed_fuel_ids()
+        load_static_files()
         load_prices()
 
 

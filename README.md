@@ -7,7 +7,7 @@
 Data is gathered through public endpoints exposed by gas station websites. While technically this qualifies as scraping, it is performed ethically by targeting open and unprotected resources. In the case of **Orkan**, the company has generously granted access to their official API, which means no scraping is performed there. This setup is subject to future refactoring.
 
 ### Notes on Costco iceland
-**Costco** operates a single gas station in Iceland under a membership-only model. It is often the cheapest option in the country, but unfortunately, **they do not publish fuel prices anywhere online.** So far, they have not responded to my requests for information. I am currently **exploring alternative ways to include their data** in the system in a reliable and ethical manner.
+**Costco** operates a single gas station in Iceland under a membership-only model. It is often the cheapest option in the country, but unfortunately, **they do not publish fuel prices anywhere online.** So far, they have not responded to my requests for information. I am currently **exploring alternative ways to include their data** in the system in a reliable and manner.
 
 
 ## Static vs Dynamic Data

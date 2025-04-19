@@ -7,7 +7,7 @@ from app.utils.brands_table_seeder import seed_brands_table
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 
-
+# TODO: take out to constants file
 STATIC_FILES = [
     "atlantsolia_static.json",
     "n1_static.json",

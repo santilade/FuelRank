@@ -6,23 +6,7 @@ from app.utils.fuel_table_seeder import seed_fuel_table
 from app.utils.brands_table_seeder import seed_brands_table
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
-
-# TODO: take out to constants file
-STATIC_FILES = [
-    "atlantsolia_static.json",
-    "n1_static.json",
-    "ob_static.json",
-    "olis_static.json",
-    "orkan_static.json",
-]
-
-PRICES_FILES = [
-    "atlantsolia_stations_prices.json",
-    "n1_stations_prices.json",
-    "ob_stations_prices.json",
-    "olis_stations_prices.json",
-    "orkan_stations_prices.json",
-]
+from app.utils.constants import STATIC_FILES, PRICES_FILES
 
 logger = get_logger("init_db")
 

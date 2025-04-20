@@ -1,13 +1,6 @@
 from app.db import db
 from app.models.brand import Brand
-
-BRANDS = {
-    "AT": "Atlantsolia",
-    "N1": "N1",
-    "OB": "Ob",
-    "OL": "Olis",
-    "OR": "Orkan",
-}
+from app.utils.constants import BRANDS
 
 
 def seed_brands_table():

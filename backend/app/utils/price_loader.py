@@ -24,7 +24,7 @@ def load_prices_data(file_path: Path) -> tuple[int, int]:
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    update_date = datetime.fromisoformat(data.get("timestamp"))
+    last_scrap_update = datetime.fromisoformat(data.get("timestamp"))
     stations = data.get("stations", [])
     inserted = 0
     skipped = 0
@@ -40,7 +40,7 @@ def load_prices_data(file_path: Path) -> tuple[int, int]:
                 continue
 
             existing = StationFuelPrice.query.filter_by(
-                update_date=update_date, id_station=station_id, id_fuel=fuel_id
+                id_station=station_id, id_fuel=fuel_id
             ).first()
 
             if existing:
@@ -57,7 +57,7 @@ def load_prices_data(file_path: Path) -> tuple[int, int]:
                     continue
 
             new_price = StationFuelPrice(
-                update_date=update_date,
+                last_update=last_scrap_update,
                 id_station=station_id,
                 id_fuel=fuel_id,
                 price=price,

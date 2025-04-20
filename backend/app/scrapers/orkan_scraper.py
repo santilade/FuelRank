@@ -62,7 +62,7 @@ class OrkanScraper(BaseScraper):
                 lon, lat = self.get_coordinates(name, counter)
                 time.sleep(1)
 
-                station_id = self.generate_station_id(brand, name)
+                station_id = self.generate_station_id(brand, name, address=None)
 
                 stations.append(
                     {

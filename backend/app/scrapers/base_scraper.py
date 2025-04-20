@@ -16,6 +16,8 @@ class BaseScraper(ABC):
         self.data_dir = self.base_dir / "data"
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
+        self.assigned_ids = []
+
     @abstractmethod
     def get_static_info(self):
         pass
@@ -48,8 +50,13 @@ class BaseScraper(ABC):
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(existing_data, f, indent=2, ensure_ascii=False)
 
-    def generate_station_id(self, brand, name):
+    def generate_station_id(self, brand, name, address):
+
         prefix = brand[:2].upper()
-        hash_bytes = hashlib.sha256(name.encode()).digest()
+        components = [brand, name, address]
+        base_raw = "-".join(filter(None, components))
+
+        hash_bytes = hashlib.sha256(base_raw.encode()).digest()
         suffix = int.from_bytes(hash_bytes[:2], "big") % 10000
+
         return f"{prefix}{suffix:04d}"

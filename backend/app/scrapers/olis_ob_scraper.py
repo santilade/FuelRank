@@ -61,7 +61,7 @@ class OlisObScraper(BaseScraper):
                 time.sleep(1)
 
                 name = s["Name"]
-                station_id = self.generate_station_id(brand, name)
+                station_id = self.generate_station_id(brand, name, address=None)
 
                 station_data = {
                     "id": station_id,

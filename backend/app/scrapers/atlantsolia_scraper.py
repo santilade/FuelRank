@@ -26,7 +26,8 @@ class AtlansoliaScraper(BaseScraper):
             try:
                 name = s["Name"]
                 brand = "atlantsolia"
-                station_id = self.generate_station_id(brand, name)
+                address = s["Address"]
+                station_id = self.generate_station_id(brand, name, address)
 
                 stations.append(
                     {

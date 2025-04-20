@@ -62,7 +62,8 @@ class N1Scraper(BaseScraper):
 
                 name = s["Name"]
                 brand = "n1"
-                station_id = self.generate_station_id(brand, name)
+                address = s["Location"]
+                station_id = self.generate_station_id(brand, name, address)
 
                 stations.append(
                     {

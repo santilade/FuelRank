@@ -58,6 +58,8 @@ def load_prices_data(file_path: Path) -> tuple[int, int]:
                 if is_equal(existing.price, price) and is_equal(
                     existing.discount, discount
                 ):
+                    existing.last_update = last_scrap_update
+                    db.session.commit()
                     skipped += 1
                     continue
 

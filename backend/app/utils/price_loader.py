@@ -20,6 +20,17 @@ DISCOUNT_MAPPING = {
 }
 
 
+def is_equal(a, b, tol=0.01):
+    """
+    to avoid diferences in precision, for ex: comparing 288.8 against 288.80000001
+    """
+    if a is None and b is None:
+        return True
+    if a is None or b is None:
+        return False
+    return abs(float(a) - float(b)) < tol
+
+
 def load_prices_data(file_path: Path) -> tuple[int, int]:
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -44,14 +55,8 @@ def load_prices_data(file_path: Path) -> tuple[int, int]:
             ).first()
 
             if existing:
-                """
-                # TODO: normalize before comparing, sometimes detects
-                diferents prices due to diferences in precision
-                (in DB 288.8 being compared against an 288.80000001)
-                """
-                if (
-                    float(existing.price) == float(price)
-                    and existing.discount == discount
+                if is_equal(existing.price, price) and is_equal(
+                    existing.discount, discount
                 ):
                     skipped += 1
                     continue

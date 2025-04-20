@@ -1,30 +1,12 @@
 from app import create_app
-from app.scrapers.atlantsolia_scraper import AtlansoliaScraper
-from app.scrapers.n1_scraper import N1Scraper
-from app.scrapers.olis_ob_scraper import OlisObScraper
-from app.scrapers.orkan_scraper import OrkanScraper
+from scripts.scrap_data import SCRAPERS
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
+from app.utils.constants import PRICES_FILES
 from pathlib import Path
 from app import models
 import time
 
-# TODO: take out to constants file?
-
-PRICES_FILES = [
-    "atlantsolia_stations_prices.json",
-    "n1_stations_prices.json",
-    "ob_stations_prices.json",
-    "olis_stations_prices.json",
-    "orkan_stations_prices.json",
-]
-
-SCRAPERS = [
-    AtlansoliaScraper(),
-    N1Scraper(),
-    OlisObScraper(),
-    OrkanScraper(),
-]
 
 logger = get_logger("update_loop")
 app = create_app()
@@ -52,4 +34,5 @@ if __name__ == "__main__":
         # TODO: once flask is running change update loop to APScheduler
         while True:
             update()
+            logger.info("Waiting 5 minutes until next update...")
             time.sleep(300)

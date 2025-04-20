@@ -4,7 +4,6 @@ from app.scrapers.olis_ob_scraper import OlisObScraper
 from app.scrapers.orkan_scraper import OrkanScraper
 import logging
 
-# TODO: take out to constants file?
 SCRAPERS = [
     AtlansoliaScraper(),
     N1Scraper(),

@@ -47,11 +47,10 @@ Data is gathered through public endpoints exposed by gas station websites. While
 
 ## Roadmap
 
-- [ ] Implement cron job for periodic price updates
 - [ ] Create RESTful API endpoints
+- [ ] Implement APScheduler for periodic price updates
 - [ ] Build a React-based frontend (filtering, map view, etc.)
 - [ ] Improve static data accuracy (e.g. geocoding verification)
-- [ ] Dockerize the project
 
 ## License
 This project is currently under development and intended for academic and research purposes under a **MIT License**

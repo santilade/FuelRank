@@ -49,11 +49,6 @@ Data is gathered through public endpoints exposed by gas station websites. While
 
 This API provides access to fuel prices from gas stations in Iceland. It supports filtering, sorting, and pagination to help users find the best fuel prices.
 
-### 🟢 Base URL
-http://localhost:5000
-
----
-
 ## Endpoints
 
 ### `GET /prices/ranking`

@@ -131,7 +131,7 @@ class OrkanScraper(BaseScraper):
                 {
                     "gas_price": price_gas,
                     "diesel_price": price_diesel,
-                    "colored_disel_price": price_diesel_c,
+                    "colored_diesel_price": price_diesel_c,
                     "price_electric": price_electric,
                     "shipping_fuel_price": None,
                     "gas_discount": None,

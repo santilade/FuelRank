@@ -10,6 +10,11 @@ prices_bp = Blueprint("prices", __name__)
 
 @prices_bp.route("ranking", methods=["GET"])
 def get_price_ranking():
+    """
+    /prices/ranking (general ranking)
+    /prices/ranking&fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
+    /prices/ranking&limit=10&offset=10 (pagination)
+    """
     fuel_params = request.args.getlist("fuel")
     limit = int(request.args.get("limit", 10))
     offset = int(request.args.get("offset", 0))

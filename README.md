@@ -45,6 +45,71 @@ Data is gathered through public endpoints exposed by gas station websites. While
     - Price: id, station_id, fuel_id, price, datetime
     - Discount: id, station_id, value, description, datetime
 
+## API – Documentation
+
+This API provides access to fuel prices from gas stations in Iceland. It supports filtering, sorting, and pagination to help users find the best fuel prices.
+
+### 🟢 Base URL
+http://localhost:5000
+
+---
+
+## Endpoints
+
+### `GET /prices/ranking`
+
+Returns a list of fuel prices ordered from lowest to highest. Supports filtering by fuel type and pagination.
+
+#### 🔍 Query Parameters
+
+| Name       | Type     | Required | Description                                                                 |
+|------------|----------|----------|-----------------------------------------------------------------------------|
+| `fuel`     | string[] | No       | One or more fuel type IDs (e.g. `GAS`, `DIESEL`, `ELECTRIC`).              |
+| `limit`    | int      | No       | Number of results to return. Default is `10`.                              |
+| `offset`   | int      | No       | Number of results to skip (for pagination). Default is `0`.                |
+
+Multiple `fuel` parameters can be passed like:  
+> `/prices/ranking?fuel=GAS&fuel=DIESEL`
+
+#### Example Requests
+
+- `GET /prices/ranking`  
+- `GET /prices/ranking?fuel=GAS`  
+- `GET /prices/ranking?fuel=GAS&fuel=DIESEL&limit=5`  
+- `GET /prices/ranking?limit=10&offset=10` ← page 2
+
+#### Sample Response
+
+```json
+[
+  {
+    "brand": "Atlantsolia",
+    "station_name": "Sprengisandur",
+    "address": "Bústaðavegur 151, 103 Reykjavík",
+    "fuel_type": "Shipping Fuel",
+    "price": 134.0,
+    "discount": 110.6,
+    "last_update": "2025-04-21T10:46:13.612003+00:00"
+  }
+]
+```
+#### Upcoming endpoints (Planned)
+| Endpoint            | Method | Description                    |
+|---------------------|--------|--------------------------------|
+| `/stations`         | GET    | List all stations              |
+| `/stations/<id>`    | GET    | Get detailed station info      |
+| `/brands`           | GET    | List available fuel brands     |
+| `/fuels`            | GET    | List available fuel types      |
+
+---
+
+#### Notes
+
+- All responses are in **JSON** format.
+- `price` and `discount` fields are decimals with **2 decimal places**.
+- `last_update` and other date fields use **ISO 8601 format**:  
+  `YYYY-MM-DDTHH:MM:SSZ` (e.g. `2025-04-21T10:46:13Z`)
+
 ## Roadmap
 
 - [ ] Create RESTful API endpoints

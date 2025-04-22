@@ -1,5 +1,5 @@
 from app import create_app
-from scripts.scrap_data import SCRAPERS
+from scripts.collect_data import DATA_COLLECTORS
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 from app.utils.constants import PRICES_FILES
@@ -15,8 +15,8 @@ app = create_app()
 def update():
     _ = models  # to satisfy flake8
     try:
-        for scraper in SCRAPERS:
-            scraper.update_prices()
+        for collector in DATA_COLLECTORS:
+            collector.update_prices()
 
         for file in PRICES_FILES:
             path = Path(__file__).resolve().parents[1] / "data" / f"{file}"

@@ -3,12 +3,12 @@ from datetime import datetime, timezone
 import json
 import os
 import time
-from app.scrapers.base_scraper import BaseScraper
+from app.data_collectors.base_collector import BaseCollector
 
 # TODO: n1 EV charging prices
 
 
-class N1Scraper(BaseScraper):
+class N1Collector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("N1_API_URL")
@@ -125,7 +125,7 @@ class N1Scraper(BaseScraper):
                 {
                     "gas_price": price_gas,
                     "diesel_price": price_diesel,
-                    "colored_disel_price": price_diesel_c,
+                    "colored_diesel_price": price_diesel_c,
                     "shipping_fuel_price": None,
                     "gas_discount": None,
                     "diesel_discount": None,

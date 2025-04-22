@@ -2,19 +2,56 @@ import requests
 from datetime import datetime, timezone
 import json
 import os
-from app.scrapers.base_scraper import BaseScraper
+from app.data_collectors.base_collector import BaseCollector
 
 
-class AtlansoliaScraper(BaseScraper):
+class AtlansoliaCollector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("ATLANSOLIA_API_URL")
         self.api_data = None
+        self.contact_data = os.getenv("CONTACT")
 
     def fetch_api_data(self):
         response = requests.get(self.api_url)
         response.raise_for_status()
         self.api_data = response.json()
+
+    def get_region_from_coords(self, lat, lon, name):
+        try:
+            url = "https://nominatim.openstreetmap.org/reverse"
+
+            params = {
+                "lat": lat,
+                "lon": lon,
+                "format": "json",
+                "zoom": 10,
+                "addressdetails": 1,
+            }
+            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
+
+            response = requests.get(url, params=params, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+            # print(data)
+
+            address = data.get("address", {})
+            region = (
+                address.get("state_district")
+                or address.get("state")
+                or address.get("county")
+            )
+
+            if region:
+                self.logger.info(f"Region for {name} found!")
+                return region
+            else:
+                self.logger.warning(f"No region for {name} found")
+                return None
+
+        except Exception as e:
+            self.logger.error(f"Reverse Geocoding error: {e}")
+            return None
 
     def get_static_info(self):
         if self.api_data is None:
@@ -27,7 +64,11 @@ class AtlansoliaScraper(BaseScraper):
                 name = s["Name"]
                 brand = "atlantsolia"
                 address = s["Address"]
+                lon = s["Longitude"]
+                lat = s["Latitude"]
+
                 station_id = self.generate_station_id(brand, name, address)
+                region = self.get_region_from_coords(lat, lon, name)
 
                 stations.append(
                     {
@@ -35,9 +76,9 @@ class AtlansoliaScraper(BaseScraper):
                         "brand": brand,
                         "name": s["Name"],
                         "address": s["Address"],
-                        "longitude": s["Longitude"],
-                        "latitude": s["Latitude"],
-                        "region": None,
+                        "longitude": lon,
+                        "latitude": lat,
+                        "region": region,
                         "url": s["Url"],
                     }
                 )

@@ -3,10 +3,10 @@ from datetime import datetime, timezone
 import json
 import os
 import time
-from app.scrapers.base_scraper import BaseScraper
+from app.data_collectors.base_collector import BaseCollector
 
 
-class OrkanScraper(BaseScraper):
+class OrkanCollector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("ORKAN_API_URL")
@@ -131,7 +131,7 @@ class OrkanScraper(BaseScraper):
                 {
                     "gas_price": price_gas,
                     "diesel_price": price_diesel,
-                    "colored_disel_price": price_diesel_c,
+                    "colored_diesel_price": price_diesel_c,
                     "price_electric": price_electric,
                     "shipping_fuel_price": None,
                     "gas_discount": None,
@@ -151,6 +151,6 @@ class OrkanScraper(BaseScraper):
 
 
 if __name__ == "__main__":
-    scraper = OrkanScraper()
+    scraper = OrkanCollector()
     scraper.get_static_info()
     scraper.update_prices()

@@ -6,7 +6,7 @@ import json
 import hashlib
 
 
-class BaseScraper(ABC):
+class BaseCollector(ABC):
     def __init__(self):
         load_dotenv()
         # Obtains module name per file:

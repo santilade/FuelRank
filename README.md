@@ -4,10 +4,10 @@
 
 ## Data Collection
 
-Data is gathered through public endpoints exposed by gas station websites. While technically this qualifies as scraping, it is performed ethically by targeting open and unprotected resources. In the case of **Orkan**, the company has generously granted access to their official API, which means no scraping is performed there. This setup is subject to future refactoring.
+Data is gathered through public endpoints exposed by gas station websites. While technically this qualifies as scraping, it is performed ethically by targeting open and unprotected resources. In the case of **Orkan**, the company has generously granted access to their official endpoint, which means no "scraping" is performed there.
 
 ### Notes on Costco iceland
-**Costco** operates a single gas station in Iceland under a membership-only model. It is often the cheapest option in the country, but unfortunately, **they do not publish fuel prices anywhere online.** So far, they have not responded to my requests for information. I am currently **exploring alternative ways to include their data** in the system in a reliable and manner.
+**Costco** operates a single gas station in Iceland under a membership-only model. It is often the cheapest option in the country, but unfortunately, **they do not publish fuel prices anywhere online.** So far, they have not responded to my requests for information. I am currently **exploring alternative ways to include their data** in the system in a reliable manner.
 
 
 ## Static vs Dynamic Data
@@ -31,12 +31,12 @@ Data is gathered through public endpoints exposed by gas station websites. While
 
 ## Workflow
 
-1. **Scraping Static Info** (Run manually or monthly):
-    - Scrapers generate `.json` files with editable station metadata.
-    - These files are manually reviewed and optionally corrected.
+1. **Collect Static Info** (Run manually or monthly):
+    - Data Collectors generate `.json` files with editable station metadata.
+    - These files are manually reviewed and optionally corrected (not possible to get allways accurate location data).
     - Then loaded into the database using `init_db.py` via utility functions.
 2. **Price data** (Run frequently, via cron) 
-    - Each scraper fetches updated fuel prices and discounts.
+    - Each data collector fetches updated fuel prices and discounts.
     - If the new price is different from the last saved price, it is inserted.
     - No duplicates are saved.
 3. **Database Structure** (simplified) 

@@ -1,0 +1,214 @@
+{
+  "stations": [
+    {
+      "id": "OL8038",
+      "brand": "Olis",
+      "name": "PIERPUMP",
+      "address": "PIERPUMP",
+      "longitude": null,
+      "latitude": null,
+      "region": null,
+      "url": null
+    },
+    {
+      "id": "OL0762",
+      "brand": "Olis",
+      "name": "Akureyri",
+      "address": "Tryggvabraut 1, 600 Akureyri",
+      "longitude": -18.101022,
+      "latitude": 65.689163,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OL7823",
+      "brand": "Olis",
+      "name": "Borgarnes",
+      "address": "Olís, Brúartorg, Borgarnes, Borgarbyggð, Vesturland, 310",
+      "longitude": -21.9082248,
+      "latitude": 64.5444358,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OL3070",
+      "brand": "Olis",
+      "name": "Akranes Esjubraut",
+      "address": "Kalmannsvellir 1 300, 300 Akranes",
+      "longitude": -22.067617,
+      "latitude": 64.324797,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OL2950",
+      "brand": "Olis",
+      "name": "Álfheimar",
+      "address": "Álfheimar 49, 104 Reykjavík",
+      "longitude": -21.8670403,
+      "latitude": 64.1326404,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL0115",
+      "brand": "Olis",
+      "name": "Ánanaust",
+      "address": "Ánanaust 12, 101 Reykjavík",
+      "longitude": -21.9552302,
+      "latitude": 64.152589,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL5053",
+      "brand": "Olis",
+      "name": "Dalvík",
+      "address": "Skíðabraut 21, 620 Dalvík",
+      "longitude": -18.5292807,
+      "latitude": 65.9671921,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OL4599",
+      "brand": "Olis",
+      "name": "Garðabær",
+      "address": "Olís, Hafnarfjarðarvegur, Grundir, Garðabær, Höfuðborgarsvæðið, 210",
+      "longitude": -21.9282176,
+      "latitude": 64.0915011,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL5396",
+      "brand": "Olis",
+      "name": "Gullinbrú",
+      "address": "1, Fjallkonuvegur, Foldir, Grafarvogur, Reikiavik, Höfuðborgarsvæðið, 112",
+      "longitude": -21.8069540,
+      "latitude": 64.1372450,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL4729",
+      "brand": "Olis",
+      "name": "Hella",
+      "address": "Þrúðvangi 2, 850 Hella",
+      "longitude": -20.401386,
+      "latitude": 63.8351001,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OL4830",
+      "brand": "Olis",
+      "name": "Hornafjörður",
+      "address": "Hafnarbraut 45, 780 Höfn í Hornafirði",
+      "longitude": -15.2089562,
+      "latitude": 64.2555287,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OL4165",
+      "brand": "Olis",
+      "name": "Húsavík",
+      "address": "Olís Garðarsbraut, 640 Húsavík",
+      "longitude": -17.3431728,
+      "latitude": 66.039113,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OL5157",
+      "brand": "Olis",
+      "name": "Langitangi",
+      "address": "Langitangi 1, 270 Mosfellsbær",
+      "longitude": -21.7072829,
+      "latitude": 64.1658388,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL4566",
+      "brand": "Olis",
+      "name": "Mjódd",
+      "address": "Álfabakki 7, 109 Reykjavík",
+      "longitude": -21.8426454,
+      "latitude": 64.1104122,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL7453",
+      "brand": "Olis",
+      "name": "Neskaupstaður",
+      "address": "Hafnarbraut 19, 740 Fjarðabyggð",
+      "longitude": -13.6946335,
+      "latitude": 65.1474865,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OL0098",
+      "brand": "Olis",
+      "name": "Norðlingaholt",
+      "address": "Norðlingabraut 7, 110 Reykjavík",
+      "longitude": -21.766275,
+      "latitude": 64.1028458,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL4014",
+      "brand": "Olis",
+      "name": "Reyðarfjörður",
+      "address": "Stekkjarbrekka 33, 730 Reyðarfjörður",
+      "longitude": -14.2312876,
+      "latitude": 65.0341416,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OL0255",
+      "brand": "Olis",
+      "name": "Selfoss",
+      "address": "Olís, Arnbergi, Selfoss, Sveitarfélagið Árborg, Suðurland, 800",
+      "longitude": -21.0079558,
+      "latitude": 63.9438509,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OL2065",
+      "brand": "Olis",
+      "name": "Siglufjörður",
+      "address": "Tjarnargata 6, 580 Siglufjörður",
+      "longitude": -18.9030838,
+      "latitude": 66.1493138,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OL1794",
+      "brand": "Olis",
+      "name": "Sæbraut",
+      "address": "Sundagarðar 2, 104 Reykjavík",
+      "longitude": -21.870427,
+      "latitude": 64.150411,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OL8920",
+      "brand": "Olis",
+      "name": "Hrauneyjar",
+      "address": "Hrauneyjar, Rangárþing ytra, Suðurland, Islandia",
+      "longitude": -19.285287,
+      "latitude": 64.197160,
+      "region": "Suðurland",
+      "url": null
+    }
+  ]
+}

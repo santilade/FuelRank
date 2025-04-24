@@ -185,4 +185,5 @@ sketch
 .ionide
 
 #jsons with stationsdata(temporal)
-backend/data/*
+backend/data/*_prices.json
+backend/data/orkan_static.json

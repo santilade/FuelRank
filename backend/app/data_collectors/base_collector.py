@@ -4,6 +4,8 @@ from pathlib import Path
 from app.utils.logger import get_logger
 import json
 import hashlib
+import requests
+import os
 
 
 class BaseCollector(ABC):
@@ -16,11 +18,106 @@ class BaseCollector(ABC):
         self.data_dir = self.base_dir / "data"
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
-        self.assigned_ids = []
+        self.contact_data = os.getenv("CONTACT")
+
+        self.api_data = None
+
+    def fetch_api_data(self):
+
+        method = self.get_HTTP_method().upper()
+
+        if method == "GET":
+            response = requests.get(self.api_url)
+        elif method == "POST":
+            response = requests.post(self.api_url)
+        else:
+            raise ValueError(f"Unsupported HTTP method: {method}")
+
+        response.raise_for_status()
+        self.api_data = response.json()
+
+    def get_static_info(self):
+        if self.api_data is None:
+            self.fetch_api_data()
+
+        static_file = self.data_dir / self.static_filename
+        with open(static_file, "r", encoding="utf-8") as file:
+            static_data = json.load(file)
+
+        static_stations = static_data.get("stations", [])
+        static_station_names = {station["name"] for station in static_stations}
+
+        updated = False
+
+        for station in self.api_data:
+            name = self.get_station_name(station)
+            if name not in static_station_names:
+                new_station = self.build_new_station(station)
+                self.logger.info(
+                    f"New station {new_station['brand']} {new_station['name']} found!"
+                )
+
+                static_stations.append(new_station)
+                static_station_names.add(name)
+                updated = True
+
+        # Adding new station to the static json file
+        if updated:
+            with open(static_file, "w", encoding="utf-8") as file:
+                json.dump(
+                    {"stations": static_stations}, file, ensure_ascii=False, indent=2
+                )
+        else:
+            self.logger.info("No new Stations")
+
+    def get_location_data(self, search_data, id):
+        try:
+            params = {"q": search_data, "format": "json", "limit": 1}
+            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
+
+            response = requests.get(
+                "https://nominatim.openstreetmap.org/search",
+                params=params,
+                headers=headers,
+            )
+            response.raise_for_status()
+
+            data = response.json()
+
+            if data:
+                open_maps_address = data.get("address", {})
+                region = (
+                    open_maps_address.get("state_district")
+                    or open_maps_address.get("state")
+                    or open_maps_address.get("county")
+                )
+                return float(data[0]["lon"]), float(data[0]["lat"]), region
+            else:
+                self.logger.warning(f"No location data found for station {id}")
+                return None, None, None
+        except Exception as e:
+            self.logger.error(f"While fetching location data for {id} station: {e}")
+            return None, None, None
 
     @abstractmethod
-    def get_static_info(self):
+    def get_HTTP_method(self):
+        """
+        Each collector must to define wether the endpoint call is GET or POST
+        """
+
+    @abstractmethod
+    def build_new_station(self, station):
+        """
+        each sub collector must build a new station for the static.json file
+        depending on the format of the endpoint answer.
+        """
         pass
+
+    @abstractmethod
+    def get_station_name(self, station):
+        """Each sub collector must define how to obtain the 'name' of the station
+        depending on the format of the endpoint answer
+        """
 
     @abstractmethod
     def update_prices(self):

@@ -9,13 +9,7 @@ class AtlansoliaCollector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("ATLANSOLIA_API_URL")
-        self.api_data = None
-        self.contact_data = os.getenv("CONTACT")
-
-    def fetch_api_data(self):
-        response = requests.get(self.api_url)
-        response.raise_for_status()
-        self.api_data = response.json()
+        self.static_filename = "atlantsolia_static.json"
 
     def get_region_from_coords(self, lat, lon, name):
         try:
@@ -53,43 +47,31 @@ class AtlansoliaCollector(BaseCollector):
             self.logger.error(f"Reverse Geocoding error: {e}")
             return None
 
-    def get_static_info(self):
-        if self.api_data is None:
-            self.fetch_api_data()
+    def get_HTTP_method(self):
+        return "GET"
 
-        stations = []
+    def get_station_name(self, station):
+        return station["Name"]
 
-        for s in self.api_data:
-            try:
-                name = s["Name"]
-                brand = "atlantsolia"
-                address = s["Address"]
-                lon = s["Longitude"]
-                lat = s["Latitude"]
+    def build_new_station(self, station):
+        lat = station["Latitude"]
+        lon = station["Longitude"]
+        name = station["Name"]
+        address = station["Address"]
+        brand = "atlantsolia"
+        id = self.generate_station_id(brand, name, address)
+        region = self.get_region_from_coords(lat, lon, name)
 
-                station_id = self.generate_station_id(brand, name, address)
-                region = self.get_region_from_coords(lat, lon, name)
-
-                stations.append(
-                    {
-                        "id": station_id,
-                        "brand": brand,
-                        "name": s["Name"],
-                        "address": s["Address"],
-                        "longitude": lon,
-                        "latitude": lat,
-                        "region": region,
-                        "url": s["Url"],
-                    }
-                )
-
-            except Exception as e:
-                self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
-                continue
-
-        static_filename = "atlantsolia_static.json"
-        self.update_json_static({"stations": stations}, static_filename)
-        self.logger.info(f"{len(stations)} stations from api")
+        return {
+            "id": id,
+            "brand": brand,
+            "name": name,
+            "address": address,
+            "longitude": lon,
+            "latitude": lat,
+            "region": region,
+            "url": f"/stodvar/{station['Url'].rstrip('/').split('/')[-1].lower()}/",
+        }
 
     def update_prices(self, static_filename="atlantsolia_static.json"):
 
@@ -175,3 +157,9 @@ class AtlansoliaCollector(BaseCollector):
         self.save_to_json(data, "atlantsolia_stations_prices.json")
 
         self.logger.info(f"{len(updated)} stations prices updated {ts}")
+
+
+if __name__ == "__main__":
+    collector = AtlansoliaCollector()
+    collector.get_static_info()
+    collector.update_prices()

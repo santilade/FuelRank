@@ -1,0 +1,744 @@
+{
+  "stations": [
+    {
+      "id": "OR9580",
+      "brand": "orkan",
+      "name": "Orkan Reykjavíkurvegur",
+      "address": "Reykjavikurvegur 58, 220 Hafnarfjörður",
+      "longitude": -21.9498453,
+      "latitude": 64.0771757,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR7700",
+      "brand": "orkan",
+      "name": "Orkan Mývatn",
+      "address": "Orkan, Mývatnssveitarvegur, Skútustaðir, Þingeyjarsveit, Norðurland eystra",
+      "longitude": -17.036268,
+      "latitude": 65.567447,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR3339",
+      "brand": "orkan",
+      "name": "Orkan Suðurfell",
+      "address": "Suðurfell 4, 111 Reykjavík",
+      "longitude": -21.8309385,
+      "latitude": 64.1014695,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR7522",
+      "brand": "orkan",
+      "name": "Orkan Kleppsvegur",
+      "address": "101, Kleppsvegur, Laugarás, Laugardalur, Reikiavik, Höfuðborgarsvæðið, 104",
+      "longitude": -21.8585226,
+      "latitude": 64.1458193,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR8928",
+      "brand": "orkan",
+      "name": "Orkan Ólafsvík",
+      "address": "Orkan, 27, Ólafsbraut, Ólafsvík, Snæfellsbær, Vesturland, 355",
+      "longitude": -23.7044779,
+      "latitude": 64.8942516,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR3616",
+      "brand": "orkan",
+      "name": "Orkan Freysnes",
+      "address": "Skaftafelli 2, 785 Hof",
+      "longitude": -16.895707,
+      "latitude": 63.990507,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR0131",
+      "brand": "orkan",
+      "name": "Orkan Baula",
+      "address": "Baulan, Borgarbyggð, Vesturland, 311",
+      "longitude": -21.664685,
+      "latitude": 64.675302,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR5444",
+      "brand": "orkan",
+      "name": "Orkan Eskifjörður",
+      "address": "Strandgata, Eskifjörður, Fjarðabyggð, Austurland, 735",
+      "longitude": -14.0217108,
+      "latitude": 65.0757947,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR1094",
+      "brand": "orkan",
+      "name": "Orkan Möðrudalur",
+      "address": "Möðrudalsleið, Múlaþing, Austurland",
+      "longitude": -15.912538,
+      "latitude": 65.437874,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR1651",
+      "brand": "orkan",
+      "name": "Orkan Grundarfjörður",
+      "address": "Suðurgarði 1, 350 Grundarfjörður",
+      "longitude": -23.2467271,
+      "latitude": 64.9215218,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR0103",
+      "brand": "orkan",
+      "name": "Orkan Seyðisfjörður",
+      "address": "Hafnargata 2, 710 Seyðisfjörður",
+      "longitude": -13.9992134,
+      "latitude": 65.2618313,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR0344",
+      "brand": "orkan",
+      "name": "Orkan Eiðistorg",
+      "address": "Hafnargötu 2, 710 Seydisfjordur",
+      "longitude": -13.999216,
+      "latitude": 65.261838,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR7006",
+      "brand": "orkan",
+      "name": "Orkan Stokkseyri",
+      "address": "Hásteinsvegur 4, 825 Stokkseyri",
+      "longitude": -21.0620167,
+      "latitude": 63.8362521,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR1966",
+      "brand": "orkan",
+      "name": "Orkan Vestmannaeyjar",
+      "address": "Faxastígur 35, 900 Vestmannaeyjabær",
+      "longitude": -20.277122,
+      "latitude": 63.440520,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR3169",
+      "brand": "orkan",
+      "name": "Orkan Reyðarfjörður",
+      "address": "Faxastígur 35, 900 Vestmannaeyjabær",
+      "longitude": -20.2774867,
+      "latitude": 63.4401509,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR3510",
+      "brand": "orkan",
+      "name": "Orkan Mýrarvegur, Akureyri",
+      "address": "Mýrarvegur, 600 Akureyri",
+      "longitude": -18.1083024,
+      "latitude": 65.6795944,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR8194",
+      "brand": "orkan",
+      "name": "Orkan Hvolsvöllur",
+      "address": "Austurvegi 10, 860 Hvolsvöllur",
+      "longitude": -20.2356352,
+      "latitude": 63.7517134,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR4512",
+      "brand": "orkan",
+      "name": "Orkan Grindavík",
+      "address": "Orkan, 1, Seljabót, Grindavík, Grindavíkurbær, Suðurnes, 240",
+      "longitude": -22.424995,
+      "latitude": 63.8413873,
+      "region": "Suðurnes",
+      "url": null
+    },
+    {
+      "id": "OR2953",
+      "brand": "orkan",
+      "name": "Orkan Ísafjörður",
+      "address": "Orkan, Skeiði, Efri-Tunga, Isafjordur, Ísafjarðarbær, Vestfirðir, 400",
+      "longitude": -23.1747412,
+      "latitude": 66.0607844,
+      "region": "Vestfirðir",
+      "url": null
+    },
+    {
+      "id": "OR8410",
+      "brand": "orkan",
+      "name": "Orkan Salavegur",
+      "address": "Salavegur 1, 201 Kópavogur",
+      "longitude": -21.859746,
+      "latitude": 64.093740,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3915",
+      "brand": "orkan",
+      "name": "Orkan Spöngin",
+      "address": "Spöngin, 112 Reykjavík",
+      "longitude": -21.7873064,
+      "latitude": 64.1498063,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3999",
+      "brand": "orkan",
+      "name": "Orkan Miðvangur, Egilsstaðir",
+      "address": "Miðvangur 13, 700 Egilsstaðir",
+      "longitude": -14.406120,
+      "latitude": 65.263143,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR0303",
+      "brand": "orkan",
+      "name": "Orkan Sunnumörk, Hveragerði",
+      "address": "Sunnumörk 2, 810 Hveragerði",
+      "longitude": -21.191710,
+      "latitude": 63.995461,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR7509",
+      "brand": "orkan",
+      "name": "Orkan Fáskrúðsfjörður",
+      "address": "Búðavegur 60, 750 Fáskrúðsfjörður",
+      "longitude": -14.028390,
+      "latitude": 64.932633,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR2663",
+      "brand": "orkan",
+      "name": "Orkan Kænan",
+      "address": "Óseyrarbraut, 220 Hafnarfjörður",
+      "longitude": -21.965516,
+      "latitude": 64.063583,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3696",
+      "brand": "orkan",
+      "name": "Orkan Húsafell",
+      "address": "Húsafell, 311 Borgarnes",
+      "longitude": -20.868080,
+      "latitude": 64.699305,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR2351",
+      "brand": "orkan",
+      "name": "Orkan Súðavík",
+      "address": "Grundarstræti 1, 420 Súðavík",
+      "longitude": -22.9910696,
+      "latitude": 66.0257962,
+      "region": "Vestfirðir",
+      "url": null
+    },
+    {
+      "id": "OR8257",
+      "brand": "orkan",
+      "name": "Orkan Bústaðavegur",
+      "address": "Bústaðavegur 20, 108 Reykjavík",
+      "longitude": -21.9182897,
+      "latitude": 64.131174,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR4569",
+      "brand": "orkan",
+      "name": "Orkan Vatnagarðar",
+      "address": "Vatnagörðum 40, 104 Reykjavík",
+      "longitude": -21.849554,
+      "latitude": 64.141244,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3446",
+      "brand": "orkan",
+      "name": "Orkan Miklabraut við Kringlu",
+      "address": "Orkan Miklabraut við Kringlu, 108 Reykjavík",
+      "longitude": -21.893110,
+      "latitude": 64.132091,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR5220",
+      "brand": "orkan",
+      "name": "Orkan Fagradalsbraut, Egilsstaðir",
+      "address": "Fagradalsbraut 13, 700 Egilsstaðir",
+      "longitude": -14.3980949,
+      "latitude": 65.2607583,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR4880",
+      "brand": "orkan",
+      "name": "Orkan Hæðarsmári",
+      "address": "2, Hæðasmári, Smárinn, Kópavogsbær, Höfuðborgarsvæðið, 201",
+      "longitude": -21.884213,
+      "latitude": 64.098845,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR5116",
+      "brand": "orkan",
+      "name": "Orkan Fitjar",
+      "address": "Fitjar, 260 Reykjanesbær",
+      "longitude": -22.542894,
+      "latitude": 63.972539,
+      "region": "Suðurnes",
+      "url": null
+    },
+    {
+      "id": "OR1657",
+      "brand": "orkan",
+      "name": "Orkan Kjarnagata, Akureyri",
+      "address": "Kjarnagötu, 600 Akureyri",
+      "longitude": -18.110050,
+      "latitude": 65.669040,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR0641",
+      "brand": "orkan",
+      "name": "Orkan Hraunbær",
+      "address": "Hraunbær 102, 110 Reykjavík",
+      "longitude": -21.7975897,
+      "latitude": 64.117731,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR1137",
+      "brand": "orkan",
+      "name": "Orkan Hallormsstaður",
+      "address": "Hallormsstað, 701 Egilsstöðum",
+      "longitude": -14.7424828,
+      "latitude": 65.0967154,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR8355",
+      "brand": "orkan",
+      "name": "Orkan Bíldudalur",
+      "address": "Dalsbraut 1, 465 Bíldudalur",
+      "longitude": -23.6012568,
+      "latitude": 65.6854214,
+      "region": "Vestfirðir",
+      "url": null
+    },
+    {
+      "id": "OR6874",
+      "brand": "orkan",
+      "name": "Orkan Austurströnd",
+      "address": "Austurströnd 7, 170 Seltjarnarnes",
+      "longitude": -21.9850731,
+      "latitude": 64.1513019,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR5444",
+      "brand": "orkan",
+      "name": "Orkan Skjöldólfsstaður",
+      "address": "Skjöldólfsstaðir 1, 701 Egilsstaðir",
+      "longitude": -15.1201984,
+      "latitude": 65.3159994,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR5175",
+      "brand": "orkan",
+      "name": "Orkan Leifsstöð",
+      "address": "Arnarvöllum 6, 235 Keflavík",
+      "longitude": -22.6190554,
+      "latitude": 64.0013643,
+      "region": "Suðurnes",
+      "url": null
+    },
+    {
+      "id": "OR1825",
+      "brand": "orkan",
+      "name": "Orkan Neskaupstaður",
+      "address": "Strandgötu 15, 740 Neskaupstaður",
+      "longitude": -13.7072785,
+      "latitude": 65.1473335,
+      "region": "Austurland",
+      "url": null
+    },
+    {
+      "id": "OR8848",
+      "brand": "orkan",
+      "name": "Orkan Skemmuvegur",
+      "address": "Skemmuvegi, 200 Reykjavík",
+      "longitude": -21.851989,
+      "latitude": 64.110701,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR4277",
+      "brand": "orkan",
+      "name": "Orkan Miklabraut við Lyfjaval",
+      "address": "Miklabraut 101 108, 108 Reykjavík",
+      "longitude": -21.892930,
+      "latitude": 64.132694,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR0017",
+      "brand": "orkan",
+      "name": "Orkan Fellsmúli",
+      "address": "Fellsmúli 30, 108 Reykjavík",
+      "longitude": -21.877261,
+      "latitude": 64.131023,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR1306",
+      "brand": "orkan",
+      "name": "Orkan Stykkishólmur",
+      "address": "Aðalgötu 26, 340 Stykkishólmur",
+      "longitude": -22.732973,
+      "latitude": 65.0728991,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR0807",
+      "brand": "orkan",
+      "name": "Orkan Vík í Mýrdal",
+      "address": "Smiðjuvegur 11, 870 Vík",
+      "longitude": -18.9937485,
+      "latitude": 63.4174454,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR9634",
+      "brand": "orkan",
+      "name": "Orkan Gylfaflöt",
+      "address": "Gylfaflöt 1, 112 Reykjavík",
+      "longitude": -21.8044392,
+      "latitude": 64.1446521,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3882",
+      "brand": "orkan",
+      "name": "Orkan Sandgerði",
+      "address": "Strandgata 15, 245 Sandgerði",
+      "longitude": -22.704830,
+      "latitude": 64.036048,
+      "region": "Suðurnes",
+      "url": null
+    },
+    {
+      "id": "OR1192",
+      "brand": "orkan",
+      "name": "Orkan Bolungarvík",
+      "address": "Þuríðarbraut 13, 415 Bolungarvik",
+      "longitude": -23.2492009,
+      "latitude": 66.1532811,
+      "region": "Vestfirðir",
+      "url": null
+    },
+    {
+      "id": "OR4899",
+      "brand": "orkan",
+      "name": "Orkan Hreðavatnsskáli",
+      "address": "Hreðavatnsskála, 311 Borgarnes",
+      "longitude": -21.541341,
+      "latitude": 64.768196,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR4991",
+      "brand": "orkan",
+      "name": "Orkan Húsavík",
+      "address": "Héðinsbraut 6, 640 Húsavík",
+      "longitude": -17.3444893,
+      "latitude": 66.0487357,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR3152",
+      "brand": "orkan",
+      "name": "Orkan Stekkjarbakki",
+      "address": "Stekkjarbakka 2, 109 Reykjavík",
+      "longitude": -21.842054,
+      "latitude": 64.112593,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3844",
+      "brand": "orkan",
+      "name": "Orkan Birkimelur",
+      "address": "Birkimelur 1, 107 Reykjavík",
+      "longitude": -21.9533274,
+      "latitude": 64.1419365,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3405",
+      "brand": "orkan",
+      "name": "Orkan Lambhagavegur",
+      "address": "Lambhagavegur 12, 113 Reykjavík",
+      "longitude": -21.7585268,
+      "latitude": 64.1412139,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR9590",
+      "brand": "orkan",
+      "name": "Orkan Hörgárbraut, Akureyri",
+      "address": "Hörgárbraut, 603 Akureyri",
+      "longitude": -18.1212869,
+      "latitude": 65.6955621,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR7807",
+      "brand": "orkan",
+      "name": "Orkan Hvammstangi",
+      "address": "Hvammstangabraut 40, 530 Hvammstangi",
+      "longitude": -20.9371851,
+      "latitude": 65.3921401,
+      "region": "Norðurland vestra",
+      "url": null
+    },
+    {
+      "id": "OR1227",
+      "brand": "orkan",
+      "name": "Orkan Borgarnes",
+      "address": "Brúartorg 3, 210 Stykkishólmur",
+      "longitude": -21.9087217,
+      "latitude": 64.5435232,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR7141",
+      "brand": "orkan",
+      "name": "Orkan Dalvegur",
+      "address": "Dalvegur 20, 201 Reykjavík",
+      "longitude": -21.8669435,
+      "latitude": 64.1052534,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3914",
+      "brand": "orkan",
+      "name": "Orkan Skógarhlíð",
+      "address": "Orkan Skógarhlíð",
+      "longitude": -21.9166935,
+      "latitude": 64.1319145,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR4102",
+      "brand": "orkan",
+      "name": "Orkan Laugavegur",
+      "address": "Laugavegur 180, 105 Reykjavík",
+      "longitude": -21.8951639,
+      "latitude": 64.1403134,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR4463",
+      "brand": "orkan",
+      "name": "Orkan Skagabraut, Akranes",
+      "address": "Skagabraut 43, 300 Reykholt",
+      "longitude": -22.0695865,
+      "latitude": 64.3200698,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR4467",
+      "brand": "orkan",
+      "name": "Orkan Hagasmári",
+      "address": "Hagasmári 9, 201 Kópavogur",
+      "longitude": -21.8838049,
+      "latitude": 64.102123,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR4297",
+      "brand": "orkan",
+      "name": "Orkan Selfoss",
+      "address": "Suðurlandsvegur, 800 Selfoss",
+      "longitude": -21.0107498,
+      "latitude": 63.9450037,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR0105",
+      "brand": "orkan",
+      "name": "Orkan Hella",
+      "address": "Faxaflatir 4, 850 Hella",
+      "longitude": -20.3914024,
+      "latitude": 63.8306365,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR1505",
+      "brand": "orkan",
+      "name": "Orkan Þorlákshöfn",
+      "address": "Óseyrarbraut 15, 815 Þorlákshöfn",
+      "longitude": -21.3784003,
+      "latitude": 63.8591974,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR6465",
+      "brand": "orkan",
+      "name": "Orkan Klettagarðar",
+      "address": "Klettagarður 6, 104 Reykjavík",
+      "longitude": -21.8673353,
+      "latitude": 64.1532499,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3876",
+      "brand": "orkan",
+      "name": "Orkan Einhella",
+      "address": "Einhella 1a, 221 Hafnarfjörður",
+      "longitude": -21.990638,
+      "latitude":64.040198,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR5350",
+      "brand": "orkan",
+      "name": "Orkan Garðabær",
+      "address": "Litlatún 1, 210 Garðabær",
+      "longitude": -21.9260286,
+      "latitude": 64.0899315,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR6028",
+      "brand": "orkan",
+      "name": "Orkan Árskógssandur",
+      "address": "Öldugata, Árskógssandur, Dalvíkurbyggð, Norðurland eystra, 630",
+      "longitude": -18.354700,
+      "latitude": 65.944132,
+      "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR6579",
+      "brand": "orkan",
+      "name": "Orkan Sauðárkrókur",
+      "address": "Skagfirðingabraut 29, 550 Sauðárkrókur",
+      "longitude": -19.6459268,
+      "latitude": 65.7470323,
+      "region": "Norðurland vestra",
+      "url": null
+    },
+    {
+      "id": "OR7794",
+      "brand": "orkan",
+      "name": "Orkan Vesturlandsvegur",
+      "address": "Orkan, Vesturlandsvegur, 110 Reykjavík",
+      "longitude": -21.804160,
+      "latitude": 64.123859,
+      "region": "Höfuðborgarsvæðið",
+      "url": null
+    },
+    {
+      "id": "OR3508",
+      "brand": "orkan",
+      "name": "Orkan Austurmörk, Hveragerði",
+      "address": "Austurmörk 22, 810 Hveragerði",
+      "longitude": -21.1851276,
+      "latitude": 63.9955544,
+      "region": "Suðurland",
+      "url": null
+    },
+    {
+      "id": "OR7077",
+      "brand": "orkan",
+      "name": "Orkan Smiðjuvellir, Akranes",
+      "address": "Smiðjuvellir 32, 300 Akranes",
+      "longitude": -22.0560157,
+      "latitude": 64.3268541,
+      "region": "Vesturland",
+      "url": null
+    },
+    {
+      "id": "OR7474",
+      "brand": "orkan",
+      "name": "Orkan Furuvellir, Akureyri",
+      "address": "Furuvöllum 17, 600 Akureyri",
+      "longitude": -18.088646,
+      "latitude": 65.690391,
+      "region": "Norðurland eystra",
+      "url": null
+    }
+  ]
+}

@@ -186,4 +186,3 @@ sketch
 
 #jsons with stationsdata(temporal)
 backend/data/*_prices.json
-backend/data/orkan_static.json

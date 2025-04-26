@@ -1,8 +1,6 @@
-import requests
 from datetime import datetime, timezone
 import json
 import os
-import time
 from app.data_collectors.base_collector import BaseCollector
 
 # TODO: n1 EV charging prices
@@ -12,86 +10,42 @@ class N1Collector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("N1_API_URL")
-        self.api_data = None
-        self.contact_data = os.getenv("CONTACT")
+        self.static_filename = "n1_static.json"
 
-    def fetch_api_data(self):
-        response = requests.post(self.api_url)
-        response.raise_for_status()
-        self.api_data = response.json()
+    def get_HTTP_method(self):
+        return "POST"
 
-    # TODO: normalize and fallback for get_coordinates
-    def get_coordinates(self, address, counter):
-        try:
-            params = {"q": address, "format": "json", "limit": 1}
-            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
+    def get_station_name(self, station):
+        return station["Name"]
 
-            response = requests.get(
-                "https://nominatim.openstreetmap.org/search",
-                params=params,
-                headers=headers,
-            )
-            response.raise_for_status()
+    def build_new_station(self, station):
+        name = station["Name"]
+        address = station["Location"]
+        brand = "n1"
+        id = self.generate_station_id(brand, name, address)
+        url = station["Url"]
 
-            data = response.json()
+        search_data = address
+        lon, lat, region = self.get_location_data(search_data, id)
 
-            if data:
-                self.logger.info(f"Coords for {address} found")
-                counter[0] += 1
-                return float(data[0]["lon"]), float(data[0]["lat"])
-            else:
-                self.logger.warning(f"No coords found for {address}")
-                return None, None
+        return {
+            "id": id,
+            "brand": brand,
+            "name": name,
+            "address": address,
+            "longitude": lon,
+            "latitude": lat,
+            "region": region,
+            "url": url,
+        }
 
-        except Exception as e:
-            self.logger.error(f"Geocodifying error '{address}: {e}")
-            return None, None
-
-    def get_static_info(self):
-        if self.api_data is None:
-            self.fetch_api_data()
-
-        stations = []
-        counter = [0]
-
-        for s in self.api_data:
-            try:
-                # extracting coordinates
-                lon, lat = self.get_coordinates(s["Location"], counter)
-                time.sleep(1)
-
-                name = s["Name"]
-                brand = "n1"
-                address = s["Location"]
-                station_id = self.generate_station_id(brand, name, address)
-
-                stations.append(
-                    {
-                        "id": station_id,
-                        "brand": brand,
-                        "name": s["Name"],
-                        "address": s["Location"],
-                        "longitude": lon,
-                        "latitude": lat,
-                        "region": s["Region"],
-                        "url": s["Url"],
-                    }
-                )
-            except Exception as e:
-                self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
-                continue
-
-        self.update_json_static({"stations": stations}, "n1_static.json")
-        self.logger.info(f"{len(stations)} stations from api")
-        self.logger.info(f"geocoords for {counter} stations")
-
-    def update_prices(self, static_filename="n1_static.json"):
+    def update_prices(self):
 
         if self.api_data is None:
             self.fetch_api_data()
 
         stations_aux = {s["Name"]: s for s in self.api_data}
-        static_file = self.data_dir / static_filename
+        static_file = self.data_dir / self.static_filename
 
         with open(static_file, "r", encoding="utf-8") as f:
             static_data = json.load(f)
@@ -142,3 +96,9 @@ class N1Collector(BaseCollector):
         self.save_to_json(data, "n1_stations_prices.json")
 
         self.logger.info(f"{len(updated)} stations prices updated {ts}")
+
+
+if __name__ == "__main__":
+    collector = N1Collector()
+    collector.get_static_info()
+    collector.update_prices()

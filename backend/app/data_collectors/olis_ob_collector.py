@@ -1,8 +1,6 @@
-import requests
 from datetime import datetime, timezone
 import json
 import os
-import time
 from app.data_collectors.base_collector import BaseCollector
 
 
@@ -10,84 +8,106 @@ class OlisObCollector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("OLIS_OB_API_URL")
-        self.api_data = None
         self.contact_data = os.getenv("CONTACT")
 
-    def fetch_api_data(self):
-        response = requests.get(self.api_url)
-        response.raise_for_status()
-        self.api_data = response.json()
+    def get_HTTP_method(self):
+        return "GET"
 
-    def get_coordinates(self, address, counter):
-        try:
-            params = {"q": address, "format": "json", "limit": 1}
-            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
+    def get_station_name(self, station):
+        return station["Name"]
 
-            response = requests.get(
-                "https://nominatim.openstreetmap.org/search",
-                params=params,
-                headers=headers,
-            )
-            response.raise_for_status()
+    def build_new_station(self, station):
+        brand = "Olis" if station["Type"] == 0 else "Ob"
+        name = (station["Name"],)
+        address = station[
+            "Name"
+        ]  # No address data, "Name usually includes location of the station "
+        id = self.generate_station_id(brand, name, address=None)
 
-            data = response.json()
+        search_data = f"{brand}, {name}"
 
-            if data:
-                self.logger.info(f"Coords for {address} found")
-                counter[0] += 1
-                return float(data[0]["lon"]), float(data[0]["lat"])
-            else:
-                self.logger.warning(f"No coords found for {address}")
-                return None, None
+        lon, lat, region = self.get_location_data(search_data, id)
 
-        except Exception as e:
-            self.logger.error(f"Geocodifying error '{address}: {e}")
-            return None, None
+        return {
+            "id": id,
+            "brand": brand,
+            "name": name,
+            "address": address,
+            "longitude": lon,
+            "latitude": lat,
+            "region": region,
+            "url": None,
+        }
 
     def get_static_info(self):
-
+        """
+        Custom get_static_info for Olís and ÓB stations.
+        This collector generates two separate static files (olis_static.json
+        and ob_static.json),so the base get_static_info() method is overridden.
+        """
         if self.api_data is None:
             self.fetch_api_data()
 
-        olis_stations = []
-        ob_stations = []
-        counter = [0]
+        brands = {
+            0: {"static_file": "olis_static.json", "stations": [], "names": set()},
+            1: {"static_file": "ob_static.json", "stations": [], "names": set()},
+        }
 
-        for s in self.api_data["Items"]:
-            try:
-                brand = "Olis" if s["Type"] == 0 else "Ob"
-                search_data = f"{brand} {s['Name']}"
-                lon, lat = self.get_coordinates(search_data, counter)
-                time.sleep(1)
-
-                name = s["Name"]
-                station_id = self.generate_station_id(brand, name, address=None)
-
-                station_data = {
-                    "id": station_id,
-                    "brand": brand,
-                    "name": s["Name"],
-                    "address": s["Name"],
-                    "longitude": lon,
-                    "latitude": lat,
-                    "region": None,
-                    "url": None,
+        # Olis static data load
+        olis_file = self.data_dir / brands[0]["static_file"]
+        if olis_file.exists():
+            with open(olis_file, "r", encoding="utf-8") as file:
+                static_data = json.load(file)
+                brands[0]["stations"] = static_data.get("stations", [])
+                brands[0]["names"] = {
+                    station["name"] for station in brands[0]["stations"]
                 }
 
-                if brand == "Olis":
-                    olis_stations.append(station_data)
-                else:
-                    ob_stations.append(station_data)
+        # Ob static data load
+        ob_file = self.data_dir / brands[1]["static_file"]
+        if ob_file.exists():
+            with open(ob_file, "r", encoding="utf-8") as file:
+                static_data = json.load(file)
+                brands[1]["stations"] = static_data.get("stations", [])
+                brands[1]["names"] = {
+                    station["name"] for station in brands[1]["stations"]
+                }
+
+        updated = {0: False, 1: False}
+
+        # Proccess API stations
+        for station in self.api_data["Items"]:
+            try:
+                type_station = station["Type"]  # 0 = Olis, 1 = Ob
+                name = self.get_station_name(station)
+
+                if name not in brands[type_station]["names"]:
+                    new_station = self.build_new_station(station)
+                    brands[type_station]["stations"].append(new_station)
+                    brands[type_station]["names"].add(name)
+                    updated[type_station] = True
 
             except Exception as e:
-                self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
+                self.logger.error(
+                    f"Error building station '{station.get('Name', '???')}': {e}"
+                )
                 continue
 
-        olis_filename = "olis_static.json"
-        ob_filename = "ob_static.json"
+        for type_station, data in brands.items():
 
-        self.update_json_static({"stations": olis_stations}, olis_filename)
-        self.update_json_static({"stations": ob_stations}, ob_filename)
+            brand = "OB" if type_station == 1 else "Olis"
+            if updated[type_station]:
+                filepath = self.data_dir / data["static_file"]
+                with open(filepath, "w", encoding="utf-8") as file:
+                    json.dump(
+                        {"stations": data["stations"]},
+                        file,
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                self.logger.info(f"New station found for {brand}")
+            else:
+                self.logger.info(f"No new stations for {brand}")
 
     def update_single_brand(self, static_filename, type_filter, output_file):
         """
@@ -181,3 +201,9 @@ class OlisObCollector(BaseCollector):
             type_filter=1,
             output_file="ob_stations_prices.json",
         )
+
+
+if __name__ == "__main__":
+    collector = OlisObCollector()
+    collector.get_static_info()
+    collector.update_prices()

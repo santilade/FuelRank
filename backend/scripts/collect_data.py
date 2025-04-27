@@ -1,17 +1,7 @@
-from app.data_collectors.atlantsolia_collector import AtlansoliaCollector
-from app.data_collectors.n1_collector import N1Collector
-from app.data_collectors.olis_ob_collector import OlisObCollector
-from app.data_collectors.orkan_collector import OrkanCollector
+from app.utils.constants import DATA_COLLECTORS
 import logging
 
-DATA_COLLECTORS = [
-    AtlansoliaCollector(),
-    N1Collector(),
-    OlisObCollector(),
-    OrkanCollector(),
-]
-
-logger = logging.getLogger("allscraper")
+logger = logging.getLogger("All Collectors script")
 
 
 def get_static_data():

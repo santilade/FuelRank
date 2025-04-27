@@ -1,3 +1,15 @@
+from app.data_collectors.atlantsolia_collector import AtlansoliaCollector
+from app.data_collectors.n1_collector import N1Collector
+from app.data_collectors.olis_ob_collector import OlisObCollector
+from app.data_collectors.orkan_collector import OrkanCollector
+
+DATA_COLLECTORS = [
+    AtlansoliaCollector(),
+    N1Collector(),
+    OlisObCollector(),
+    OrkanCollector(),
+]
+
 FUEL_MAPPING = {
     "gas_price": "GAS",
     "diesel_price": "DIESEL",

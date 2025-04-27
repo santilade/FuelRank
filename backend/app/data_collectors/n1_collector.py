@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 import json
 import os
+import time
 from app.data_collectors.base_collector import BaseCollector
 
 # TODO: n1 EV charging prices
@@ -27,6 +28,7 @@ class N1Collector(BaseCollector):
 
         search_data = address
         lon, lat, region = self.get_location_data(search_data, id)
+        time.sleep(1)
 
         return {
             "id": id,

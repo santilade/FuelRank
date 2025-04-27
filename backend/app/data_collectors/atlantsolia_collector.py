@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, timezone
 import json
 import os
+import time
 from app.data_collectors.base_collector import BaseCollector
 
 
@@ -61,6 +62,7 @@ class AtlansoliaCollector(BaseCollector):
         brand = "atlantsolia"
         id = self.generate_station_id(brand, name, address)
         region = self.get_region_from_coords(lat, lon, name)
+        time.sleep(1)
 
         return {
             "id": id,

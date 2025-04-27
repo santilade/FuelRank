@@ -10,88 +10,62 @@ class OrkanCollector(BaseCollector):
     def __init__(self):
         super().__init__()
         self.api_url = os.getenv("ORKAN_API_URL")
-        self.api_data = None
-        self.contact_data = os.getenv("CONTACT")
+        self.static_filename = "orkan_static.json"
+
+    def get_HTTP_method(self):
+        return "POST"
+
+    def get_station_name(self, station):
+        return station["name"]
 
     def fetch_api_data(self):
-        response = requests.post(self.api_url)
+        """Adapted to Orkan's nested JSON structure"""
+
+        method = self.get_HTTP_method().upper()
+
+        if method == "GET":
+            response = requests.get(self.api_url)
+        elif method == "POST":
+            response = requests.post(self.api_url)
+        else:
+            raise ValueError(f"Unsupported HTTP method: {method}")
+
         response.raise_for_status()
-        self.api_data = response.json()
+        full_response = response.json()
 
-    def get_coordinates(self, address, counter):
         try:
-            params = {"q": address, "format": "json", "limit": 1}
-            headers = {"User-Agent": f"FuelRank ({self.contact_data})"}
+            self.api_data = full_response["value"]["priceList"]["price"]
+        except KeyError:
+            raise ValueError("Unexpected API response structure from Orkan.")
 
-            response = requests.get(
-                "https://nominatim.openstreetmap.org/search",
-                params=params,
-                headers=headers,
-            )
-            response.raise_for_status()
+    def build_new_station(self, station):
+        name = station["name"]
+        address = station["name"]  # no address data from endpoint
+        brand = "orkan"
+        id = self.generate_station_id(brand, name, address=None)
+        url = None
 
-            data = response.json()
+        search_data = address
+        lon, lat, region = self.get_location_data(search_data, id)
+        time.sleep(1)
 
-            if data:
-                self.logger.info(f"Coords for {address} found")
-                counter[0] += 1
-                return float(data[0]["lon"]), float(data[0]["lat"])
-            else:
-                self.logger.warning(f"No coords found for {address}")
-                return None, None
-
-        except Exception as e:
-            self.logger.error(f"Geocodifying error '{address}': {e}")
-            return None, None
-
-    def get_static_info(self):
-
-        if self.api_data is None:
-            self.fetch_api_data()
-
-        stations = []
-        counter = [0]
-
-        for s in self.api_data["value"]["priceList"]["price"]:
-            try:
-
-                name = s["name"]
-                brand = "orkan"
-
-                # extracting coordinates
-                lon, lat = self.get_coordinates(name, counter)
-                time.sleep(1)
-
-                station_id = self.generate_station_id(brand, name, address=None)
-
-                stations.append(
-                    {
-                        "id": station_id,
-                        "brand": brand,
-                        "name": s["name"],
-                        "address": s["name"],
-                        "longitude": lon,
-                        "latitude": lat,
-                        "region": None,
-                        "url": None,
-                    }
-                )
-            except Exception as e:
-                self.logger.error(f"in station '{s.get('Name', '???')}': {e}")
-                continue
-
-        self.update_json_static({"stations": stations}, "orkan_static.json")
-        self.logger.info(f"{len(stations)} stations fetched from api")
-        self.logger.info(f"geocoords for {counter} stations")
+        return {
+            "id": id,
+            "brand": brand,
+            "name": name,
+            "address": address,
+            "longitude": lon,
+            "latitude": lat,
+            "region": region,
+            "url": url,
+        }
 
     def update_prices(self, static_filename="orkan_static.json"):
 
         if self.api_data is None:
             self.fetch_api_data()
 
-        stations_aux = {
-            s["name"]: s for s in self.api_data["value"]["priceList"]["price"]
-        }
+        stations_aux = {s["name"]: s for s in self.api_data}
         static_file = self.data_dir / static_filename
 
         with open(static_file, "r", encoding="utf-8") as f:

@@ -12,7 +12,7 @@ prices_bp = Blueprint("prices", __name__)
 def get_price_ranking():
     """
     /prices/ranking (general ranking)
-    /prices/ranking&fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
+    /prices/ranking?fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
     /prices/ranking&limit=10&offset=10 (pagination)
     """
     fuel_params = request.args.getlist("fuel")

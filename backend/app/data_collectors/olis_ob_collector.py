@@ -88,9 +88,7 @@ class OlisObCollector(BaseCollector):
                     updated[type_station] = True
 
             except Exception as e:
-                self.logger.error(
-                    f"Error building station '{station.get('Name', '???')}': {e}"
-                )
+                self.logger.error(f"Error adding new station {name}: {e}")
                 continue
 
         for type_station, data in brands.items():

@@ -50,16 +50,20 @@ class BaseCollector(ABC):
         updated = False
 
         for station in self.api_data:
-            name = self.get_station_name(station)
-            if name not in static_station_names:
-                new_station = self.build_new_station(station)
-                self.logger.info(
-                    f"New station {new_station['brand']} {new_station['name']} found!"
-                )
+            try:
+                name = self.get_station_name(station)
+                if name not in static_station_names:
+                    new_station = self.build_new_station(station)
+                    self.logger.info(
+                        f"New station {new_station['brand']} {new_station['name']} !"
+                    )
 
-                static_stations.append(new_station)
-                static_station_names.add(name)
-                updated = True
+                    static_stations.append(new_station)
+                    static_station_names.add(name)
+                    updated = True
+            except Exception as e:
+                self.logger.error(f"Error adding new station {name}: {e}")
+                continue
 
         # Adding new station to the static json file
         if updated:

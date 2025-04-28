@@ -2,6 +2,7 @@ from flask import Blueprint, request, Response
 from app.models.station_fuel_price import StationFuelPrice
 from app.models.fuel import Fuel
 from app.models.station import Station
+from app.models.region import Region
 from app import db
 import json
 
@@ -14,8 +15,18 @@ def get_prices():
     /prices (general prices ranking)
     /prices?fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
     /prices&limit=10&offset=10 (pagination)
+    /prices?region=cr
+    cr = capital region
+    sp = southern peninsula
+    wr = western region
+    wf = westerfjords
+    nw = northwestern region
+    ne = northeastern region
+    er = eastern region
+    sr = southern region
     """
     fuel_params = request.args.getlist("fuel")
+    region_params = request.args.get("region")
     limit = int(request.args.get("limit", 10))
     offset = int(request.args.get("offset", 0))
 
@@ -29,6 +40,10 @@ def get_prices():
     if fuel_params:
         fuel_params = [f.upper() for f in fuel_params]
         query = query.filter(Fuel.id.in_(fuel_params))
+
+    if region_params:
+        region_params = region_params.upper()
+        query = query.join(Station.region).filter(Region.id == region_params)
 
     results = (
         query.order_by(StationFuelPrice.price.asc()).offset(offset).limit(limit).all()

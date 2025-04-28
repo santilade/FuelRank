@@ -7,7 +7,7 @@
       "address": "Hörgárbraut, 603 Akureyri",
       "longitude": -18.1247421,
       "latitude": 65.6958724,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/akureyri-horgarbraut/"
     },
     {
@@ -197,7 +197,7 @@
       "address": "Hafnargata 86, 230 Reykjanesbær",
       "longitude": -22.549438,
       "latitude": 63.996731,
-      "region": "Reykjanes",
+      "region": "Suðurnes",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-reykjanesbaer/"
     },
     {
@@ -207,7 +207,7 @@
       "address": "Leiruvegur, 600 Akureyri",
       "longitude": -18.0803941,
       "latitude": 65.6698805,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/thjonustustod-akureyri-leiruvegur/"
     },
     {
@@ -237,7 +237,7 @@
       "address": "Héðinsbraut 2, 640 Húsavík",
       "longitude": -17.3435087,
       "latitude": 66.0476306,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/thjonustustod-husavik/"
     },
     {
@@ -287,7 +287,7 @@
       "address": "Reykjahlíð, 660 Mývatnssveit",
       "longitude": -16.9197425,
       "latitude": 65.6496143,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-reykjahlid/"
     },
     {
@@ -377,7 +377,7 @@
       "address": "Víkurbraut 31, 240 Grindavík",
       "longitude": -22.4364722,
       "latitude": 63.8437174,
-      "region": "Reykjanes",
+      "region": "Suðurnes",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-grindavik/"
     },
     {
@@ -547,7 +547,7 @@
       "address": "Reykjadal, 650 Laugar",
       "longitude": -17.3727021,
       "latitude": 65.7216173,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-laugar/"
     },
     {
@@ -557,7 +557,7 @@
       "address": "N1, Fosshóll, Þingeyjarsveit, Norðurland eystra",
       "longitude": -17.5388064,
       "latitude": 65.6860710, 
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-fossholl/"
     },
     {
@@ -567,7 +567,7 @@
       "address": "Túngata 3, 610 Grenivík",
       "longitude": -18.180710,
       "latitude": 65.946776, 
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-grenivik/"
     },
     {
@@ -577,7 +577,7 @@
       "address": "Hafnarbraut 24, 610 Dalvík",
       "longitude": -18.3543899,
       "latitude": 65.9440346,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-dalvik/"
     },
     {
@@ -597,7 +597,7 @@
       "address": "N1, Víðihlíð, Auðunnarstaðir II, Húnaþing vestra, Norðurland vestra",
       "longitude": -20.643219,
       "latitude": 65.378600, 
-      "region": "Norðurland",
+      "region": "Norðurland vestra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-vidihlid/"
     },
     {
@@ -767,7 +767,7 @@
       "address": "Ásbrú, 262 Reykjanesbær",
       "longitude": -22.5734288,
       "latitude": 63.9715967,
-      "region": "Reykjanes",
+      "region": "Suðurnes",
       "url": "https://n1.is/stodvar/vallarheidi/"
     },
     {
@@ -797,7 +797,7 @@
       "address": "Tryggvabraut, 600 Akureyri",
       "longitude": -18.0943133,
       "latitude": 65.690818,
-      "region": "Norðurland",
+      "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-akureyri-tryggvabraut/"
     },
     {
@@ -817,7 +817,7 @@
       "address": "Flugvellir 27",
       "longitude": -22.5834493,
       "latitude": 63.9973863,
-      "region": "Reykjanes",
+      "region": "Suðurnes",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-flugvellir/"
     }
   ]

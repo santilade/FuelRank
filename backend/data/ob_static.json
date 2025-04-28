@@ -4,10 +4,10 @@
       "id": "OB9391",
       "brand": "Ob",
       "name": "Búðardalur",
-      "address": "Búðardalur",
-      "longitude": null,
-      "latitude": null,
-      "region": null,
+      "address": "Vesturbraut 15, 370 Búðardalur",
+      "longitude": -21.76254249793967,
+      "latitude": 65.10760522860694,
+      "region": "Vesturland",
       "url": null
     },
     {
@@ -287,7 +287,7 @@
       "address": "Hólmavík",
       "longitude": -21.692822,
       "latitude": 65.701328,
-      "region": null,
+      "region": "Vestfirðir",
       "url": null
     },
     {
@@ -307,7 +307,7 @@
       "address": "Aðalgata 62, 230 Keflavík",
       "longitude": -22.5881634,
       "latitude": 63.9980944,
-      "region": "SuðurnesS",
+      "region": "Suðurnes",
       "url": null
     },
     {
@@ -317,7 +317,7 @@
       "address": "Keflavíkurflugvöllur",
       "longitude": null,
       "latitude": null,
-      "region": null,
+      "region":"Suðurnes" ,
       "url": null
     },
     {

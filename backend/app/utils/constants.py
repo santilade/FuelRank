@@ -47,3 +47,14 @@ BRANDS = {
     "OL": "Olis",
     "OR": "Orkan",
 }
+
+REGIONS = {
+    "CR": "Capital Region",
+    "SP": "Southern Peninsula",
+    "WR": "Western Region",
+    "WF": "Westfjords",
+    "NW": "Northwestern Region",
+    "NE": "Northeastern Region",
+    "ER": "Eastern Region",
+    "SR": "Southern Region",
+}

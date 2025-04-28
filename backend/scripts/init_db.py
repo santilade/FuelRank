@@ -4,6 +4,7 @@ from pathlib import Path
 from app.utils.static_loader import load_static_data
 from app.utils.fuel_table_seeder import seed_fuel_table
 from app.utils.brands_table_seeder import seed_brands_table
+from app.utils.regions_table_seeder import seed_regions_table
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 from app.utils.constants import STATIC_FILES, PRICES_FILES
@@ -38,7 +39,7 @@ def load_static_files():
         logger.error(f"Error loading static data: {e}")
 
 
-def seed_fuel_ids():
+def seed_fuels():
     try:
         count = seed_fuel_table()
         logger.info(f"{count} Fuel IDs seeded in fuel table")
@@ -47,7 +48,7 @@ def seed_fuel_ids():
         logger.error(f"Error seeding Fuel Table: {e}")
 
 
-def seed_brands_id():
+def seed_brands():
     try:
         count = seed_brands_table()
         logger.info(f"{count} Brands IDs seeded in Brands table")
@@ -68,11 +69,20 @@ def load_prices():
         logger.error(f"Error loading prices: {e}")
 
 
+def seed_regions():
+    try:
+        count = seed_regions_table()
+        logger.info(f"{count} Regions IDs seeded in Regions table")
+    except Exception as e:
+        logger.error(f"Error seeding Regions table: {e}")
+
+
 def initialize_db():
     with app.app_context():
         create_db()
-        seed_brands_id()
-        seed_fuel_ids()
+        seed_brands()
+        seed_fuels()
+        seed_regions()
         load_static_files()
         load_prices()
 

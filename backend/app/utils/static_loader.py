@@ -1,5 +1,6 @@
 from app.models.station import Station
 from app.models.brand import Brand
+from app.models.region import Region
 from app.db import db
 from datetime import datetime, timezone
 from app.utils.logger import get_logger
@@ -12,6 +13,17 @@ BRAND_NAME_TO_ID = {
     "ob": "OB",
     "olis": "OL",
     "orkan": "OR",
+}
+
+REGION_NAME_TO_ID = {
+    "höfuðborgarsvæðið": "CR",
+    "suðurnes": "SP",
+    "vesturland": "WR",
+    "vestfirðir": "WF",
+    "norðurland vestra": "NW",
+    "norðurland eystra": "NE",
+    "austurland": "ER",
+    "suðurland": "SR",
 }
 
 logger = logger = get_logger("static_loader")
@@ -39,6 +51,24 @@ def load_static_data(filepath):
             logger.error(f"Brand {brand_id} not found in table brands. Skipping")
             continue
 
+        raw_region = entry.get("region", "")
+        region_id = None
+
+        if raw_region:
+            region_id = (
+                REGION_NAME_TO_ID.get(raw_region.lower()) if raw_region else None
+            )
+
+        if not region_id:
+            logger.error(
+                f"Unknown region '{raw_region}' in station {entry.get('id')}. Skipping"
+            )
+
+        region = db.session.get(Region, region_id)
+        if not region:
+            logger.error(f"Region {region_id} not found in table regions. Skipping")
+            continue
+
         station = Station(
             id=entry.get("id"),
             name=entry.get("name"),
@@ -47,7 +77,7 @@ def load_static_data(filepath):
             lat=entry.get("latitude"),
             long=entry.get("longitude"),
             url=entry.get("url"),
-            region=entry.get("region"),
+            id_region=region_id,
             created_at=datetime.now(timezone.utc),
         )
 

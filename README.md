@@ -51,9 +51,9 @@ This API provides access to fuel prices from gas stations in Iceland. It support
 
 ## Endpoints
 
-### `GET /prices/ranking`
+### `GET /prices`
 
-Returns a list of fuel prices ordered from lowest to highest. Supports filtering by fuel type and pagination.
+Returns a list of fuel prices ordered from lowest to highest. Supports filtering by fuel type, region and pagination.
 
 #### 🔍 Query Parameters
 
@@ -64,14 +64,36 @@ Returns a list of fuel prices ordered from lowest to highest. Supports filtering
 | `offset`   | int      | No       | Number of results to skip (for pagination). Default is `0`.                |
 
 Multiple `fuel` parameters can be passed like:  
-> `/prices/ranking?fuel=GAS&fuel=DIESEL`
+> `/prices?fuel=GAS&fuel=DIESEL`
 
 #### Example Requests
 
-- `GET /prices/ranking`  
-- `GET /prices/ranking?fuel=GAS`  
-- `GET /prices/ranking?fuel=GAS&fuel=DIESEL&limit=5`  
-- `GET /prices/ranking?limit=10&offset=10` ← page 2
+- `GET /prices`  
+- `GET /prices?fuel=GAS`  
+- `GET /prices?fuel=GAS&fuel=DIESEL&limit=5`  
+- `GET /prices?limit=10&offset=10` ← page 2
+- `GET /prices?region=cr`
+- `GET /prices?region=sr&fuel=DIESEL` ← prices of diesel in Southern Region
+
+### 📍 Available Regions
+
+To filter fuel prices by region, use the `region` query parameter with one of the following region IDs:
+
+| ID  | Region Name              |
+|-----|---------------------------|
+| CR  | Capital Region             |
+| SP  | Southern Peninsula         |
+| WR  | Western Region             |
+| WF  | Westfjords                 |
+| NW  | Northwestern Region        |
+| NE  | Northeastern Region        |
+| ER  | Eastern Region             |
+| SR  | Southern Region            |
+| UR  | Unknown Region             |
+
+**Example**:  
+`GET /prices?region=CR` → returns prices for the Capital Region.
+
 
 #### Sample Response
 
@@ -79,7 +101,6 @@ Multiple `fuel` parameters can be passed like:
 [
   {
     "brand": "Atlantsolia",
-    "station_name": "Sprengisandur",
     "address": "Bústaðavegur 151, 103 Reykjavík",
     "fuel_type": "Shipping Fuel",
     "price": 134.0,

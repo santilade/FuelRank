@@ -8,12 +8,12 @@ import json
 prices_bp = Blueprint("prices", __name__)
 
 
-@prices_bp.route("ranking", methods=["GET"])
-def get_price_ranking():
+@prices_bp.route("/", methods=["GET"])
+def get_prices():
     """
-    /prices/ranking (general ranking)
-    /prices/ranking?fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
-    /prices/ranking&limit=10&offset=10 (pagination)
+    /prices (general prices ranking)
+    /prices?fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
+    /prices&limit=10&offset=10 (pagination)
     """
     fuel_params = request.args.getlist("fuel")
     limit = int(request.args.get("limit", 10))
@@ -39,7 +39,6 @@ def get_price_ranking():
         response.append(
             {
                 "brand": p.station.brand.name,
-                "station_name": p.station.name,
                 "address": p.station.address,
                 "fuel_type": p.fuel.name,
                 "price": float(p.price),

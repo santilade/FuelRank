@@ -57,4 +57,5 @@ REGIONS = {
     "NE": "Northeastern Region",
     "ER": "Eastern Region",
     "SR": "Southern Region",
+    "UR": "Unkown Region",
 }

@@ -24,6 +24,8 @@ REGION_NAME_TO_ID = {
     "norðurland eystra": "NE",
     "austurland": "ER",
     "suðurland": "SR",
+    None: "UR",
+    "": "UR",
 }
 
 logger = logger = get_logger("static_loader")
@@ -51,13 +53,9 @@ def load_static_data(filepath):
             logger.error(f"Brand {brand_id} not found in table brands. Skipping")
             continue
 
-        raw_region = entry.get("region", "")
-        region_id = None
-
-        if raw_region:
-            region_id = (
-                REGION_NAME_TO_ID.get(raw_region.lower()) if raw_region else None
-            )
+        raw_region = entry.get("region")
+        raw_region_key = raw_region.lower() if raw_region else None
+        region_id = REGION_NAME_TO_ID.get(raw_region_key, "NO")
 
         if not region_id:
             logger.error(

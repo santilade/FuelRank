@@ -4,7 +4,7 @@
 
 ## Data Collection
 
-Data is gathered through public endpoints exposed by gas station websites. While technically this qualifies as scraping, it is performed ethically by targeting open and unprotected resources. In the case of **Orkan**, the company has generously granted access to their official endpoint, which means no "scraping" is performed there.
+Data is gathered through public endpoints exposed by gas station websites. While technically this qualifies as scraping, it is performed ethically by targeting open and unprotected resources. In the case of **Orkan** and **Olís** (also owners of **ÓB**), the companies have generously granted access to their official endpoint, which means no "scraping" is performed there.
 
 ### Notes on Costco iceland
 **Costco** operates a single gas station in Iceland under a membership-only model. It is often the cheapest option in the country, but unfortunately, **they do not publish fuel prices anywhere online.** So far, they have not responded to my requests for information. I am currently **exploring alternative ways to include their data** in the system in a reliable manner.
@@ -75,7 +75,7 @@ Multiple `fuel` parameters can be passed like:
 - `GET /prices?region=cr`
 - `GET /prices?region=sr&fuel=DIESEL` ← prices of diesel in Southern Region
 
-### 📍 Available Regions
+### Available Regions
 
 To filter fuel prices by region, use the `region` query parameter with one of the following region IDs:
 
@@ -94,7 +94,6 @@ To filter fuel prices by region, use the `region` query parameter with one of th
 **Example**:  
 `GET /prices?region=CR` → returns prices for the Capital Region.
 
-
 #### Sample Response
 
 ```json
@@ -108,12 +107,94 @@ To filter fuel prices by region, use the `region` query parameter with one of th
     "last_update": "2025-04-21T10:46:13.612003+00:00"
   }
 ]
+
 ```
+
+### `GET /stations`
+
+Returns a paginated list of gas stations. Optionally, stations can be filtered by region.
+
+#### Query Parameters
+
+| Name       | Type   | Required | Description                                    |
+|------------|--------|----------|------------------------------------------------|
+| `limit`    | int    | No       | Number of results to return (default `20`)     |
+| `offset`   | int    | No       | Number of results to skip (default `0`)        |
+| `region`   | string | No       | Filter stations by region ID (e.g., `CR`, `SR`) |
+
+> **Note**:  
+> Use the same region IDs as for /prices:
+
+#### Example Requests
+
+- `GET /stations`
+- `GET /stations?region=CR`
+- `GET /stations?limit=10&offset=20`
+
+---
+
+#### Sample Response
+
+```json
+[
+  {
+    "id": "IS001",
+    "name": "Orkan Mjódd",
+    "brand": "Orkan",
+    "address": "Mjódd, 108 Reykjavík",
+    "region": "Capital Region"
+  },
+  {
+    "id": "IS002",
+    "name": "N1 Reykjavik",
+    "brand": "N1",
+    "address": "Vesturlandsvegur, 104 Reykjavík",
+    "region": "Capital Region"
+  }
+]
+```
+### `GET /stations/<id>`
+Returns detailed information about a specific gas station, including basic station info and the latest fuel prices for GAS and DIESEL (if available).
+
+#### URL Parameters
+| Name       | Type   | Required | Description                                    |
+|------------|--------|----------|------------------------------------------------|
+| `id`       | string | yes      | Station ID to retrieve information             |
+
+#### Example Request
+- `GET /stations/N14082`
+
+#### Sample Response
+```json
+[
+  {
+  "id": "N14082",
+  "name": "Þjónustustöð - Húsavík",
+  "brand": "N1",
+  "address": "Héðinsbraut 2, 640 Húsavík",
+  "lat": 66.047631,
+  "long": -17.343509,
+  "url": "https://n1.is/stodvar/thjonustustod-husavik/",
+  "region": "Northeastern Region",
+  "prices": {
+    "GAS": {
+      "price": 317.3,
+      "discount": null,
+      "last_update": "2025-04-29T07:34:40.799219+00:00"
+    },
+    "DIESEL": {
+      "price": 323.2,
+      "discount": null,
+      "last_update": "2025-04-29T07:34:40.799219+00:00"
+    }
+  }
+}
+]
+```
+
 #### Upcoming endpoints (Planned)
 | Endpoint            | Method | Description                    |
-|---------------------|--------|--------------------------------|
-| `/stations`         | GET    | List all stations              |
-| `/stations/<id>`    | GET    | Get detailed station info      |
+|---------------------|--------|--------------------------------     |
 | `/brands`           | GET    | List available fuel brands     |
 | `/fuels`            | GET    | List available fuel types      |
 

@@ -57,7 +57,7 @@ def get_prices():
                 "address": p.station.address,
                 "fuel_type": p.fuel.name,
                 "price": float(p.price),
-                "discount": float(p.discount) if p.discount is not None else None,
+                "discount": float(p.discount) if p.discount else None,
                 "last_update": p.last_update.isoformat(),
             }
         )

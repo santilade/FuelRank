@@ -32,7 +32,8 @@ def update():
 if __name__ == "__main__":
     with app.app_context():
         # TODO: once flask is running change update loop to APScheduler
+        logger.info("Starting update prices loop every 5 mins...")
         while True:
+            time.sleep(300)
             update()
             logger.info("Waiting 5 minutes until next update...")
-            time.sleep(300)

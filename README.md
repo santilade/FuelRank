@@ -218,11 +218,45 @@ Returns a list of all available fuel brands.
 ]
 ```
 
-#### Upcoming endpoints (Planned)
-| Endpoint            | Method | Description                    |
-|---------------------|--------|--------------------------------     |
-| `/fuels`            | GET    | List available fuel types      |
+### `GET /fuels`
 
+Returns a list of all available fuel types that the application tracks.
+
+---
+
+#### Example Request
+
+- `GET /fuels`
+
+---
+
+#### Sample Response
+
+```json
+[
+  {
+    "id": "GAS",
+    "name": "Gasoline"
+  },
+  {
+    "id": "DIESEL",
+    "name": "Diesel"
+  },
+  {
+    "id": "COLORED_DIESEL",
+    "name": "Colored Diesel"
+  },
+  {
+    "id": "SHIPPING",
+    "name": "Shipping Fuel"
+  },
+  {
+    "id": "ELECTRIC",
+    "name": "Electric Charging"
+  }
+]
+
+```
 ---
 
 #### Notes

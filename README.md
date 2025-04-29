@@ -75,7 +75,7 @@ Multiple `fuel` parameters can be passed like:
 - `GET /prices?region=cr`
 - `GET /prices?region=sr&fuel=DIESEL` ← prices of diesel in Southern Region
 
-### Available Regions
+#### Available Regions
 
 To filter fuel prices by region, use the `region` query parameter with one of the following region IDs:
 
@@ -191,11 +191,36 @@ Returns detailed information about a specific gas station, including basic stati
 }
 ]
 ```
+### `GET /brands`
+
+Returns a list of all available fuel brands.
+
+#### Example Request
+
+- `GET /brands`
+
+#### Sample Response
+
+```json
+[
+  {
+    "id": "ORK",
+    "name": "Orkan"
+  },
+  {
+    "id": "N1",
+    "name": "N1"
+  },
+  {
+    "id": "ATL",
+    "name": "Atlantsolía"
+  }
+]
+```
 
 #### Upcoming endpoints (Planned)
 | Endpoint            | Method | Description                    |
 |---------------------|--------|--------------------------------     |
-| `/brands`           | GET    | List available fuel brands     |
 | `/fuels`            | GET    | List available fuel types      |
 
 ---

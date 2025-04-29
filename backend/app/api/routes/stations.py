@@ -21,15 +21,47 @@ def get_stations():
     sr = southern region
 
     """
-    limit = int(request.args.get("limit", 20))
-    offset = int(request.args.get("offset", 0))
+    # limit param validation
+    try:
+        limit = int(request.args.get("limit", 20))
+        if limit <= 0:
+            raise ValueError
+    except ValueError:
+        return Response(
+            json.dumps({"error": 'Invalid "limit" parameter'}),
+            status=400,
+            content_type="application/json",
+        )
+
+    # offset validation
+    try:
+        offset = int(request.args.get("offset", 0))
+        if offset < 0:
+            raise ValueError
+    except ValueError:
+        return Response(
+            json.dumps({"error": "Invalid offset parameter"}),
+            status=400,
+            content_type="application/json",
+        )
+
+    # Region param validation
     region_param = request.args.get("region")
+    valid_region_ids = [region.id for region in db.session.query(Region.id).all()]
+
+    if region_param:
+        region_param_upper = region_param.upper()
+        if region_param_upper not in valid_region_ids:
+            return Response(
+                json.dumps({"error": f"Invalid region id:{region_param_upper}"}),
+                status=400,
+                content_type="application/json",
+            )
 
     query = db.session.query(Station).join(Station.brand)
 
     if region_param:
-        region_param = region_param.upper()
-        query = query.join(Station.region).filter(Region.id == region_param)
+        query = query.join(Station.region).filter(Region.id == region_param_upper)
 
     results = query.offset(offset).limit(limit).all()
 

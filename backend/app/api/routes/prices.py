@@ -14,7 +14,7 @@ def get_prices():
     """
     /prices (general prices ranking)
     /prices?fuel=gas (diesel, colored_diesel,shipping, for ranking by fuel type)
-    /prices&limit=10&offset=10 (pagination)
+    /prices?limit=10&offset=10 (pagination)
     /prices?region=cr
     cr = capital region
     sp = southern peninsula
@@ -25,10 +25,57 @@ def get_prices():
     er = eastern region
     sr = southern region
     """
+
+    # limit param validation
+    try:
+        limit = int(request.args.get("limit", 10))
+        if limit <= 0:
+            raise ValueError
+    except ValueError:
+        return Response(
+            json.dumps({"error": 'Invalid "limit" parameter'}),
+            status=400,
+            content_type="application/json",
+        )
+
+    # offset validation
+    try:
+        offset = int(request.args.get("offset", 0))
+        if offset < 0:
+            raise ValueError
+    except ValueError:
+        return Response(
+            json.dumps({"error": "Invalid offset parameter"}),
+            status=400,
+            content_type="application/json",
+        )
+
+    # fuel param validation
     fuel_params = request.args.getlist("fuel")
+    valid_fuel_ids = [fuel.id for fuel in db.session.query(Fuel.id).all()]
+
+    if fuel_params:
+        fuel_params_upper = [f.upper() for f in fuel_params]
+        for fuel_id in fuel_params_upper:
+            if fuel_id not in valid_fuel_ids:
+                return Response(
+                    json.dumps({"error": f"Invalid fuel type:{fuel_id}"}),
+                    status=400,
+                    content_type="application/json",
+                )
+
+    # Region param validation
     region_params = request.args.get("region")
-    limit = int(request.args.get("limit", 10))
-    offset = int(request.args.get("offset", 0))
+    valid_region_ids = [region.id for region in db.session.query(Region.id).all()]
+
+    if region_params:
+        region_params_upper = region_params.upper()
+        if region_params_upper not in valid_region_ids:
+            return Response(
+                json.dumps({"error": f"Invalid region id:{region_params_upper}"}),
+                status=400,
+                content_type="application/json",
+            )
 
     query = (
         db.session.query(StationFuelPrice)

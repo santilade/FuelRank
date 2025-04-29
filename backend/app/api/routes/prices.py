@@ -65,14 +65,14 @@ def get_prices():
                 )
 
     # Region param validation
-    region_params = request.args.get("region")
+    region_param = request.args.get("region")
     valid_region_ids = [region.id for region in db.session.query(Region.id).all()]
 
-    if region_params:
-        region_params_upper = region_params.upper()
-        if region_params_upper not in valid_region_ids:
+    if region_param:
+        region_param_upper = region_param.upper()
+        if region_param_upper not in valid_region_ids:
             return Response(
-                json.dumps({"error": f"Invalid region id:{region_params_upper}"}),
+                json.dumps({"error": f"Invalid region id:{region_param_upper}"}),
                 status=400,
                 content_type="application/json",
             )
@@ -85,12 +85,10 @@ def get_prices():
     )
 
     if fuel_params:
-        fuel_params = [f.upper() for f in fuel_params]
-        query = query.filter(Fuel.id.in_(fuel_params))
+        query = query.filter(Fuel.id.in_(fuel_params_upper))
 
-    if region_params:
-        region_params = region_params.upper()
-        query = query.join(Station.region).filter(Region.id == region_params)
+    if region_param:
+        query = query.join(Station.region).filter(Region.id == region_param_upper)
 
     results = (
         query.order_by(StationFuelPrice.price.asc()).offset(offset).limit(limit).all()

@@ -52,7 +52,10 @@ def get_stations():
 
 @stations_bp.route("/<station_id>", methods=["GET"])
 def get_station_detail(station_id):
-
+    """
+    /stations/<id> → Get detailed info for a specific station including
+    prices for GAS and DIESEL
+    """
     station = (
         db.session.query(Station)
         .join(Station.brand)

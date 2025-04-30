@@ -1,8 +1,10 @@
 from app import db
+from app.settings import SCHEMA_NAME
 
 
 class Fuel(db.Model):
     __tablename__ = "fuel"
+    __table_args__ = {"schema": SCHEMA_NAME}
 
     id = db.Column(db.String(20), primary_key=True)
     name = db.Column(db.String(30), nullable=False)

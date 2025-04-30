@@ -2,19 +2,25 @@ from app import db
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy import Numeric
 from sqlalchemy.orm import relationship
+from app.settings import SCHEMA_NAME
 
 
 class Station(db.Model):
     __tablename__ = "stations"
+    __table_args__ = {"schema": SCHEMA_NAME}
 
     id = db.Column(db.String(10), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    id_brand = db.Column(db.String, db.ForeignKey("brands.id"), nullable=False)
+    id_brand = db.Column(
+        db.String, db.ForeignKey(f"{SCHEMA_NAME}.brands.id"), nullable=False
+    )
     address = db.Column(db.String(255), nullable=True)
     lat = db.Column(Numeric(9, 6), nullable=True)
     long = db.Column(Numeric(9, 6), nullable=True)
     url = db.Column(db.String(255), nullable=True)
-    id_region = db.Column(db.String, db.ForeignKey("regions.id"), nullable=True)
+    id_region = db.Column(
+        db.String, db.ForeignKey(f"{SCHEMA_NAME}.regions.id"), nullable=True
+    )
     created_at = db.Column(TIMESTAMP(timezone=True), nullable=False)
 
     brand = relationship("Brand", back_populates="stations")

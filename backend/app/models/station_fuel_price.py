@@ -2,14 +2,20 @@ from app import db
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy import NUMERIC, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
+from app.settings import SCHEMA_NAME
 
 
 class StationFuelPrice(db.Model):
     __tablename__ = "station_fuel_price"
+    __table_args__ = {"schema": SCHEMA_NAME}
 
     last_update = db.Column(TIMESTAMP(timezone=True), nullable=False)
-    id_station = db.Column(db.String, db.ForeignKey("stations.id"), nullable=False)
-    id_fuel = db.Column(db.String, db.ForeignKey("fuel.id"), nullable=False)
+    id_station = db.Column(
+        db.String, db.ForeignKey(f"{SCHEMA_NAME}.stations.id"), nullable=False
+    )
+    id_fuel = db.Column(
+        db.String, db.ForeignKey(f"{SCHEMA_NAME}.fuel.id"), nullable=False
+    )
     price = db.Column(NUMERIC(6, 2), nullable=False)
     discount = db.Column(NUMERIC(6, 2), nullable=True)
 

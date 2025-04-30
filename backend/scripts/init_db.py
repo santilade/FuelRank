@@ -1,6 +1,7 @@
 from app import create_app
 from app.db import db
 from pathlib import Path
+from sqlalchemy import text
 from app.utils.static_loader import load_static_data
 from app.utils.fuel_table_seeder import seed_fuel_table
 from app.utils.brands_table_seeder import seed_brands_table
@@ -8,6 +9,7 @@ from app.utils.regions_table_seeder import seed_regions_table
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 from app.utils.constants import STATIC_FILES, PRICES_FILES
+from app.settings import SCHEMA_NAME
 
 logger = get_logger("init_db")
 
@@ -25,6 +27,18 @@ def create_db():
 
     except Exception as e:
         logger.error(f"Error initializing the database: {e}")
+
+
+def recreate_schema():
+    """
+    DELETE CASCADE on the working schema, meant to be used ONLY during development.
+    """
+    logger.info(f"Dropping and creating schema {SCHEMA_NAME}")
+    db.session.execute(text(f"DROP SCHEMA IF EXISTS {SCHEMA_NAME} CASCADE"))
+    db.session.execute(text(f"CREATE SCHEMA {SCHEMA_NAME}"))
+    db.session.commit()
+    db.session.execute(text(f"SET search_path TO {SCHEMA_NAME}"))
+    logger.info(f"Schema {SCHEMA_NAME} recreated successfully")
 
 
 def load_static_files():
@@ -79,6 +93,9 @@ def seed_regions():
 
 def initialize_db():
     with app.app_context():
+        if SCHEMA_NAME == "dev":
+            logger.warning("Deleting schema, ONLY DEVELOPMENT STAGE")
+            recreate_schema()
         create_db()
         seed_brands()
         seed_fuels()
@@ -88,4 +105,7 @@ def initialize_db():
 
 
 if __name__ == "__main__":
+
+    print("Current SCHEMA_NAME:", SCHEMA_NAME)
+
     initialize_db()

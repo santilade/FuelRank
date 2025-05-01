@@ -1,7 +1,7 @@
-from scripts.collect_data import DATA_COLLECTORS
+from app.utils.constants import DATA_COLLECTORS
+from app.utils.constants import PRICES_FILES
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
-from app.utils.constants import PRICES_FILES
 from pathlib import Path
 from app import models
 
@@ -9,7 +9,7 @@ from app import models
 logger = get_logger("update_loop")
 
 
-def update():
+def update_prices():
     _ = models  # to satisfy flake8
     try:
         for collector in DATA_COLLECTORS:

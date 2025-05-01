@@ -5,7 +5,7 @@ logger = logging.getLogger("All Collectors script")
 
 
 def get_static_data():
-    logger.info("scraping static info")
+    logger.info("collecting static info")
     for collector in DATA_COLLECTORS:
         collector.get_static_info()
 

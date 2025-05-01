@@ -2,6 +2,7 @@ from flask import Flask
 from .db import db
 from dotenv import load_dotenv
 from app.api import init_api
+from app.utils.scheduler import start_scheduler
 import os
 
 
@@ -16,5 +17,7 @@ def create_app():
     db.init_app(app)
 
     init_api(app)
+
+    start_scheduler(app)
 
     return app

@@ -35,13 +35,14 @@ Data is gathered through public endpoints exposed by gas station websites. While
     - Data Collectors generate `.json` files with editable station metadata.
     - These files are manually reviewed and optionally corrected (not possible to get allways accurate location data).
     - Then loaded into the database using `init_db.py` via utility functions.
-2. **Price data** (Run frequently, via cron) 
+2. **Price data** (Run frequently, APScheduler) 
     - Each data collector fetches updated fuel prices and discounts.
     - If the new price is different from the last saved price, it is inserted.
     - No duplicates are saved.
 3. **Database Structure** (simplified) 
     - Station: id, name, address, location, company
     - Fuel: id, name
+    - Region: id and name
     - Price: id, station_id, fuel_id, price, datetime
     - Discount: id, station_id, value, description, datetime
 
@@ -268,8 +269,6 @@ Returns a list of all available fuel types that the application tracks.
 
 ## Roadmap
 
-- [ ] Create RESTful API endpoints
-- [ ] Implement APScheduler for periodic price updates
 - [ ] Build a React-based frontend (filtering, map view, etc.)
 - [ ] Improve static data accuracy (e.g. geocoding verification)
 

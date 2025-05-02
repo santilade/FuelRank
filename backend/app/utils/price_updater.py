@@ -1,6 +1,6 @@
 from app.utils.constants import DATA_COLLECTORS
 from app.utils.constants import PRICES_FILES
-from app.utils.price_loader import load_prices_data
+from app.utils.data_loaders.price_loader import load_prices_data
 from app.utils.logger import get_logger
 from pathlib import Path
 from app import models

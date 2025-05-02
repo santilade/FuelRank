@@ -3,11 +3,11 @@ from app import create_app
 from app.db import db
 from pathlib import Path
 from sqlalchemy import text
-from app.utils.static_loader import load_static_data
-from app.utils.fuel_table_seeder import seed_fuel_table
-from app.utils.brands_table_seeder import seed_brands_table
-from app.utils.regions_table_seeder import seed_regions_table
-from app.utils.price_loader import load_prices_data
+from app.utils.data_loaders.static_loader import load_static_data
+from app.utils.seeders.fuel_table_seeder import seed_fuel_table
+from app.utils.seeders.brands_table_seeder import seed_brands_table
+from app.utils.seeders.regions_table_seeder import seed_regions_table
+from app.utils.data_loaders.price_loader import load_prices_data
 from app.utils.logger import get_logger
 from app.utils.constants import STATIC_FILES, PRICES_FILES
 

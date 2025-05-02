@@ -1,6 +1,6 @@
+from app.settings import N1_ENDPOINT
 from datetime import datetime, timezone
 import json
-import os
 import time
 from app.data_collectors.base_collector import BaseCollector
 
@@ -10,7 +10,7 @@ from app.data_collectors.base_collector import BaseCollector
 class N1Collector(BaseCollector):
     def __init__(self):
         super().__init__()
-        self.api_url = os.getenv("N1_API_URL")
+        self.endpoint_url = N1_ENDPOINT
         self.static_filename = "n1_static.json"
 
     def get_HTTP_method(self):

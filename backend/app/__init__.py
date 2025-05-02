@@ -1,17 +1,18 @@
+from app.settings import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, HOSTNAME_DB
 from flask import Flask
 from .db import db
-from dotenv import load_dotenv
 from app.api import init_api
 from app.utils.scheduler import start_scheduler
-import os
+
+db_url = (
+    f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOSTNAME_DB}:5432/{POSTGRES_DB}"
+)
 
 
 def create_app():
-    load_dotenv()
-
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)

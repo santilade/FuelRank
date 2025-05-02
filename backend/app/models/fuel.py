@@ -1,5 +1,5 @@
-from app import db
 from app.settings import SCHEMA_NAME
+from app import db
 
 
 class Fuel(db.Model):

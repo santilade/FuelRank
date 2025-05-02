@@ -1,3 +1,4 @@
+from app.settings import SCHEMA_NAME
 from app import create_app
 from app.db import db
 from pathlib import Path
@@ -9,7 +10,6 @@ from app.utils.regions_table_seeder import seed_regions_table
 from app.utils.price_loader import load_prices_data
 from app.utils.logger import get_logger
 from app.utils.constants import STATIC_FILES, PRICES_FILES
-from app.settings import SCHEMA_NAME
 
 logger = get_logger("init_db")
 

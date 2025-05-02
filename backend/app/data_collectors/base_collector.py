@@ -1,3 +1,4 @@
+from app.settings import CONTACT
 from abc import ABC, abstractmethod
 from dotenv import load_dotenv
 from pathlib import Path
@@ -5,7 +6,6 @@ from app.utils.logger import get_logger
 import json
 import hashlib
 import requests
-import os
 
 
 class BaseCollector(ABC):
@@ -18,7 +18,7 @@ class BaseCollector(ABC):
         self.data_dir = self.base_dir / "data"
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
-        self.contact_data = os.getenv("CONTACT")
+        self.contact_data = CONTACT
 
         self.api_data = None
 
@@ -27,9 +27,9 @@ class BaseCollector(ABC):
         method = self.get_HTTP_method().upper()
 
         if method == "GET":
-            response = requests.get(self.api_url)
+            response = requests.get(self.endpoint_url)
         elif method == "POST":
-            response = requests.post(self.api_url)
+            response = requests.post(self.endpoint_url)
         else:
             raise ValueError(f"Unsupported HTTP method: {method}")
 

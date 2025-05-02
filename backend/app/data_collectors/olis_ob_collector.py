@@ -1,14 +1,14 @@
+from app.settings import CONTACT, OLIS_OB_ENDPOINT
 from datetime import datetime, timezone
 import json
-import os
 from app.data_collectors.base_collector import BaseCollector
 
 
 class OlisObCollector(BaseCollector):
     def __init__(self):
         super().__init__()
-        self.api_url = os.getenv("OLIS_OB_API_URL")
-        self.contact_data = os.getenv("CONTACT")
+        self.endpoint_url = OLIS_OB_ENDPOINT
+        self.contact_data = CONTACT
 
     def get_HTTP_method(self):
         return "GET"

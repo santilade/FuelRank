@@ -1,7 +1,7 @@
+from app.settings import ORKAN_ENDPOINT
 import requests
 from datetime import datetime, timezone
 import json
-import os
 import time
 from app.data_collectors.base_collector import BaseCollector
 
@@ -9,7 +9,7 @@ from app.data_collectors.base_collector import BaseCollector
 class OrkanCollector(BaseCollector):
     def __init__(self):
         super().__init__()
-        self.api_url = os.getenv("ORKAN_API_URL")
+        self.endpoint_url = ORKAN_ENDPOINT
         self.static_filename = "orkan_static.json"
 
     def get_HTTP_method(self):
@@ -24,9 +24,9 @@ class OrkanCollector(BaseCollector):
         method = self.get_HTTP_method().upper()
 
         if method == "GET":
-            response = requests.get(self.api_url)
+            response = requests.get(self.endpoint_url)
         elif method == "POST":
-            response = requests.post(self.api_url)
+            response = requests.post(self.endpoint_url)
         else:
             raise ValueError(f"Unsupported HTTP method: {method}")
 

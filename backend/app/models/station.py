@@ -1,8 +1,8 @@
+from app.settings import SCHEMA_NAME
 from app import db
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy import Numeric
 from sqlalchemy.orm import relationship
-from app.settings import SCHEMA_NAME
 
 
 class Station(db.Model):

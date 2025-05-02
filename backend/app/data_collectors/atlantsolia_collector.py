@@ -1,7 +1,7 @@
+from app.settings import ATLANTSOLIA_ENDPOINT
 import requests
 from datetime import datetime, timezone
 import json
-import os
 import time
 from app.data_collectors.base_collector import BaseCollector
 
@@ -9,7 +9,7 @@ from app.data_collectors.base_collector import BaseCollector
 class AtlansoliaCollector(BaseCollector):
     def __init__(self):
         super().__init__()
-        self.api_url = os.getenv("ATLANSOLIA_API_URL")
+        self.endpoint_url = ATLANTSOLIA_ENDPOINT
         self.static_filename = "atlantsolia_static.json"
 
     def get_region_from_coords(self, lat, lon, name):

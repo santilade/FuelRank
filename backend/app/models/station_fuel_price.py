@@ -1,8 +1,8 @@
+from app.settings import SCHEMA_NAME
 from app import db
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy import NUMERIC, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
-from app.settings import SCHEMA_NAME
 
 
 class StationFuelPrice(db.Model):

@@ -98,6 +98,8 @@ def get_prices():
     for p in results:
         response.append(
             {
+                "station_id": p.station.id,
+                "station_name": p.station.name,
                 "brand": p.station.brand.name,
                 "address": p.station.address,
                 "fuel_type": p.fuel.name,

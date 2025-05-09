@@ -11,8 +11,6 @@ import {
   Paper,
 } from '@mui/material';
 
-import Layout from '../shared/Layout';
-
 type Price = {
   station_id: string;
   station_name: string;
@@ -60,39 +58,37 @@ const PriceListPage = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Layout title="FuelRank">
-      <List>
-        {prices.map((p) => (
-          <Paper key={`${p.fuel_type}${p.station_id}`} elevation={5} square={false} sx={{ mb: 1 }}>
-            <ListItemButton>
-              <ListItemAvatar>
-                <Avatar src={`/logos/${p.brand.toLocaleLowerCase()}.png`} variant="rounded" />
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="subtitle1" color="text.primary">
-                      {cleanStationName(p.station_name, p.brand)}
-                      <Typography>{p.price} ISK</Typography>
-                    </Typography>
-                    <Typography component="span" variant="body2" color="text.primary">
-                      {p.brand}
-                    </Typography>
-                  </Box>
-                }
-                secondary={
-                  <>
-                    <Typography component="span" variant="body2" color="text.secondary">
-                      {p.discount !== null && `Discount: ${p.discount} ISK`}
-                    </Typography>
-                  </>
-                }
-              />
-            </ListItemButton>
-          </Paper>
-        ))}
-      </List>
-    </Layout>
+    <List>
+      {prices.map((p) => (
+        <Paper key={`${p.fuel_type}${p.station_id}`} elevation={5} square={false} sx={{ mb: 1 }}>
+          <ListItemButton>
+            <ListItemAvatar>
+              <Avatar src={`/logos/${p.brand.toLocaleLowerCase()}.png`} variant="rounded" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Typography variant="subtitle1" color="text.primary">
+                    {cleanStationName(p.station_name, p.brand)}
+                    <Typography>{p.price} ISK</Typography>
+                  </Typography>
+                  <Typography component="span" variant="body2" color="text.primary">
+                    {p.brand}
+                  </Typography>
+                </Box>
+              }
+              secondary={
+                <>
+                  <Typography component="span" variant="body2" color="text.secondary">
+                    {p.discount !== null && `Discount: ${p.discount} ISK`}
+                  </Typography>
+                </>
+              }
+            />
+          </ListItemButton>
+        </Paper>
+      ))}
+    </List>
   );
 };
 

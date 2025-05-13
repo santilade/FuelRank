@@ -56,7 +56,7 @@
       "name": "Þjónustustöð - Egilsstaðir",
       "address": "Kaupvangur 4, 700 Egilsstaðir",
       "longitude": -14.4077826,
-      "latitude":  65.2608388,
+      "latitude": 65.2608388,
       "region": "Austurland",
       "url": "https://n1.is/stodvar/thjonustustod-egilsstadir/"
     },
@@ -91,22 +91,12 @@
       "url": "https://n1.is/stodvar/thjonustustod-hvolsvollur/"
     },
     {
-      "id": "N16325",
-      "brand": "n1",
-      "name": "Þjónustustöð - Háholt",
-      "address": "Háholt 11, 270 Mosfellsbær",
-      "longitude": -21.6931555,
-      "latitude": 64.1674797,
-      "region": "Höfuðborgarsvæðið",
-      "url": "https://n1.is/stodvar/thjonustustod-haholt/"
-    },
-    {
       "id": "N13506",
       "brand": "n1",
       "name": "Þjónustustöð - Staðarskáli",
       "address": "Hrútafirði v/Norðurlandsveg, 500 Staður",
       "longitude": -21.0838247,
-      "latitude": 65.1446930,
+      "latitude": 65.144693,
       "region": "Vesturland",
       "url": "https://n1.is/stodvar/thjonustustod-stadarskali/"
     },
@@ -386,7 +376,7 @@
       "name": "Sjálfsafgreiðslustöð - Brautarhóll",
       "address": "Brautarhóli, 801 Selfoss",
       "longitude": -20.4535464,
-      "latitude": 64.1771626, 
+      "latitude": 64.1771626,
       "region": "Suðurland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-brautarholl/"
     },
@@ -406,7 +396,7 @@
       "name": "Sjálfsafgreiðslustöð - Árnes",
       "address": "N1, Þjórsárdalsvegur, Árnes, Skeiða- og Gnúpverjahreppur, Suðurland",
       "longitude": -20.2510493,
-      "latitude": 64.0412435, 
+      "latitude": 64.0412435,
       "region": "Suðurland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-arnes/"
     },
@@ -436,7 +426,7 @@
       "name": "Sjálfsafgreiðslustöð - Nesjar",
       "address": "Nesjar, 781 Höfn",
       "longitude": -15.1957205,
-      "latitude":  64.2500942,
+      "latitude": 64.2500942,
       "region": "Austurland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-nesjar/"
     },
@@ -446,7 +436,7 @@
       "name": "Sjálfsafgreiðslustöð - Djúpivogur",
       "address": "1, Búland, Djúpivogur, Múlaþing, Austurland, 765",
       "longitude": -14.2856775,
-      "latitude":  64.6560757,
+      "latitude": 64.6560757,
       "region": "Austurland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-djupivogur/"
     },
@@ -476,7 +466,7 @@
       "name": "Sjálfsafgreiðslustöð - Borgarfjörður Eystri",
       "address": "N1, Bakkavegur, Bakkagerði, Múlaþing, Austurland, 720",
       "longitude": -13.8170924,
-      "latitude":  65.5280107,
+      "latitude": 65.5280107,
       "region": "Austurland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-borgarfjordur-eystri/"
     },
@@ -486,7 +476,7 @@
       "name": "Sjálfsafgreiðslustöð - Vopnafjörður",
       "address": "35, Kolbeinsgata, Vopnafjörður, Vopnafjarðarhreppur, Austurland, 690",
       "longitude": -14.8332959,
-      "latitude": 65.7495587, 
+      "latitude": 65.7495587,
       "region": "Austurland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-vopnafjordur/"
     },
@@ -496,7 +486,7 @@
       "name": "Sjálfsafgreiðslustöð - Bakkafjörður",
       "address": "Hafnartangi, Bakkafjörður, Langanesbyggð, Norðurland eystra, 685",
       "longitude": -14.8047932,
-      "latitude":  66.0381106,
+      "latitude": 66.0381106,
       "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-bakkafjordur/"
     },
@@ -525,7 +515,7 @@
       "brand": "n1",
       "name": "Sjálfsafgreiðslustöð - Ásbyrgi",
       "address": "N1, Norðausturvegur, Norðurþing, Norðurland eystra",
-      "longitude":  -16.483773,
+      "longitude": -16.483773,
       "latitude": 66.030698,
       "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-asbyrgi/"
@@ -556,7 +546,7 @@
       "name": "Sjálfsafgreiðslustöð - Fosshóll",
       "address": "N1, Fosshóll, Þingeyjarsveit, Norðurland eystra",
       "longitude": -17.5388064,
-      "latitude": 65.6860710, 
+      "latitude": 65.686071,
       "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-fossholl/"
     },
@@ -565,8 +555,8 @@
       "brand": "n1",
       "name": "Sjálfsafgreiðslustöð - Grenivík",
       "address": "Túngata 3, 610 Grenivík",
-      "longitude": -18.180710,
-      "latitude": 65.946776, 
+      "longitude": -18.18071,
+      "latitude": 65.946776,
       "region": "Norðurland Eystra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-grenivik/"
     },
@@ -596,7 +586,7 @@
       "name": "Sjálfsafgreiðslustöð - Víðihlíð",
       "address": "N1, Víðihlíð, Auðunnarstaðir II, Húnaþing vestra, Norðurland vestra",
       "longitude": -20.643219,
-      "latitude": 65.378600, 
+      "latitude": 65.3786,
       "region": "Norðurland vestra",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-vidihlid/"
     },
@@ -646,7 +636,7 @@
       "name": "Sjálfsafgreiðslustöð - Þingeyri",
       "address": "N1, Hafnargarður, Þingeyri, Ísafjarðarbær, Vestfirðir, 470,",
       "longitude": -23.488909,
-      "latitude": 65.876720, 
+      "latitude": 65.87672,
       "region": "Vestfirðir",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-thingeyri/"
     },
@@ -675,8 +665,8 @@
       "brand": "n1",
       "name": "Sjálfsafgreiðslustöð - Flókalundur",
       "address": "Flókalundur",
-      "longitude":-23.1674327,
-      "latitude": 65.5758899, 
+      "longitude": -23.1674327,
+      "latitude": 65.5758899,
       "region": "Vestfirðir",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-flokalundur/"
     },
@@ -706,7 +696,7 @@
       "name": "Sjálfsafgreiðslustöð - Grundarfjörður",
       "address": "N1, Grundargata, Grundarfjarðarbær, Vesturland, 350",
       "longitude": -23.260511,
-      "latitude": 64.925173, 
+      "latitude": 64.925173,
       "region": "Vesturland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-grundarfjordur/"
     },
@@ -716,7 +706,7 @@
       "name": "Sjálfsafgreiðslustöð - Hellissandur",
       "address": "N1, Útnesvegur, Hellissandur, Snæfellsbær, Vesturland, 360",
       "longitude": -23.884535,
-      "latitude": 64.914951, 
+      "latitude": 64.914951,
       "region": "Vesturland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-hellissandur/"
     },
@@ -725,7 +715,7 @@
       "brand": "n1",
       "name": "Sjálfsafgreiðslustöð - Breiðablik",
       "address": "Breiðablik, Snæfellsnesvegur, Eyja- og Miklaholtshreppur, Vesturland, 342",
-      "longitude":  -22.6539040,
+      "longitude": -22.653904,
       "latitude": 64.8437133,
       "region": "Vesturland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-breidablik/"
@@ -736,7 +726,7 @@
       "name": "Sjálfsafgreiðslustöð - Reykholt",
       "address": "N1, Breiðvangur, Reykholt, Borgarbyggð, Vesturland",
       "longitude": -21.283168,
-      "latitude": 64.662883, 
+      "latitude": 64.662883,
       "region": "Vesturland",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-reykholt/"
     },
@@ -819,6 +809,16 @@
       "latitude": 63.9973863,
       "region": "Suðurnes",
       "url": "https://n1.is/stodvar/sjalfsafgreidslustod-flugvellir/"
+    },
+    {
+      "id": "N19708",
+      "brand": "n1",
+      "name": "Þjónustustöð - Bjarkarholt",
+      "address": "Bjarkarholt 1, 270 Mosfellsbær",
+      "longitude": -21.69573328,
+      "latitude": 64.16616751,
+      "region": "Höfuðborgarsvæðið",
+      "url": "https://n1.is/stodvar/thjonustustod-bjarkarholt/"
     }
   ]
 }

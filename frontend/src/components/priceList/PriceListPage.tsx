@@ -10,6 +10,7 @@ import {
   Box,
   Paper,
 } from '@mui/material';
+import { useSharedContext } from '../shared/context';
 
 type Price = {
   station_id: string;
@@ -25,6 +26,7 @@ type Price = {
 const PriceListPage = () => {
   const [pricelist, setPricelist] = useState<Price[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const { fuelType } = useSharedContext();
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -55,11 +57,15 @@ const PriceListPage = () => {
       .catch((err) => setError(err.message));
   }, []);
 
+  const filteredPricelist = fuelType
+    ? pricelist.filter((p) => p.fuel_type.toLowerCase() === fuelType)
+    : pricelist;
+
   if (error) return <div>Error: {error}</div>;
 
   return (
     <List>
-      {pricelist.map((p) => (
+      {filteredPricelist.map((p) => (
         <Paper key={`${p.fuel_type}${p.station_id}`} elevation={5} square={false} sx={{ mb: 1 }}>
           <ListItemButton>
             <ListItemAvatar>

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from '@mui/material';
 import { useSharedContext } from './context';
 
@@ -58,7 +58,7 @@ const Header = ({ title }: HeaderProps) => {
           aria-label="Platform"
           size="small"
         >
-          <ToggleButton value="gas">Gas</ToggleButton>
+          <ToggleButton value="gasoline">Gas</ToggleButton>
           <ToggleButton value="diesel">Diesel</ToggleButton>
         </ToggleButtonGroup>
         <StyledIconButton onClick={toggleTheme}>

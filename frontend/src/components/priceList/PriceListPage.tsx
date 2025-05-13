@@ -23,7 +23,7 @@ type Price = {
 };
 
 const PriceListPage = () => {
-  const [prices, setPrices] = useState<Price[]>([]);
+  const [pricelist, setPricelist] = useState<Price[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   //const formatTime = (isoString: string) => {
@@ -47,7 +47,7 @@ const PriceListPage = () => {
         const data = response;
 
         if (Array.isArray(data)) {
-          setPrices(data);
+          setPricelist(data);
         } else {
           throw new Error('Wrong answer');
         }
@@ -59,7 +59,7 @@ const PriceListPage = () => {
 
   return (
     <List>
-      {prices.map((p) => (
+      {pricelist.map((p) => (
         <Paper key={`${p.fuel_type}${p.station_id}`} elevation={5} square={false} sx={{ mb: 1 }}>
           <ListItemButton>
             <ListItemAvatar>

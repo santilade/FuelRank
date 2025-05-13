@@ -5,14 +5,12 @@ import type { ReactNode } from 'react';
 type LayoutProps = {
   title: string;
   children: ReactNode;
-  lightMode: boolean;
-  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Layout = ({ title, children, lightMode, setLightMode }: LayoutProps) => {
+const Layout = ({ title, children }: LayoutProps) => {
   return (
     <>
-      <Header title={title} lightMode={lightMode} setLightMode={setLightMode} />
+      <Header title={title} />
       <Box
         sx={{
           width: '100%',

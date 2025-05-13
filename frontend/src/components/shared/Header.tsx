@@ -10,11 +10,10 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import React, { useState } from 'react';
 import { styled } from '@mui/material';
+import { useSharedContext } from './context';
 
 type HeaderProps = {
   title: string;
-  lightMode: boolean;
-  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -37,14 +36,15 @@ const StyledToolBar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-const Header = ({ title, lightMode, setLightMode }: HeaderProps) => {
-  const [fuelType, setFuelType] = useState<string | null>(null);
+const Header = ({ title }: HeaderProps) => {
+  const { lightMode, setLightMode, fuelType, setFuelType } = useSharedContext();
 
   const handleChange = (_event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
     setFuelType(newValue);
+    console.log(newValue);
   };
 
-  const toggleTheme = () => setLightMode((prev) => !prev);
+  const toggleTheme = () => setLightMode((prev: boolean) => !prev);
 
   return (
     <StyledAppBar position="static" elevation={0}>
@@ -56,6 +56,7 @@ const Header = ({ title, lightMode, setLightMode }: HeaderProps) => {
           value={fuelType}
           onChange={handleChange}
           aria-label="Platform"
+          size="small"
         >
           <ToggleButton value="gas">Gas</ToggleButton>
           <ToggleButton value="diesel">Diesel</ToggleButton>

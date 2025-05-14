@@ -101,6 +101,8 @@ def get_prices():
                 "station_id": p.station.id,
                 "station_name": p.station.name,
                 "brand": p.station.brand.name,
+                "lat": float(p.station.lat),
+                "long": float(p.station.long),
                 "address": p.station.address,
                 "fuel_type": p.fuel.name,
                 "price": float(p.price),

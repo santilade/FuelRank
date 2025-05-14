@@ -26,7 +26,7 @@ type Price = {
 const PriceListPage = () => {
   const [pricelist, setPricelist] = useState<Price[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { fuelType } = useSharedContext();
+  const { fuelType, userCoords, setUserCoords } = useSharedContext();
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -42,7 +42,7 @@ const PriceListPage = () => {
     }
     return name;
   };
-
+  // get data
   useEffect(() => {
     getLatestPrices()
       .then((response) => {
@@ -62,6 +62,22 @@ const PriceListPage = () => {
     : pricelist;
 
   if (error) return <div>Error: {error}</div>;
+
+  // get user coords
+
+  useEffect(() => {
+    if (!userCoords && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserCoords(position.coords);
+          console.log('location obtained: ', position.coords);
+        },
+        (error) => {
+          console.error('Error obtaining device position: ', error);
+        }
+      );
+    }
+  });
 
   return (
     <List>

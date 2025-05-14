@@ -1,54 +1,96 @@
-# React + TypeScript + Vite
+# FuelRank - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Project Structure
+```
+frontend/
+├── public/
+│   └── logos/                # PNG images of fuel brand logos (n1, orkan, olis, etc.)
+├── src/
+│   ├── api/                  # API request module
+│   ├── assets/               # Static resources (fonts, decorative images)
+│   ├── components/
+│   │   ├── priceList/        # Fuel price listing page
+│   │   │   ├── PriceListPage.tsx
+│   │   │   └── service.ts
+│   │   └── shared/
+│   │       ├── Layout.tsx
+│   │       ├── Header.tsx
+│   │       └── context.tsx   # Global context (theme and filter)
+│   ├── App.tsx               # Main app entry
+│   ├── index.tsx             # ReactDOM render
+│   ├── theme/                # Light/Dark themes
+│   │   ├── light.ts
+│   │   ├── dark.ts
+│   │   └── index.ts
+├── .env.local
+├── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
+- **Language**: React (TypeScript)
+- **React + TypeScript**
+- **Vite** as bundler
+- **Material UI v5** (`@mui/material`, `@mui/icons-material`)
+- **Context API** for global state (`lightMode`, `fuelType`)
+- **Styled Components** (MUI styled API)
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## Dynamic Theme (Light/Dark)
+
+- Two themes defined in `src/theme/light.ts` and `src/theme/dark.ts`
+- Theme toggling via `IconButton` (`LightModeIcon`, `DarkModeIcon`)
+- Theme controlled via `SharedContext`
+---
+
+## Fuel Type Filter
+
+- Controlled globally from the `Header` using `ToggleButtonGroup`
+- Values are `"gas"` and `"diesel"`
+- Updates global `fuelType` context
+- `PriceListPage` filters the stations based on selected value
+
+---
+
+## Global Context (`SharedContext`)
+
+Located in `src/components/shared/context.tsx`
+
+```ts
+type SharedContextType = {{
+  lightMode: boolean;
+  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
+  fuelType: string | null;
+  setFuelType: React.Dispatch<React.SetStateAction<string | null>>;
+}};
 ```
+
+Provided via `<SharedProvider>` and consumed with `useSharedContext()`.
+
+---
+
+## Key Components
+### `<Header.tsx>`
+- Displays the title and buttons to toggle theme and fuel type.
+- Uses `ToggleButtonGroup`, `IconButton`, `AppBar`, `Toolbar`.
+### `<Layout.tsx>`
+- Defines the base layout.
+- Wraps `Header` and applies responsive `Box` layout.
+### `<PriceListPage.tsx>`
+- Renders the fuel price list (`List`, `ListItem`, `Avatar`)
+- Filters list by `fuelType` if set
+- Accesses context data
+
+## App.tsx
+Renders:
+```ts
+<SharedProvider>
+  <AppContent />  // Contains ThemeProvider, Layout and the page
+</SharedProvider>
+```
+---
+
+### Additional Notes
+- Brand logos are stored in `public/logos/` and accessed via relative paths (/logos/n1.png)
+- Data is fetched via `service.ts` (HTTP requests)
+- Theme and fuel type state can be extended with `localStorage` for persistence

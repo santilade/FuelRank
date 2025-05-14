@@ -37,11 +37,19 @@ const StyledToolBar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const Header = ({ title }: HeaderProps) => {
-  const { lightMode, setLightMode, fuelType, setFuelType } = useSharedContext();
+  const { lightMode, setLightMode, fuelType, setFuelType, closest, setClosest } =
+    useSharedContext();
 
-  const handleChange = (_event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
+  const fuelHandleChange = (_event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
     setFuelType(newValue);
-    console.log(newValue);
+  };
+
+  const closestHandleChange = (_event: React.MouseEvent<HTMLElement>, newValue: boolean) => {
+    setClosest(newValue);
+    if (newValue !== null) {
+      setClosest(newValue);
+    }
+    console.log('closest: ', newValue);
   };
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
@@ -54,12 +62,27 @@ const Header = ({ title }: HeaderProps) => {
           color="primary"
           exclusive
           value={fuelType}
-          onChange={handleChange}
-          aria-label="Platform"
+          onChange={fuelHandleChange}
+          aria-label="Sort by type of fuel"
           size="small"
         >
           <ToggleButton value="gasoline">Gas</ToggleButton>
           <ToggleButton value="diesel">Diesel</ToggleButton>
+        </ToggleButtonGroup>
+        <ToggleButtonGroup
+          color="primary"
+          exclusive
+          value={closest}
+          onChange={closestHandleChange}
+          aria-label="Sort by closest or cheapest price"
+          size="small"
+        >
+          <ToggleButton value={true} disabled={closest === true}>
+            Closest
+          </ToggleButton>
+          <ToggleButton value={false} disabled={closest === false}>
+            Cheapest
+          </ToggleButton>
         </ToggleButtonGroup>
         <StyledIconButton onClick={toggleTheme}>
           {lightMode ? <DarkModeIcon /> : <LightModeIcon />}

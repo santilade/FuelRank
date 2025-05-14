@@ -6,6 +6,9 @@
 **Costco** operates a single gas station in Iceland under a membership-only model. It is often the cheapest option in the country, but unfortunately, **they do not publish fuel prices anywhere online.** So far, they have not responded to my requests for information. I am currently **exploring alternative ways to include their data** in the system in a reliable manner.
 
 ## Backend and Frontend detailed documentation
+[Backend details](https://github.com/Ivarsky/FuelRank/tree/front/backend)
+
+[Frontend details](https://github.com/Ivarsky/FuelRank/tree/front/frontend)
 
 ## Tech Stack
 ### Backend

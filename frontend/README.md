@@ -16,6 +16,8 @@ frontend/
 │   │       ├── Layout.tsx
 │   │       ├── Header.tsx
 │   │       └── context.tsx   # Global context (theme and filter)
+│   ├── utils/
+│   │   └── geo.ts            # haversineDistance function for geolocation
 │   ├── App.tsx               # Main app entry
 │   ├── index.tsx             # ReactDOM render
 │   ├── theme/                # Light/Dark themes
@@ -52,6 +54,25 @@ frontend/
 
 ---
 
+## Sorting Mode: Cheapest vs Closest
+- Toggle added in `Header` with two buttons: `"Cheapest"` and `"Closest"`
+
+- Global state `closest` (boolean) determines sorting mode:
+
+  - `false`: sorts by price
+
+  - `true`: sorts by distance (requires geolocation)
+
+### User Location & Distance Calculation
+- User's geolocation obtained via Geolocation API on page load
+- Coordinates stored in global context (`userCoords`)
+- Stations are sorted by proximity when`"Closest"` is selected
+- Distance is calculated using Haversine formula (`utils/geo.ts`)
+- Formatted as readable string (`formatDistance()` in `utils/format.ts`)
+- Distance is displayed next to each station entry
+
+---
+
 ## Global Context (`SharedContext`)
 
 Located in `src/components/shared/context.tsx`
@@ -62,6 +83,10 @@ type SharedContextType = {{
   setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
   fuelType: string | null;
   setFuelType: React.Dispatch<React.SetStateAction<string | null>>;
+  userCoords: GeolocationCoordinates | null;
+  setUserCoords: React.Dispatch<React.SetStateAction<GeolocationCoordinates | null>>;
+  closest: boolean;
+  setClosest: React.Dispatch<React.SetStateAction<boolean>>;
 }};
 ```
 
@@ -94,3 +119,5 @@ Renders:
 - Brand logos are stored in `public/logos/` and accessed via relative paths (/logos/n1.png)
 - Data is fetched via `service.ts` (HTTP requests)
 - Theme and fuel type state can be extended with `localStorage` for persistence
+- Utility functions for geolocation and formatting are in utils/
+

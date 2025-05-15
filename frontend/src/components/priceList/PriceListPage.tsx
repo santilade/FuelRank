@@ -145,6 +145,7 @@ const PriceListPage = () => {
                       No distance data
                     </Typography>
                   )}
+                  <Typography>{p.fuel_type}</Typography>
                   <Typography component="span" variant="body2" color="text.secondary">
                     {p.discount !== null && `Discount: ${p.discount} ISK`}
                   </Typography>

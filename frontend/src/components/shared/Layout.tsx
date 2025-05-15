@@ -15,10 +15,10 @@ const Layout = ({ title, children }: LayoutProps) => {
         sx={{
           width: '100%',
           maxWidth: {
-            xs: '100%', // móviles
-            sm: '600px', // tablets
-            md: '700px', // laptops
-            lg: '800px', // pantallas grandes
+            xs: '100%',
+            sm: '600px',
+            md: '700px',
+            lg: '800px',
           },
           margin: '0 auto',
           padding: {

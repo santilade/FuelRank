@@ -97,7 +97,6 @@ const PriceListPage = () => {
 
   if (error) return <div>Error: {error}</div>;
 
-  //TODO: afina la visualizacion en mobile
   //TODO: mapa con geolocalizacion de estaciones y usuario
 
   return (

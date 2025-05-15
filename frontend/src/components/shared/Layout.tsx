@@ -9,28 +9,16 @@ type LayoutProps = {
 
 const Layout = ({ title, children }: LayoutProps) => {
   return (
-    <>
+    <Box
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Header title={title} />
-      <Box
-        sx={{
-          width: '100%',
-          maxWidth: {
-            xs: '100%',
-            sm: '600px',
-            md: '700px',
-            lg: '800px',
-          },
-          margin: '0 auto',
-          padding: {
-            xs: 1,
-            sm: 2,
-            md: 3,
-          },
-        }}
-      >
-        {children}
-      </Box>
-    </>
+      <Box sx={{ flex: 1, overflow: 'hidden' }}>{children}</Box>
+    </Box>
   );
 };
 

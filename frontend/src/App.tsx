@@ -1,8 +1,8 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './theme';
+import { SharedProvider, useSharedContext } from './components/shared/context';
 import PriceListPage from './components/priceList/PriceListPage';
 import Layout from './components/shared/Layout';
-import { SharedProvider, useSharedContext } from './components/shared/context';
 
 function AppContent() {
   const { lightMode } = useSharedContext();

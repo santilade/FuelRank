@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getLatestPrices } from './service';
+import { useSharedContext } from '../shared/context';
+import { haversineDistance } from '../../utils/geo';
+import { formatDistance } from '../../utils/format';
 import {
   List,
   ListItemButton,
@@ -10,8 +13,6 @@ import {
   Box,
   Paper,
 } from '@mui/material';
-import { useSharedContext } from '../shared/context';
-import { haversineDistance } from '../../utils/geo';
 
 type Price = {
   station_id: string;
@@ -46,20 +47,6 @@ const PriceListPage = () => {
     return name;
   };
 
-  const formatDistance = (
-    userLat: number,
-    userLong: number,
-    stationLat: number,
-    stationLong: number
-  ): string => {
-    const distance = haversineDistance(userLat, userLong, stationLat, stationLong);
-    if (distance >= 1000) {
-      return `${(distance / 1000).toFixed(1)} km`;
-    } else {
-      return `${Math.round(distance)} m`;
-    }
-  };
-
   // get data
   useEffect(() => {
     getLatestPrices()
@@ -85,7 +72,6 @@ const PriceListPage = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setUserCoords(position.coords);
-          console.log('location obtained: ', position.coords);
         },
         (error) => {
           console.error('Error obtaining device position: ', error);
@@ -124,32 +110,30 @@ const PriceListPage = () => {
             </ListItemAvatar>
             <ListItemText
               primary={
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Typography variant="subtitle1" color="text.primary">
-                    {cleanStationName(p.station_name, p.brand)}
-                    <Typography>{p.price} ISK</Typography>
-                  </Typography>
-                  <Typography component="span" variant="body2" color="text.primary">
-                    {p.brand}
-                  </Typography>
-                </Box>
-              }
-              secondary={
-                <Box display="flex" alignItems="center" gap={1}>
-                  {userCoords ? (
-                    <Typography component="span" variant="body2" color="text.primary">
-                      {formatDistance(userCoords.latitude, userCoords.longitude, p.lat, p.long)}
-                    </Typography>
-                  ) : (
-                    <Typography component="span" variant="body2" color="text.primary">
-                      No distance data
-                    </Typography>
-                  )}
-                  <Typography>{p.fuel_type}</Typography>
-                  <Typography component="span" variant="body2" color="text.secondary">
-                    {p.discount !== null && `Discount: ${p.discount} ISK`}
-                  </Typography>
-                </Box>
+                <Typography component="div">
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Box>
+                      <Typography variant="subtitle1" color="text.primary">
+                        {cleanStationName(p.station_name, p.brand)}
+                      </Typography>
+                      <Typography component="span" variant="body2" color="text.primary">
+                        {userCoords
+                          ? formatDistance(userCoords.latitude, userCoords.longitude, p.lat, p.long)
+                          : 'No distance data'}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" flexDirection="column" alignItems="flex-end">
+                      <Typography variant="body2" color="text.secondary">
+                        {p.fuel_type}
+                      </Typography>
+                      <Typography>{p.price} ISK</Typography>
+                      <Typography component="span" variant="body2" color="text.secondary">
+                        {p.discount !== null &&
+                          `With discount: ${(p.price - p.discount).toFixed(1)}`}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Typography>
               }
             />
           </ListItemButton>

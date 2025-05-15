@@ -1,16 +1,22 @@
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import React from 'react';
+import { useSharedContext } from './context';
+import { useTheme } from '@mui/material/styles';
 import {
   AppBar,
+  styled,
   ToggleButtonGroup,
   ToggleButton,
   Typography,
   Toolbar,
   IconButton,
+  useMediaQuery,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import React from 'react';
-import { styled } from '@mui/material';
-import { useSharedContext } from './context';
 
 type HeaderProps = {
   title: string;
@@ -54,36 +60,72 @@ const Header = ({ title }: HeaderProps) => {
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <StyledAppBar position="static" elevation={0}>
       <StyledToolBar variant="dense">
         <Typography variant="h6">{title}</Typography>
-        <ToggleButtonGroup
-          color="primary"
-          exclusive
-          value={fuelType}
-          onChange={fuelHandleChange}
-          aria-label="Sort by type of fuel"
-          size="small"
-        >
-          <ToggleButton value="gasoline">Gas</ToggleButton>
-          <ToggleButton value="diesel">Diesel</ToggleButton>
-        </ToggleButtonGroup>
-        <ToggleButtonGroup
-          color="primary"
-          exclusive
-          value={closest}
-          onChange={closestHandleChange}
-          aria-label="Sort by closest or cheapest price"
-          size="small"
-        >
-          <ToggleButton value={true} disabled={closest === true}>
-            Closest
-          </ToggleButton>
-          <ToggleButton value={false} disabled={closest === false}>
-            Cheapest
-          </ToggleButton>
-        </ToggleButtonGroup>
+        {isMobile ? (
+          <FormControl size="small" sx={{ minWidth: 80, mx: 1 }}>
+            <InputLabel>Fuel</InputLabel>
+            <Select
+              value={fuelType ?? ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFuelType(value === '' ? null : value);
+              }}
+              label="Fuel"
+            >
+              <MenuItem value="">All fuels</MenuItem>
+              <MenuItem value="gasoline">Gas</MenuItem>
+              <MenuItem value="diesel">Diesel</MenuItem>
+            </Select>
+          </FormControl>
+        ) : (
+          <ToggleButtonGroup
+            color="primary"
+            exclusive
+            value={fuelType}
+            onChange={fuelHandleChange}
+            aria-label="Sort by type of fuel"
+            size="small"
+          >
+            <ToggleButton value="gasoline">Gas</ToggleButton>
+            <ToggleButton value="diesel">Diesel</ToggleButton>
+          </ToggleButtonGroup>
+        )}
+
+        {isMobile ? (
+          <FormControl size="small" sx={{ minWidth: 80, mr: 1 }}>
+            <InputLabel>Order</InputLabel>
+            <Select
+              value={closest}
+              onChange={(e) => setClosest(e.target.value === 'true')}
+              label="Order"
+            >
+              <MenuItem value="true">Closest</MenuItem>
+              <MenuItem value="false">Cheapest</MenuItem>
+            </Select>
+          </FormControl>
+        ) : (
+          <ToggleButtonGroup
+            color="primary"
+            exclusive
+            value={closest}
+            onChange={closestHandleChange}
+            aria-label="Sort by closest or cheapest price"
+            size="small"
+          >
+            <ToggleButton value={true} disabled={closest === true}>
+              Closest
+            </ToggleButton>
+            <ToggleButton value={false} disabled={closest === false}>
+              Cheapest
+            </ToggleButton>
+          </ToggleButtonGroup>
+        )}
         <StyledIconButton onClick={toggleTheme}>
           {lightMode ? <DarkModeIcon /> : <LightModeIcon />}
         </StyledIconButton>

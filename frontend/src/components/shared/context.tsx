@@ -1,4 +1,7 @@
-import React, { createContext, useContext, useState } from 'react';
+import { useTheme, useMediaQuery } from '@mui/material';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
+// TODO: problema de las importaciones con react
 
 type SharedContextType = {
   lightMode: boolean;
@@ -9,6 +12,7 @@ type SharedContextType = {
   setUserCoords: React.Dispatch<React.SetStateAction<GeolocationCoordinates | null>>;
   closest: boolean;
   setClosest: React.Dispatch<React.SetStateAction<boolean>>;
+  isMobile: boolean;
 };
 
 const defaultContext: SharedContextType = {
@@ -20,6 +24,7 @@ const defaultContext: SharedContextType = {
   setUserCoords: () => {},
   closest: false,
   setClosest: () => {},
+  isMobile: false,
 };
 
 export const SharedContext = createContext<SharedContextType>(defaultContext);
@@ -29,6 +34,14 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
   const [fuelType, setFuelType] = useState<string | null>(null);
   const [userCoords, setUserCoords] = useState<GeolocationCoordinates | null>(null);
   const [closest, setClosest] = useState(false);
+
+  const theme = useTheme();
+  const isMobileQuery = useMediaQuery(theme.breakpoints.down('sm'));
+  const [isMobile, setIsMobile] = useState(isMobileQuery);
+
+  useEffect(() => {
+    setIsMobile(isMobileQuery);
+  }, [isMobileQuery]);
 
   return (
     <SharedContext.Provider
@@ -41,6 +54,7 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
         setUserCoords,
         closest,
         setClosest,
+        isMobile,
       }}
     >
       {children}

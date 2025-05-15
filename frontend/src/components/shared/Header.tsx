@@ -1,8 +1,7 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import React from 'react';
+import * as React from 'react';
 import { useSharedContext } from './context';
-import { useTheme } from '@mui/material/styles';
 import {
   AppBar,
   styled,
@@ -11,7 +10,6 @@ import {
   Typography,
   Toolbar,
   IconButton,
-  useMediaQuery,
   Select,
   MenuItem,
   FormControl,
@@ -60,8 +58,7 @@ const Header = ({ title }: HeaderProps) => {
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useSharedContext();
 
   return (
     <StyledAppBar position="static" elevation={0}>

@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import StationMap from './StationMap';
 
-type Price = {
+type Station = {
   station_id: string;
   station_name: string;
   brand: string;
@@ -29,9 +29,10 @@ type Price = {
 };
 
 const PriceListPage = () => {
-  const [pricelist, setPricelist] = useState<Price[]>([]);
+  const [stationList, setStationList] = useState<Station[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { fuelType, userCoords, setUserCoords, closest, isMobile } = useSharedContext();
+  const [stationCoords, setStationCoords] = useState<[number, number] | null>(null);
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -48,6 +49,10 @@ const PriceListPage = () => {
     return name;
   };
 
+  const handleStationClick = (station: Station) => {
+    setStationCoords([station.lat, station.long]);
+  };
+
   // get data
   useEffect(() => {
     getLatestPrices()
@@ -55,7 +60,7 @@ const PriceListPage = () => {
         const data = response;
 
         if (Array.isArray(data)) {
-          setPricelist(data);
+          setStationList(data);
         } else {
           throw new Error('Wrong answer');
         }
@@ -64,8 +69,8 @@ const PriceListPage = () => {
   }, []);
 
   const filteredPricelist = fuelType
-    ? pricelist.filter((p) => p.fuel_type.toLowerCase() === fuelType)
-    : pricelist;
+    ? stationList.filter((station) => station.fuel_type.toLowerCase() === fuelType)
+    : stationList;
 
   // get user coords
   useEffect(() => {
@@ -98,8 +103,6 @@ const PriceListPage = () => {
 
   if (error) return <div>Error: {error}</div>;
 
-  //TODO: mapa con geolocalizacion de estaciones y usuario
-
   return (
     <Box
       sx={{
@@ -120,16 +123,19 @@ const PriceListPage = () => {
         }}
       >
         <List>
-          {sortedPriceList.map((p) => (
+          {sortedPriceList.map((station) => (
             <Paper
-              key={`${p.fuel_type}${p.station_id}`}
+              key={`${station.fuel_type}${station.station_id}`}
               elevation={5}
               square={false}
               sx={{ mb: 1 }}
             >
-              <ListItemButton>
+              <ListItemButton onClick={() => handleStationClick(station)}>
                 <ListItemAvatar>
-                  <Avatar src={`/logos/${p.brand.toLocaleLowerCase()}.png`} variant="rounded" />
+                  <Avatar
+                    src={`/logos/${station.brand.toLocaleLowerCase()}.png`}
+                    variant="rounded"
+                  />
                 </ListItemAvatar>
                 <ListItemText
                   primary={
@@ -137,27 +143,27 @@ const PriceListPage = () => {
                       <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Box>
                           <Typography variant="subtitle1" color="text.primary">
-                            {cleanStationName(p.station_name, p.brand)}
+                            {cleanStationName(station.station_name, station.brand)}
                           </Typography>
                           <Typography component="span" variant="body2" color="text.primary">
                             {userCoords
                               ? formatDistance(
                                   userCoords.latitude,
                                   userCoords.longitude,
-                                  p.lat,
-                                  p.long
+                                  station.lat,
+                                  station.long
                                 )
                               : 'No distance data'}
                           </Typography>
                         </Box>
                         <Box display="flex" flexDirection="column" alignItems="flex-end">
                           <Typography variant="body2" color="text.secondary">
-                            {p.fuel_type}
+                            {station.fuel_type}
                           </Typography>
-                          <Typography>{p.price} ISK</Typography>
+                          <Typography>{station.price} ISK</Typography>
                           <Typography component="span" variant="body2" color="text.secondary">
-                            {p.discount !== null &&
-                              `With discount: ${(p.price - p.discount).toFixed(1)}`}
+                            {station.discount !== null &&
+                              `With discount: ${(station.price - station.discount).toFixed(1)}`}
                           </Typography>
                         </Box>
                       </Box>
@@ -176,7 +182,7 @@ const PriceListPage = () => {
           overflow: 'hidden',
         }}
       >
-        <StationMap />
+        <StationMap selectedCoords={stationCoords} />
       </Box>
     </Box>
   );

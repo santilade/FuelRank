@@ -16,6 +16,8 @@ import {
   InputLabel,
 } from '@mui/material';
 
+//TODO: filtro por region, adaptado a vista movil
+
 type HeaderProps = {
   title: string;
 };

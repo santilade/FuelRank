@@ -28,11 +28,18 @@ type Station = {
   last_update: string;
 };
 
+type SelectedStation = {
+  station_id: string;
+  station_name: string;
+  address: string;
+  coords: [number, number];
+};
+
 const PriceListPage = () => {
   const [stationList, setStationList] = useState<Station[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { fuelType, userCoords, setUserCoords, closest, isMobile } = useSharedContext();
-  const [stationCoords, setStationCoords] = useState<[number, number] | null>(null);
+  const [selectedStation, setSelectedStation] = useState<SelectedStation | null>(null);
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -50,7 +57,12 @@ const PriceListPage = () => {
   };
 
   const handleStationClick = (station: Station) => {
-    setStationCoords([station.lat, station.long]);
+    setSelectedStation({
+      station_id: station.station_id,
+      station_name: cleanStationName(station.station_name, station.brand),
+      address: station.address,
+      coords: [station.lat, station.long],
+    });
   };
 
   // get data
@@ -182,7 +194,7 @@ const PriceListPage = () => {
           overflow: 'hidden',
         }}
       >
-        <StationMap selectedCoords={stationCoords} />
+        <StationMap selectedStation={selectedStation} />
       </Box>
     </Box>
   );

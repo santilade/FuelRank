@@ -1,14 +1,20 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngBounds } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { Box, Typography } from '@mui/material';
 import { useSharedContext } from '../shared/context';
 import { useEffect } from 'react';
 
 //TODO: pop up de estacion con datos y link a gmaps
 
-type Props = {
-  selectedCoords: [number, number] | null;
+type StationMapsProps = {
+  selectedStation: {
+    coords: [number, number];
+    station_name: string;
+    address: string;
+  } | null;
 };
+
 const userIcon = new Icon({
   iconUrl: '/map-icons/userIcon.svg',
   iconSize: [36, 36],
@@ -21,26 +27,26 @@ const stationIcon = new Icon({
   iconAnchor: [18, 36],
 });
 
-const MapEffect = ({ selectedCoords }: Props) => {
+const MapEffect = ({ selectedStation }: StationMapsProps) => {
   const { userCoords } = useSharedContext();
   const map = useMap();
 
   useEffect(() => {
-    if (userCoords && selectedCoords) {
+    if (userCoords && selectedStation) {
       const bounds = new LatLngBounds([
         [userCoords.latitude, userCoords.longitude],
-        selectedCoords,
+        selectedStation.coords,
       ]);
       map.fitBounds(bounds, { padding: [50, 50] });
     } else if (userCoords) {
       map.setView([userCoords.latitude, userCoords.longitude], 13);
     }
-  }, [userCoords, selectedCoords, map]);
+  }, [userCoords, selectedStation, map]);
 
   return null;
 };
 
-const StationMap = ({ selectedCoords }: Props) => {
+const StationMap = ({ selectedStation }: StationMapsProps) => {
   const { userCoords } = useSharedContext();
 
   const defaultCenter: [number, number] = userCoords
@@ -63,12 +69,44 @@ const StationMap = ({ selectedCoords }: Props) => {
           <Popup>Your Location</Popup>
         </Marker>
       )}
-      {selectedCoords && (
-        <Marker position={selectedCoords} icon={stationIcon}>
-          <Popup>Station</Popup>
+      {selectedStation && (
+        <Marker position={selectedStation.coords} icon={stationIcon}>
+          <Popup>
+            <Box>
+              <Typography variant="subtitle1">{selectedStation.station_name}</Typography>
+              <Box display="flex" flexDirection="column" alignItems="flex-start" gap={1}>
+                <Box component="span" display="inline-flex" alignItems="center" gap={1}>
+                  <img
+                    src="/map-icons/google-maps-icon.svg"
+                    alt="Open in Google Maps"
+                    width={20}
+                    height={20}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <a
+                    href={`https://www.google.com/maps?q=${selectedStation.coords[0]},${selectedStation.coords[1]}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Typography variant="subtitle2">{selectedStation.address}</Typography>
+                  </a>
+                </Box>
+                <Box component="span" display="inline-flex" alignItems="center" gap={1}>
+                  <img
+                    src="/map-icons/magnifying-glass-icon.svg"
+                    alt="View station detailes"
+                    width={14}
+                    height={14}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <Typography variant="subtitle2">Station details</Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Popup>
         </Marker>
       )}
-      <MapEffect selectedCoords={selectedCoords} />
+      <MapEffect selectedStation={selectedStation} />
     </MapContainer>
   );
 };

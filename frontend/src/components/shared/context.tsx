@@ -1,8 +1,6 @@
 import { useTheme, useMediaQuery } from '@mui/material';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO: problema de las importaciones con react
-
 type SharedContextType = {
   lightMode: boolean;
   setLightMode: React.Dispatch<React.SetStateAction<boolean>>;

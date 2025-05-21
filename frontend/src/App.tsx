@@ -3,6 +3,8 @@ import { lightTheme, darkTheme } from './theme';
 import { SharedProvider, useSharedContext } from './components/shared/context';
 import PriceListPage from './components/priceList/PriceListPage';
 import Layout from './components/shared/Layout';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import StationDetailPage from './components/stationDetail/StationDetailPage';
 
 function AppContent() {
   const { lightMode } = useSharedContext();
@@ -12,7 +14,10 @@ function AppContent() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout title="FuelRank">
-        <PriceListPage />
+        <Routes>
+          <Route path="/" element={<PriceListPage />} />
+          <Route path="/station/:id" element={<StationDetailPage />} />
+        </Routes>
       </Layout>
     </ThemeProvider>
   );
@@ -21,7 +26,9 @@ function AppContent() {
 function App() {
   return (
     <SharedProvider>
-      <AppContent />
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </SharedProvider>
   );
 }

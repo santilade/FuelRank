@@ -5,13 +5,12 @@ import { Box, Typography } from '@mui/material';
 import { useSharedContext } from '../shared/context';
 import { useEffect } from 'react';
 
-//TODO: pop up de estacion con datos y link a gmaps
-
 type StationMapsProps = {
   selectedStation: {
-    coords: [number, number];
+    station_id: string;
     station_name: string;
     address: string;
+    coords: [number, number];
   } | null;
 };
 
@@ -19,12 +18,14 @@ const userIcon = new Icon({
   iconUrl: '/map-icons/userIcon.svg',
   iconSize: [36, 36],
   iconAnchor: [18, 36],
+  popupAnchor: [0, -36],
 });
 
 const stationIcon = new Icon({
   iconUrl: '/map-icons/stationIcon.svg',
   iconSize: [36, 36],
   iconAnchor: [18, 36],
+  popupAnchor: [0, -36],
 });
 
 const MapEffect = ({ selectedStation }: StationMapsProps) => {
@@ -99,7 +100,9 @@ const StationMap = ({ selectedStation }: StationMapsProps) => {
                     height={14}
                     style={{ cursor: 'pointer' }}
                   />
-                  <Typography variant="subtitle2">Station details</Typography>
+                  <a href={`/station/${selectedStation.station_id}`}>
+                    <Typography variant="subtitle2">Station details</Typography>
+                  </a>
                 </Box>
               </Box>
             </Box>

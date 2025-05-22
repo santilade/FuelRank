@@ -15,7 +15,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Button,
+  Box,
 } from '@mui/material';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
@@ -36,6 +36,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const StyledToolBar = styled(Toolbar)(({ theme }) => ({
+  position: 'relative',
+
   justifyContent: 'space-between',
   minHeight: 56,
   paddingLeft: theme.spacing(2),
@@ -69,86 +71,126 @@ const Header = ({ title }: HeaderProps) => {
 
   return (
     <StyledAppBar position="static" elevation={0}>
-      <StyledToolBar variant="dense">
-        <Typography
-          variant="h6"
-          component={Link}
-          to={'/'}
-          sx={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+      <StyledToolBar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        {/* LEFT section */}
+        <Box sx={{ display: 'flex', alignItems: 'center', minWidth: '100px' }}>
+          {isDetailPage ? (
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="back"
+              onClick={() => navigate('/')}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          ) : (
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              {/* FILTERS */}
+              {isMobile ? (
+                <>
+                  <FormControl size="small">
+                    <InputLabel>Fuel</InputLabel>
+                    <Select
+                      value={fuelType ?? ''}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFuelType(value === '' ? null : value);
+                      }}
+                      label="Fuel"
+                    >
+                      <MenuItem value="">All fuels</MenuItem>
+                      <MenuItem value="gasoline">Gas</MenuItem>
+                      <MenuItem value="diesel">Diesel</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl size="small" sx={{ minWidth: 80, mr: 1 }}>
+                    <InputLabel>Order</InputLabel>
+                    <Select
+                      value={closest}
+                      onChange={(e) => setClosest(e.target.value === 'true')}
+                      label="Order"
+                    >
+                      <MenuItem value="true">Closest</MenuItem>
+                      <MenuItem value="false">Cheapest</MenuItem>
+                    </Select>
+                  </FormControl>
+                </>
+              ) : (
+                <>
+                  <ToggleButtonGroup
+                    color="primary"
+                    exclusive
+                    value={fuelType}
+                    onChange={fuelHandleChange}
+                    aria-label="Sort by type of fuel"
+                    size="small"
+                  >
+                    <ToggleButton value="gasoline">Gas</ToggleButton>
+                    <ToggleButton value="diesel">Diesel</ToggleButton>
+                  </ToggleButtonGroup>
+                  <ToggleButtonGroup
+                    color="primary"
+                    exclusive
+                    value={closest}
+                    onChange={closestHandleChange}
+                    aria-label="Sort by closest or cheapest price"
+                    size="small"
+                  >
+                    <ToggleButton value={true} disabled={closest === true}>
+                      Closest
+                    </ToggleButton>
+                    <ToggleButton value={false} disabled={closest === false}>
+                      Cheapest
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </>
+              )}
+            </Box>
+          )}
+        </Box>
+
+        {/* CENTRAL section */}
+
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: isMobile ? 'space-between' : 'center',
+          }}
         >
-          {title}
-        </Typography>
-        {isDetailPage ? (
-          <Button onClick={() => navigate('/')} size="small" variant="outlined">
-            <Typography variant="button">← Back</Typography>
-          </Button>
-        ) : (
-          <>
-            {isMobile ? (
-              <FormControl size="small" sx={{ minWidth: 80, mx: 1 }}>
-                <InputLabel>Fuel</InputLabel>
-                <Select
-                  value={fuelType ?? ''}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setFuelType(value === '' ? null : value);
-                  }}
-                  label="Fuel"
-                >
-                  <MenuItem value="">All fuels</MenuItem>
-                  <MenuItem value="gasoline">Gas</MenuItem>
-                  <MenuItem value="diesel">Diesel</MenuItem>
-                </Select>
-              </FormControl>
-            ) : (
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                value={fuelType}
-                onChange={fuelHandleChange}
-                aria-label="Sort by type of fuel"
-                size="small"
-              >
-                <ToggleButton value="gasoline">Gas</ToggleButton>
-                <ToggleButton value="diesel">Diesel</ToggleButton>
-              </ToggleButtonGroup>
-            )}
+          <Typography
+            variant={isMobile ? 'subtitle1' : 'h6'}
+            component={Link}
+            to="/"
+            sx={{
+              ...(isMobile
+                ? {}
+                : {
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }),
+              textDecoration: 'none',
+              color: 'inherit',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {title}
+          </Typography>
+        </Box>
 
-            {isMobile ? (
-              <FormControl size="small" sx={{ minWidth: 80, mr: 1 }}>
-                <InputLabel>Order</InputLabel>
-                <Select
-                  value={closest}
-                  onChange={(e) => setClosest(e.target.value === 'true')}
-                  label="Order"
-                >
-                  <MenuItem value="true">Closest</MenuItem>
-                  <MenuItem value="false">Cheapest</MenuItem>
-                </Select>
-              </FormControl>
-            ) : (
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                value={closest}
-                onChange={closestHandleChange}
-                aria-label="Sort by closest or cheapest price"
-                size="small"
-              >
-                <ToggleButton value={true} disabled={closest === true}>
-                  Closest
-                </ToggleButton>
-                <ToggleButton value={false} disabled={closest === false}>
-                  Cheapest
-                </ToggleButton>
-              </ToggleButtonGroup>
-            )}
-          </>
-        )}
-
-        <StyledIconButton onClick={toggleTheme}>
-          {lightMode ? <DarkModeIcon /> : <LightModeIcon />}
-        </StyledIconButton>
+        {/* RIGHT section */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            minWidth: '100px',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <StyledIconButton onClick={toggleTheme}>
+            {lightMode ? <DarkModeIcon /> : <LightModeIcon />}
+          </StyledIconButton>
+        </Box>
       </StyledToolBar>
     </StyledAppBar>
   );

@@ -3,6 +3,7 @@ import { getLatestPrices } from './service';
 import { useSharedContext } from '../shared/context';
 import { haversineDistance } from '../../utils/geo';
 import { formatDistance } from '../../utils/format';
+import { cleanStationName } from '../../utils/stationNameCleaner';
 import {
   List,
   ListItemButton,
@@ -45,16 +46,6 @@ const PriceListPage = () => {
   //  const date = new Date(isoString);
   //  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   //};
-
-  const cleanStationName = (name: string, brand: string): string => {
-    const normalizedBrand = brand.trim().toLocaleLowerCase();
-    const normalizedName = name.trim().toLocaleLowerCase();
-
-    if (normalizedName.startsWith(normalizedBrand)) {
-      return name.slice(brand.length).trimStart();
-    }
-    return name;
-  };
 
   const handleStationClick = (station: Station) => {
     setSelectedStation({

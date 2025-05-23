@@ -52,7 +52,6 @@ const StationDetailPage = () => {
 
   if (error) return <div>Error: {error}</div>;
   if (!station) return <div>Loading...</div>;
-  console.log(station);
 
   return (
     <Box
@@ -60,10 +59,11 @@ const StationDetailPage = () => {
       maxWidth="md"
       mx="auto"
       sx={{
-        display: 'flex',
+        display: { xs: 'block', md: 'flex' },
         flexDirection: 'column',
-        justifyContent: { xs: 'flex-start', md: 'center' },
-        minHeight: '70vh',
+        justifyContent: { md: 'center' },
+        minHeight: { xs: 'auto', md: '70vh' },
+        overflowY: { xs: 'visible', md: 'hidden' },
       }}
     >
       <Card variant="outlined">
@@ -94,7 +94,7 @@ const StationDetailPage = () => {
               <Paper
                 sx={{
                   p: 2,
-                  mb: 2,
+                  mb: { xs: 1, md: 0 },
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
@@ -142,12 +142,16 @@ const StationDetailPage = () => {
               </Paper>
             </Box>
 
-            {isMobile && <Divider sx={{ my: 2 }} />}
+            {isMobile && <Divider sx={{ my: 0.5 }} />}
 
             {/* PRICES*/}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
               {Object.entries(station.prices).map(([fuelType, fuel]) => (
-                <Paper key={fuelType} sx={{ p: 2, mb: 2 }} elevation={4}>
+                <Paper
+                  key={fuelType}
+                  sx={{ p: { xs: 1, md: 2 }, mb: { xs: 1, md: 2 } }}
+                  elevation={4}
+                >
                   <Typography variant="h6">{fuelType}</Typography>
                   <Typography>Price: {fuel.price} ISK</Typography>
 

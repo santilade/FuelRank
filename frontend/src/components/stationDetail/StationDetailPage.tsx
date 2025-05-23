@@ -55,7 +55,17 @@ const StationDetailPage = () => {
   console.log(station);
 
   return (
-    <Box p={2} maxWidth="md" mx="auto">
+    <Box
+      p={2}
+      maxWidth="md"
+      mx="auto"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: { xs: 'flex-start', md: 'center' },
+        minHeight: '70vh',
+      }}
+    >
       <Card variant="outlined">
         <CardHeader
           avatar={
@@ -106,8 +116,8 @@ const StationDetailPage = () => {
                     <img
                       src="/map-icons/google-maps-icon.svg"
                       alt="Open in Google maps"
-                      width={20}
-                      height={20}
+                      width={16}
+                      height={16}
                       style={{ cursor: 'pointer' }}
                     />
                     <Typography>{station.address}</Typography>

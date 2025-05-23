@@ -80,8 +80,8 @@ const StationMap = ({ selectedStation }: StationMapsProps) => {
                   <img
                     src="/map-icons/google-maps-icon.svg"
                     alt="Open in Google Maps"
-                    width={20}
-                    height={20}
+                    width={16}
+                    height={16}
                     style={{ cursor: 'pointer' }}
                   />
                   <a

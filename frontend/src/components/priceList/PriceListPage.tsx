@@ -39,7 +39,7 @@ type SelectedStation = {
 const PriceListPage = () => {
   const [stationList, setStationList] = useState<Station[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { fuelType, userCoords, setUserCoords, closest, isMobile } = useSharedContext();
+  const { fuelType, userCoords, setUserCoords, closest, isMobile, region } = useSharedContext();
   const [selectedStation, setSelectedStation] = useState<SelectedStation | null>(null);
 
   //const formatTime = (isoString: string) => {
@@ -58,7 +58,7 @@ const PriceListPage = () => {
 
   // get data
   useEffect(() => {
-    getLatestPrices()
+    getLatestPrices(region ?? undefined)
       .then((response) => {
         const data = response;
 
@@ -69,7 +69,7 @@ const PriceListPage = () => {
         }
       })
       .catch((err) => setError(err.message));
-  }, []);
+  }, [region]);
 
   const filteredPricelist = fuelType
     ? stationList.filter((station) => station.fuel_type.toLowerCase() === fuelType)

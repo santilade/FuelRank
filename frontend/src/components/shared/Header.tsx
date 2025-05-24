@@ -1,7 +1,7 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useSharedContext } from './context';
 import {
   AppBar,
@@ -16,6 +16,7 @@ import {
   FormControl,
   InputLabel,
   Box,
+  type SelectChangeEvent,
 } from '@mui/material';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ type HeaderProps = {
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
+  padding: 0,
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -52,8 +54,17 @@ const Header = ({ title }: HeaderProps) => {
   const navigate = useNavigate();
 
   const isDetailPage = location.pathname.startsWith('/station/');
-  const { lightMode, setLightMode, fuelType, setFuelType, closest, setClosest, isMobile } =
-    useSharedContext();
+  const {
+    lightMode,
+    setLightMode,
+    fuelType,
+    setFuelType,
+    closest,
+    setClosest,
+    isMobile,
+    region,
+    setRegion,
+  } = useSharedContext();
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
 
@@ -66,7 +77,11 @@ const Header = ({ title }: HeaderProps) => {
     if (newValue !== null) {
       setClosest(newValue);
     }
-    console.log('closest: ', newValue);
+  };
+
+  const regionHandleChange = (e: SelectChangeEvent) => {
+    const value = e.target.value;
+    setRegion(value === 'None' ? null : value);
   };
 
   return (
@@ -112,6 +127,22 @@ const Header = ({ title }: HeaderProps) => {
                     >
                       <MenuItem value="true">Closest</MenuItem>
                       <MenuItem value="false">Cheapest</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl size="small">
+                    <InputLabel>Region</InputLabel>
+                    <Select value={region ?? 'None'} label="region" onChange={regionHandleChange}>
+                      <MenuItem value={'None'}>
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={'CR'}>Capital Region</MenuItem>
+                      <MenuItem value={'SP'}>Southern Peninsula</MenuItem>
+                      <MenuItem value={'WR'}>Western Region</MenuItem>
+                      <MenuItem value={'WF'}>Westfjords</MenuItem>
+                      <MenuItem value={'NW'}>Northwestern Region</MenuItem>
+                      <MenuItem value={'NE'}>Northeastern Region</MenuItem>
+                      <MenuItem value={'ER'}>Eastern Region</MenuItem>
+                      <MenuItem value={'SR'}>Southern Region</MenuItem>
                     </Select>
                   </FormControl>
                 </>
@@ -183,7 +214,7 @@ const Header = ({ title }: HeaderProps) => {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            minWidth: '100px',
+            minWidth: 'auto',
             justifyContent: 'flex-end',
           }}
         >

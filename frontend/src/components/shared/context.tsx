@@ -11,6 +11,8 @@ type SharedContextType = {
   closest: boolean;
   setClosest: React.Dispatch<React.SetStateAction<boolean>>;
   isMobile: boolean;
+  region: string | null;
+  setRegion: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const defaultContext: SharedContextType = {
@@ -23,6 +25,8 @@ const defaultContext: SharedContextType = {
   closest: false,
   setClosest: () => {},
   isMobile: false,
+  region: null,
+  setRegion: () => {},
 };
 
 export const SharedContext = createContext<SharedContextType>(defaultContext);
@@ -32,6 +36,7 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
   const [fuelType, setFuelType] = useState<string | null>(null);
   const [userCoords, setUserCoords] = useState<GeolocationCoordinates | null>(null);
   const [closest, setClosest] = useState(false);
+  const [region, setRegion] = useState<string | null>(null);
 
   const theme = useTheme();
   const isMobileQuery = useMediaQuery(theme.breakpoints.down('sm'));
@@ -53,6 +58,8 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
         closest,
         setClosest,
         isMobile,
+        region,
+        setRegion,
       }}
     >
       {children}

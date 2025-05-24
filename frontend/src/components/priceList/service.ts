@@ -1,7 +1,8 @@
 import client from '../../api/client.ts';
 
-const priceListUrl = '/prices?fuel=GAS&fuel=DIESEL&limit=100';
-
-export const getLatestPrices = () => {
-  return client.get(priceListUrl);
+export const getLatestPrices = (region?: string) => {
+  const limit = '100';
+  const baseUrl = `/prices?fuel=GAS&fuel=DIESEL&limit=${limit}`;
+  const url = region ? `/prices?region=${region}&fuel=GAS&fuel=DIESEL` : baseUrl;
+  return client.get(url);
 };

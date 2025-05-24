@@ -28,7 +28,7 @@ def get_prices():
 
     # limit param validation
     try:
-        limit = int(request.args.get("limit", 10))
+        limit = int(request.args.get("limit", 100))
         if limit <= 0:
             raise ValueError
     except ValueError:
@@ -101,8 +101,8 @@ def get_prices():
                 "station_id": p.station.id,
                 "station_name": p.station.name,
                 "brand": p.station.brand.name,
-                "lat": float(p.station.lat),
-                "long": float(p.station.long),
+                "lat": float(p.station.lat) if p.station.lat else None,
+                "long": float(p.station.long) if p.station.long else None,
                 "address": p.station.address,
                 "fuel_type": p.fuel.name,
                 "price": float(p.price),

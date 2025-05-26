@@ -32,7 +32,11 @@ const defaultContext: SharedContextType = {
 export const SharedContext = createContext<SharedContextType>(defaultContext);
 
 export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
-  const [lightMode, setLightMode] = useState(false);
+  const [lightMode, setLightMode] = useState(() => {
+    const saved = localStorage.getItem('lightMode');
+    if (saved !== null) return JSON.parse(saved);
+    return window.matchMedia('(prefers-color-scheme: light)').matches;
+  });
   const [fuelType, setFuelType] = useState<string | null>(null);
   const [userCoords, setUserCoords] = useState<GeolocationCoordinates | null>(null);
   const [closest, setClosest] = useState(false);
@@ -45,6 +49,10 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setIsMobile(isMobileQuery);
   }, [isMobileQuery]);
+
+  useEffect(() => {
+    localStorage.setItem('lightMode', JSON.stringify(lightMode));
+  }, [lightMode]);
 
   return (
     <SharedContext.Provider

@@ -85,7 +85,6 @@ const Header = ({ title }: HeaderProps) => {
   const RegionSelector = ({
     region,
     onChange,
-    sx = {},
   }: {
     region: string | null;
     onChange: (e: SelectChangeEvent) => void;

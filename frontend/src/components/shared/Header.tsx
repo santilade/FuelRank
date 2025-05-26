@@ -1,7 +1,7 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useState } from 'react';
+import React from 'react';
 import { useSharedContext } from './context';
 import {
   AppBar,
@@ -19,8 +19,6 @@ import {
   type SelectChangeEvent,
 } from '@mui/material';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-
-//TODO: filtro por region, adaptado a vista movil
 
 type HeaderProps = {
   title: string;
@@ -84,12 +82,48 @@ const Header = ({ title }: HeaderProps) => {
     setRegion(value === 'None' ? null : value);
   };
 
+  const RegionSelector = ({
+    region,
+    onChange,
+    sx = {},
+  }: {
+    region: string | null;
+    onChange: (e: SelectChangeEvent) => void;
+    sx?: object;
+  }) => (
+    <FormControl
+      size="small"
+      sx={{
+        ...(isMobile ? { flex: 1 } : { width: '150px' }),
+      }}
+    >
+      <InputLabel>Region</InputLabel>
+      <Select value={region ?? 'None'} onChange={onChange} label="Region">
+        <MenuItem value="None">
+          <em>None</em>
+        </MenuItem>
+        <MenuItem value="CR">Capital</MenuItem>
+        <MenuItem value="SP">S. Peninsula</MenuItem>
+        <MenuItem value="WR">West</MenuItem>
+        <MenuItem value="WF">Westfjords</MenuItem>
+        <MenuItem value="NW">NW</MenuItem>
+        <MenuItem value="NE">NE</MenuItem>
+        <MenuItem value="ER">East</MenuItem>
+        <MenuItem value="SR">South</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
   return (
     <StyledAppBar position="static" elevation={0}>
-      <StyledToolBar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        {/* LEFT section */}
-        <Box sx={{ display: 'flex', alignItems: 'center', minWidth: '100px' }}>
-          {isDetailPage ? (
+      <StyledToolBar
+        variant="dense"
+        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        {/* LEFT: title and back button */}
+
+        {isDetailPage && (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -98,123 +132,71 @@ const Header = ({ title }: HeaderProps) => {
             >
               <ArrowBackIcon />
             </IconButton>
-          ) : (
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              {/* FILTERS */}
-              {isMobile ? (
-                <>
-                  <FormControl size="small">
-                    <InputLabel>Fuel</InputLabel>
-                    <Select
-                      value={fuelType ?? ''}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFuelType(value === '' ? null : value);
-                      }}
-                      label="Fuel"
-                    >
-                      <MenuItem value="">All fuels</MenuItem>
-                      <MenuItem value="gasoline">Gas</MenuItem>
-                      <MenuItem value="diesel">Diesel</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl size="small" sx={{ minWidth: 80, mr: 1 }}>
-                    <InputLabel>Order</InputLabel>
-                    <Select
-                      value={closest}
-                      onChange={(e) => setClosest(e.target.value === 'true')}
-                      label="Order"
-                    >
-                      <MenuItem value="true">Closest</MenuItem>
-                      <MenuItem value="false">Cheapest</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl size="small">
-                    <InputLabel>Region</InputLabel>
-                    <Select value={region ?? 'None'} label="region" onChange={regionHandleChange}>
-                      <MenuItem value={'None'}>
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={'CR'}>Capital Region</MenuItem>
-                      <MenuItem value={'SP'}>Southern Peninsula</MenuItem>
-                      <MenuItem value={'WR'}>Western Region</MenuItem>
-                      <MenuItem value={'WF'}>Westfjords</MenuItem>
-                      <MenuItem value={'NW'}>Northwestern Region</MenuItem>
-                      <MenuItem value={'NE'}>Northeastern Region</MenuItem>
-                      <MenuItem value={'ER'}>Eastern Region</MenuItem>
-                      <MenuItem value={'SR'}>Southern Region</MenuItem>
-                    </Select>
-                  </FormControl>
-                </>
-              ) : (
-                <>
-                  <ToggleButtonGroup
-                    color="primary"
-                    exclusive
-                    value={fuelType}
-                    onChange={fuelHandleChange}
-                    aria-label="Sort by type of fuel"
-                    size="small"
-                  >
-                    <ToggleButton value="gasoline">Gas</ToggleButton>
-                    <ToggleButton value="diesel">Diesel</ToggleButton>
-                  </ToggleButtonGroup>
-                  <ToggleButtonGroup
-                    color="primary"
-                    exclusive
-                    value={closest}
-                    onChange={closestHandleChange}
-                    aria-label="Sort by closest or cheapest price"
-                    size="small"
-                  >
-                    <ToggleButton value={true} disabled={closest === true}>
-                      Closest
-                    </ToggleButton>
-                    <ToggleButton value={false} disabled={closest === false}>
-                      Cheapest
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </>
-              )}
-            </Box>
-          )}
-        </Box>
-
-        {/* CENTRAL section */}
-
-        <Box
+          </Box>
+        )}
+        <Typography
+          variant={isMobile ? 'subtitle1' : 'h6'}
+          component={Link}
+          to="/"
           sx={{
-            flexGrow: 1,
-            display: 'flex',
-            justifyContent: isMobile ? 'space-between' : 'center',
+            textDecoration: 'none',
+            color: 'inherit',
+            whiteSpace: 'nowrap',
           }}
         >
-          <Typography
-            variant={isMobile ? 'subtitle1' : 'h6'}
-            component={Link}
-            to="/"
-            sx={{
-              ...(isMobile
-                ? {}
-                : {
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                  }),
-              textDecoration: 'none',
-              color: 'inherit',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {title}
-          </Typography>
-        </Box>
+          {title}
+        </Typography>
 
-        {/* RIGHT section */}
+        {/* CENTER desktop: filters  */}
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            minWidth: 'auto',
+            gap: 2,
+            flexGrow: 1,
+            justifyContent: isMobile ? 'space-between' : 'center',
+          }}
+        >
+          {!isMobile && !isDetailPage && (
+            <>
+              <ToggleButtonGroup
+                color="primary"
+                exclusive
+                value={fuelType}
+                onChange={fuelHandleChange}
+                aria-label="Sort by type of fuel"
+                size="small"
+              >
+                <ToggleButton value="gasoline">Gas</ToggleButton>
+                <ToggleButton value="diesel">Diesel</ToggleButton>
+              </ToggleButtonGroup>
+
+              <ToggleButtonGroup
+                color="primary"
+                exclusive
+                value={closest}
+                onChange={closestHandleChange}
+                aria-label="Sort by closest or cheapest price"
+                size="small"
+              >
+                <ToggleButton value={true} disabled={closest === true}>
+                  Closest
+                </ToggleButton>
+                <ToggleButton value={false} disabled={closest === false}>
+                  Cheapest
+                </ToggleButton>
+              </ToggleButtonGroup>
+              <RegionSelector region={region} onChange={regionHandleChange} />
+            </>
+          )}
+        </Box>
+
+        {/* RIGHT desktop: dark/light theme toggle */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            minWidth: '100px',
             justifyContent: 'flex-end',
           }}
         >
@@ -223,6 +205,50 @@ const Header = ({ title }: HeaderProps) => {
           </StyledIconButton>
         </Box>
       </StyledToolBar>
+
+      {/* MOBILE FILTERS */}
+      {isMobile && !isDetailPage && (
+        <Box
+          sx={{
+            px: 2,
+            pb: 1,
+            pt: 1,
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 1,
+          }}
+        >
+          <FormControl size="small" fullWidth sx={{ flex: 1 }}>
+            <InputLabel>Fuel</InputLabel>
+            <Select
+              value={fuelType ?? ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFuelType(value === '' ? null : value);
+              }}
+              label="Fuel"
+            >
+              <MenuItem value="">All fuels</MenuItem>
+              <MenuItem value="gasoline">Gas</MenuItem>
+              <MenuItem value="diesel">Diesel</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl size="small" fullWidth sx={{ flex: 1 }}>
+            <InputLabel>Order</InputLabel>
+            <Select
+              value={closest.toString()}
+              onChange={(e) => setClosest(e.target.value === 'true')}
+              label="Order"
+            >
+              <MenuItem value="true">Closest</MenuItem>
+              <MenuItem value="false">Cheapest</MenuItem>
+            </Select>
+          </FormControl>
+
+          <RegionSelector region={region} onChange={regionHandleChange} />
+        </Box>
+      )}
     </StyledAppBar>
   );
 };

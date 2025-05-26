@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useSharedContext } from '../shared/context';
 import { cleanStationName } from '../../utils/stationNameCleaner';
-
+//TODO: al cargar esta pagina el theme vuelve a dark
 type FuelPrice = {
   price: number;
   discount: number | null;

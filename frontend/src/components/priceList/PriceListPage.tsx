@@ -111,7 +111,7 @@ const PriceListPage = () => {
       sx={{
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',
-        height: '100vh',
+        height: '100%',
         maxWidth: '100%',
         width: '100%',
         gap: 1,

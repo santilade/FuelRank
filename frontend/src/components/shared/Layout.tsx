@@ -18,7 +18,7 @@ const Layout = ({ title, children }: LayoutProps) => {
       }}
     >
       <Header title={title} />
-      <Box sx={{ flex: 1, overflow: 'hidden' }}>{children}</Box>
+      <Box sx={{ flex: 1, overflow: 'hidden', minHeight: 0 }}>{children}</Box>
       <Footer />
     </Box>
   );

@@ -13,6 +13,8 @@ type SharedContextType = {
   isMobile: boolean;
   region: string | null;
   setRegion: React.Dispatch<React.SetStateAction<string | null>>;
+  modalState: boolean;
+  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const defaultContext: SharedContextType = {
@@ -27,6 +29,8 @@ const defaultContext: SharedContextType = {
   isMobile: false,
   region: null,
   setRegion: () => {},
+  modalState: false,
+  setModalState: () => {},
 };
 
 export const SharedContext = createContext<SharedContextType>(defaultContext);
@@ -45,6 +49,7 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const isMobileQuery = useMediaQuery(theme.breakpoints.down('sm'));
   const [isMobile, setIsMobile] = useState(isMobileQuery);
+  const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
     setIsMobile(isMobileQuery);
@@ -68,6 +73,8 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
         isMobile,
         region,
         setRegion,
+        modalState,
+        setModalState,
       }}
     >
       {children}

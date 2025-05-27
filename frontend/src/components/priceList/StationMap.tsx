@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngBounds } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useSharedContext } from '../shared/context';
 import { useEffect } from 'react';
 
@@ -73,39 +73,7 @@ const StationMap = ({ selectedStation }: StationMapsProps) => {
       {selectedStation && (
         <Marker position={selectedStation.coords} icon={stationIcon}>
           <Popup>
-            <Box>
-              <Typography variant="subtitle1">{selectedStation.station_name}</Typography>
-              <Box display="flex" flexDirection="column" alignItems="flex-start" gap={1}>
-                <Box component="span" display="inline-flex" alignItems="center" gap={1}>
-                  <img
-                    src="/map-icons/google-maps-icon.svg"
-                    alt="Open in Google Maps"
-                    width={16}
-                    height={16}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  <a
-                    href={`https://www.google.com/maps?q=${selectedStation.coords[0]},${selectedStation.coords[1]}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Typography variant="subtitle2">{selectedStation.address}</Typography>
-                  </a>
-                </Box>
-                <Box component="span" display="inline-flex" alignItems="center" gap={1}>
-                  <img
-                    src="/map-icons/magnifying-glass-icon.svg"
-                    alt="View station detailes"
-                    width={14}
-                    height={14}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  <a href={`/station/${selectedStation.station_id}`}>
-                    <Typography variant="subtitle2">Station details</Typography>
-                  </a>
-                </Box>
-              </Box>
-            </Box>
+            <Box>{selectedStation.station_name}</Box>
           </Popup>
         </Marker>
       )}

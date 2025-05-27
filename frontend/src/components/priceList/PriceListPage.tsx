@@ -15,6 +15,7 @@ import {
   Paper,
 } from '@mui/material';
 import StationMap from './StationMap';
+import StationDetailModal from '../stationDetail/StationDetailModal';
 
 type Station = {
   station_id: string;
@@ -39,8 +40,10 @@ type SelectedStation = {
 const PriceListPage = () => {
   const [stationList, setStationList] = useState<Station[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { fuelType, userCoords, setUserCoords, closest, isMobile, region } = useSharedContext();
+  const { fuelType, userCoords, setUserCoords, closest, isMobile, region, setModalState } =
+    useSharedContext();
   const [selectedStation, setSelectedStation] = useState<SelectedStation | null>(null);
+  const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -54,6 +57,9 @@ const PriceListPage = () => {
       address: station.address,
       coords: [station.lat, station.long],
     });
+
+    setSelectedStationId(station.station_id);
+    setModalState(true);
   };
 
   // get data
@@ -180,13 +186,14 @@ const PriceListPage = () => {
       </Box>
       <Box
         sx={{
-          flexBasis: isMobile ? '100%' : '70%',
+          flexBasis: isMobile ? '0%' : '70%',
           height: '100%',
           overflow: 'hidden',
         }}
       >
-        <StationMap selectedStation={selectedStation} />
+        {!isMobile && <StationMap selectedStation={selectedStation} />}
       </Box>
+      <StationDetailModal stationId={selectedStationId} />
     </Box>
   );
 };

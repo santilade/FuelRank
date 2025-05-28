@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getLatestPrices } from './service';
-import { useSharedContext } from '../shared/context';
-import { haversineDistance } from '../../utils/geo';
-import { formatDistance } from '../../utils/format';
-import { cleanStationName } from '../../utils/stationNameCleaner';
+import { getLatestPrices } from '../services/pricesService.ts';
+import { useSharedContext } from './shared/context.tsx';
+import { haversineDistance } from '../utils/geo.ts';
+import { formatDistance } from '../utils/format.ts';
+import { cleanStationName } from '../utils/stationNameCleaner.ts';
 import {
   List,
   ListItemButton,
@@ -14,8 +14,8 @@ import {
   Box,
   Paper,
 } from '@mui/material';
-import StationMap from './StationMap';
-import StationDetailModal from '../stationDetail/StationDetailModal';
+import StationMap from './StationMap.tsx';
+import StationDetailModal from './StationDetailModal.tsx';
 
 type Station = {
   station_id: string;
@@ -182,6 +182,7 @@ const PriceListPage = () => {
               </ListItemButton>
             </Paper>
           ))}
+          <StationDetailModal stationId={selectedStationId} />
         </List>
       </Box>
       <Box
@@ -193,7 +194,6 @@ const PriceListPage = () => {
       >
         {!isMobile && <StationMap selectedStation={selectedStation} />}
       </Box>
-      <StationDetailModal stationId={selectedStationId} />
     </Box>
   );
 };

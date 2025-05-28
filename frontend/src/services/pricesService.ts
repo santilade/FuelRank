@@ -1,4 +1,4 @@
-import client from '../../api/client.ts';
+import client from '../api/client.ts';
 
 export const getLatestPrices = (region?: string) => {
   const baseUrl = `/prices?fuel=GAS&fuel=DIESEL`;

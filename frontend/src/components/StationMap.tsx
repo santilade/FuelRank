@@ -2,17 +2,9 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngBounds } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Box } from '@mui/material';
-import { useSharedContext } from '../shared/context';
+import { useSharedContext } from './shared/context';
 import { useEffect } from 'react';
-
-type StationMapsProps = {
-  selectedStation: {
-    station_id: string;
-    station_name: string;
-    address: string;
-    coords: [number, number];
-  } | null;
-};
+import type { StationMapsProps } from '../types/types';
 
 const userIcon = new Icon({
   iconUrl: '/map-icons/userIcon.svg',

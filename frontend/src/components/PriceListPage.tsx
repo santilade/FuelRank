@@ -182,7 +182,6 @@ const PriceListPage = () => {
               </ListItemButton>
             </Paper>
           ))}
-          <StationDetailModal stationId={selectedStationId} />
         </List>
       </Box>
       <Box
@@ -194,6 +193,7 @@ const PriceListPage = () => {
       >
         {!isMobile && <StationMap selectedStation={selectedStation} />}
       </Box>
+      {isMobile && <StationDetailModal stationId={selectedStationId} />}
     </Box>
   );
 };

@@ -45,4 +45,5 @@ export type StationMapsProps = {
     address: string;
     coords: [number, number];
   } | null;
+  onMapReady: () => void;
 };

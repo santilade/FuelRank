@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 import { useSharedContext } from './shared/context';
 import { getStationDetail } from '../services/stationDetailService.ts';
 import { cleanStationName } from '../utils/stationNameCleaner';
-import type { StationDetail, StationMapsProps } from '../types/types.ts';
+import type { StationDetail, StationMapsProps, SelectedStation } from '../types/types.ts';
 
 const userIcon = new Icon({
   iconUrl: '/map-icons/userIcon.svg',
@@ -22,7 +22,7 @@ const stationIcon = new Icon({
   popupAnchor: [0, -36],
 });
 
-const MapEffect = ({ selectedStation }: StationMapsProps) => {
+const MapEffect = ({ selectedStation }: { selectedStation: SelectedStation | null }) => {
   const { userCoords } = useSharedContext();
   const map = useMap();
 
@@ -41,12 +41,11 @@ const MapEffect = ({ selectedStation }: StationMapsProps) => {
   return null;
 };
 
-const StationMap = ({ selectedStation }: StationMapsProps) => {
+const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
   const { userCoords, isMobile } = useSharedContext();
   const [station, setStation] = useState<StationDetail | null>(null);
 
   const markerRef = useRef<LeafletMarker>(null);
-  const [mapReady, setMapReady] = useState<boolean>(false);
 
   const defaultCenter: [number, number] = userCoords
     ? [userCoords.latitude, userCoords.longitude]
@@ -61,12 +60,12 @@ const StationMap = ({ selectedStation }: StationMapsProps) => {
   }, [selectedStation]);
 
   useEffect(() => {
-    if (mapReady && markerRef.current && selectedStation && !isMobile) {
+    if (markerRef.current && selectedStation && !isMobile) {
       requestAnimationFrame(() => {
         markerRef.current?.openPopup();
       });
     }
-  }, [mapReady, selectedStation]);
+  }, [selectedStation]);
 
   return (
     <MapContainer
@@ -74,7 +73,7 @@ const StationMap = ({ selectedStation }: StationMapsProps) => {
       zoom={12}
       style={{ height: '100%', width: '100%' }}
       scrollWheelZoom={true}
-      whenReady={() => setMapReady(true)}
+      whenReady={onMapReady}
     >
       <TileLayer
         attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'

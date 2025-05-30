@@ -35,6 +35,8 @@ const PriceListPage = () => {
   } = useSharedContext();
   const [selectedStation, setSelectedStation] = useState<SelectedStation | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
+  const [mapReady, setMapReady] = useState(false);
+  const [coordsLoading, setCoordsLoading] = useState(true);
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -56,6 +58,7 @@ const PriceListPage = () => {
   // get data
   useEffect(() => {
     setPricesLoading(true);
+
     getLatestPrices(region ?? undefined)
       .then((response) => {
         const data = response;
@@ -64,8 +67,8 @@ const PriceListPage = () => {
           setStationList(data);
           setPricesLoading(false);
         } else {
-          throw new Error('Wrong answer');
           setPricesLoading(false);
+          throw new Error('Wrong answer');
         }
       })
       .catch((err) => setError(err.message));
@@ -81,11 +84,15 @@ const PriceListPage = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setUserCoords(position.coords);
+          setCoordsLoading(false);
         },
         (error) => {
           console.error('Error obtaining device position: ', error);
+          setCoordsLoading(false);
         }
       );
+    } else {
+      setCoordsLoading(false);
     }
   }, [userCoords]);
 
@@ -105,48 +112,6 @@ const PriceListPage = () => {
   }, [filteredPricelist, closest, userCoords]);
 
   if (error) return <div>Error: {error}</div>;
-
-  /**
-   *  if (pricesLoading)
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          height: '100%',
-          maxWidth: '100%',
-          width: '100%',
-          gap: 1,
-          px: 1,
-        }}
-      >
-        <Box
-          sx={{
-            flex: isMobile ? '100%' : '30%',
-            overflow: 'auto',
-            height: isMobile ? 'auto' : '100%',
-          }}
-        >
-          <List>
-            {[...Array(10)].map((_, index) => (
-              <Skeleton key={index} variant="rounded" height={70} sx={{ mb: 1 }} />
-            ))}
-          </List>
-        </Box>
-
-        <Box
-          sx={{
-            flexBasis: isMobile ? '0%' : '70%',
-            height: '100%',
-            overflow: 'hidden',
-          }}
-        >
-          {!isMobile && <Skeleton variant="rectangular" height="100%" />}
-        </Box>
-      </Box>
-    );
-   * 
-   */
 
   return (
     <Box
@@ -229,9 +194,22 @@ const PriceListPage = () => {
           flexBasis: isMobile ? '0%' : '70%',
           height: '100%',
           overflow: 'hidden',
+          position: 'relative',
         }}
       >
-        {!isMobile && <StationMap selectedStation={selectedStation} />}
+        {!isMobile && (
+          <>
+            <StationMap selectedStation={selectedStation} onMapReady={() => setMapReady(true)} />
+            {(!mapReady || coordsLoading) && (
+              <Skeleton
+                variant="rectangular"
+                height="100%"
+                width="100%"
+                sx={{ position: 'absolute', top: 0, left: 0, zIndex: 10 }}
+              />
+            )}
+          </>
+        )}
       </Box>
       {isMobile && <StationDetailDialog stationId={selectedStationId} />}
     </Box>

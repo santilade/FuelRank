@@ -15,7 +15,7 @@ import {
   Paper,
 } from '@mui/material';
 import StationMap from './StationMap.tsx';
-import StationDetailModal from './StationDetailModal.tsx';
+import StationDetailDialog from './StationDetailDialog.tsx';
 
 type Station = {
   station_id: string;
@@ -40,8 +40,15 @@ type SelectedStation = {
 const PriceListPage = () => {
   const [stationList, setStationList] = useState<Station[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { fuelType, userCoords, setUserCoords, closest, isMobile, region, setModalState } =
-    useSharedContext();
+  const {
+    fuelType,
+    userCoords,
+    setUserCoords,
+    closest,
+    isMobile,
+    region,
+    setDialogOpen: setDialogOpen,
+  } = useSharedContext();
   const [selectedStation, setSelectedStation] = useState<SelectedStation | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
 
@@ -59,7 +66,7 @@ const PriceListPage = () => {
     });
 
     setSelectedStationId(station.station_id);
-    setModalState(true);
+    setDialogOpen(true);
   };
 
   // get data
@@ -193,7 +200,7 @@ const PriceListPage = () => {
       >
         {!isMobile && <StationMap selectedStation={selectedStation} />}
       </Box>
-      {isMobile && <StationDetailModal stationId={selectedStationId} />}
+      {isMobile && <StationDetailDialog stationId={selectedStationId} />}
     </Box>
   );
 };

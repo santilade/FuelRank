@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSharedContext } from './shared/context.tsx';
 import { getStationDetail } from '../services/stationDetailService.ts';
 import {
@@ -7,22 +7,24 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Dialog,
   Divider,
-  Modal,
   Paper,
   Typography,
   Slide,
+  DialogContent,
 } from '@mui/material';
 import { cleanStationName } from '../utils/stationNameCleaner.ts';
 import StationMap from './StationMap.tsx';
 import type { StationDetail } from '../types/types.ts';
 
-const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
+const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   const [station, setStation] = useState<StationDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { isMobile, modalState, setModalState } = useSharedContext();
+  const { isMobile, dialogOpen: dialogOpen, setDialogOpen: setDialogOpen } = useSharedContext(); //TODO: cambiar a dialogstate?
+  const initialFocusRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = () => setModalState(false);
+  const handleClose = () => setDialogOpen(false);
 
   useEffect(() => {
     if (stationId) {
@@ -32,6 +34,12 @@ const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
     }
   }, [stationId]);
 
+  useEffect(() => {
+    if (dialogOpen) {
+      document.activeElement instanceof HTMLElement && document.activeElement.blur();
+    }
+  }, [dialogOpen]);
+
   const lastUpdate = station ? (Object.values(station.prices)[0]?.last_update ?? null) : null;
 
   if (error) return <div>Error: {error}</div>;
@@ -39,28 +47,52 @@ const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
   //TODO: LOADING state
   if (!station)
     return (
-      <Modal open={modalState} onClose={handleClose}>
+      <Dialog open={dialogOpen} onClose={handleClose}>
         <div>Loading...</div>
-      </Modal>
+      </Dialog>
     );
 
   return (
-    <Modal open={modalState} onClose={handleClose} closeAfterTransition>
-      <Slide in={modalState} direction="up">
-        <Box
-          p={2}
-          maxWidth="md"
-          mx="auto"
+    <Dialog
+      open={dialogOpen}
+      onClose={handleClose}
+      fullWidth
+      maxWidth="md"
+      scroll="body"
+      slots={{ transition: Slide }}
+      slotProps={{
+        transition: {
+          direction: 'up',
+          onEnter: () => initialFocusRef.current?.focus(),
+        },
+        container: {
+          style: {
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            minHeight: '100dvh',
+            paddingTop: '1rem',
+            boxSizing: 'border-box',
+          },
+        },
+      }}
+    >
+      {!station ? (
+        <DialogContent>
+          <Typography>Loading...</Typography>
+        </DialogContent>
+      ) : (
+        <DialogContent
           sx={{
+            p: 0,
             display: { xs: 'block', md: 'flex' },
             flexDirection: 'column',
             justifyContent: { md: 'center' },
             minHeight: { xs: 'auto', md: '70vh' },
             overflowY: { xs: 'visible', md: 'hidden' },
           }}
-          autoFocus
         >
-          <Card variant="outlined">
+          <Card variant="outlined" sx={{ width: '100%' }}>
             <CardHeader
               sx={{ p: 1 }}
               avatar={
@@ -86,7 +118,7 @@ const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
                   alignItems: 'stretch',
                 }}
               >
-                {/*STATION INFO */}
+                {/* STATION INFO */}
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                   {isMobile && station && (
                     <>
@@ -121,25 +153,17 @@ const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
                       <Typography>{station.address}</Typography>
                     </Box>
                   </a>
-
-                  {/**
-                  TODO: Links to official site from backend
-                {station.url && (
-                  <a
-                    href={station.url}
-                    target="_blank"
-                    rel="noopener"
-                    style={{ textDecoration: 'underline' }}
-                  >
-                    Visit official site
-                  </a>
-                )}
-                              */}
                 </Box>
 
-                {/* PRICES*/}
+                {/* PRICES */}
                 <Box
-                  sx={{ flex: 1, display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap' }}
+                  sx={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: 1,
+                    flexWrap: 'wrap',
+                  }}
                 >
                   {Object.entries(station.prices).map(([fuelType, fuel]) => (
                     <Paper
@@ -154,7 +178,6 @@ const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
                     >
                       <Typography variant="h6">{fuelType}</Typography>
                       <Typography>{fuel.price} ISK</Typography>
-
                       {fuel.discount !== null && (
                         <Typography variant="caption">
                           Discounted: {(fuel.price - fuel.discount).toFixed(1)} ISK
@@ -169,10 +192,10 @@ const StationDetailModal = ({ stationId }: { stationId: string | null }) => {
               </Box>
             </CardContent>
           </Card>
-        </Box>
-      </Slide>
-    </Modal>
+        </DialogContent>
+      )}
+    </Dialog>
   );
 };
 
-export default StationDetailModal;
+export default StationDetailDialog;

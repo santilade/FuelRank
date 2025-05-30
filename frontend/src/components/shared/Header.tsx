@@ -1,6 +1,5 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
 import { useSharedContext } from './context';
 import {
@@ -18,7 +17,7 @@ import {
   Box,
   type SelectChangeEvent,
 } from '@mui/material';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type HeaderProps = {
   title: string;
@@ -48,10 +47,6 @@ const StyledToolBar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const Header = ({ title }: HeaderProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const isDetailPage = location.pathname.startsWith('/station/');
   const {
     lightMode,
     setLightMode,
@@ -120,19 +115,6 @@ const Header = ({ title }: HeaderProps) => {
         sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
       >
         {/* LEFT: title and back button */}
-
-        {isDetailPage && (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="back"
-              onClick={() => navigate('/')}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-          </Box>
-        )}
         <Typography
           variant={isMobile ? 'subtitle1' : 'h6'}
           component={Link}
@@ -156,7 +138,7 @@ const Header = ({ title }: HeaderProps) => {
             justifyContent: isMobile ? 'space-between' : 'center',
           }}
         >
-          {!isMobile && !isDetailPage && (
+          {!isMobile && (
             <>
               <ToggleButtonGroup
                 color="primary"
@@ -206,7 +188,7 @@ const Header = ({ title }: HeaderProps) => {
       </StyledToolBar>
 
       {/* MOBILE FILTERS */}
-      {isMobile && !isDetailPage && (
+      {isMobile && (
         <Box
           sx={{
             px: 2,

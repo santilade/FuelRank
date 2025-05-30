@@ -15,6 +15,8 @@ type SharedContextType = {
   setRegion: React.Dispatch<React.SetStateAction<string | null>>;
   dialogOpen: boolean;
   setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  pricesLoading: boolean;
+  setPricesLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const defaultContext: SharedContextType = {
@@ -31,6 +33,8 @@ const defaultContext: SharedContextType = {
   setRegion: () => {},
   dialogOpen: false,
   setDialogOpen: () => {},
+  pricesLoading: false,
+  setPricesLoading: () => {},
 };
 
 export const SharedContext = createContext<SharedContextType>(defaultContext);
@@ -50,6 +54,7 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
   const isMobileQuery = useMediaQuery(theme.breakpoints.down('sm'));
   const [isMobile, setIsMobile] = useState(isMobileQuery);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [pricesLoading, setPricesLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setIsMobile(isMobileQuery);
@@ -75,6 +80,8 @@ export const SharedProvider = ({ children }: { children: React.ReactNode }) => {
         setRegion,
         dialogOpen: dialogOpen,
         setDialogOpen: setDialogOpen,
+        pricesLoading,
+        setPricesLoading,
       }}
     >
       {children}

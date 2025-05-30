@@ -31,6 +31,13 @@ export type Station = {
   last_update: string;
 };
 
+export type SelectedStation = {
+  station_id: string;
+  station_name: string;
+  address: string;
+  coords: [number, number];
+};
+
 export type StationMapsProps = {
   selectedStation: {
     station_id: string;

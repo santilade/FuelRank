@@ -57,6 +57,7 @@ const Header = ({ title }: HeaderProps) => {
     isMobile,
     region,
     setRegion,
+    pricesLoading,
   } = useSharedContext();
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
@@ -92,7 +93,7 @@ const Header = ({ title }: HeaderProps) => {
       }}
     >
       <InputLabel>Region</InputLabel>
-      <Select value={region ?? 'None'} onChange={onChange} label="Region">
+      <Select value={region ?? 'None'} onChange={onChange} label="Region" disabled={pricesLoading}>
         <MenuItem value="None">
           <em>None</em>
         </MenuItem>

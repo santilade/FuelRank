@@ -13,6 +13,7 @@ import {
   Typography,
   Slide,
   DialogContent,
+  CircularProgress,
 } from '@mui/material';
 import { cleanStationName } from '../utils/stationNameCleaner.ts';
 import StationMap from './StationMap.tsx';
@@ -21,16 +22,25 @@ import type { StationDetail } from '../types/types.ts';
 const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   const [station, setStation] = useState<StationDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isMobile, dialogOpen, setDialogOpen } = useSharedContext();
   const initialFocusRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = () => setDialogOpen(false);
+  const handleClose = () => {
+    setDialogOpen(false);
+    setStation(null);
+    setError(null);
+  };
 
   useEffect(() => {
     if (stationId) {
+      setIsLoading(true);
+      setStation(null);
+
       getStationDetail(stationId)
         .then((res) => setStation(res))
-        .catch((err) => setError(err.message));
+        .catch((err) => setError(err.message))
+        .finally(() => setIsLoading(false));
     }
   }, [stationId]);
 
@@ -45,12 +55,6 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   if (error) return <div>Error: {error}</div>;
   //TODO: ERROR state
   //TODO: LOADING state
-  if (!station)
-    return (
-      <Dialog open={dialogOpen} onClose={handleClose}>
-        <div>Loading...</div>
-      </Dialog>
-    );
 
   return (
     <Dialog
@@ -77,9 +81,16 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
         },
       }}
     >
-      {!station ? (
-        <DialogContent>
-          <Typography>Loading...</Typography>
+      {!station || isLoading ? (
+        <DialogContent
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '200px',
+          }}
+        >
+          <CircularProgress size={48} />
         </DialogContent>
       ) : (
         <DialogContent

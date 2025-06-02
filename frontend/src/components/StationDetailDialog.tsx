@@ -47,17 +47,56 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   }, [stationId]);
 
   useEffect(() => {
+    setMapReady(false);
     if (dialogOpen) {
-      setMapReady(false);
       document.activeElement instanceof HTMLElement && document.activeElement.blur();
     }
   }, [dialogOpen]);
 
-  const lastUpdate = station ? (Object.values(station.prices)[0]?.last_update ?? null) : null;
+  if (error) {
+    console.error(error);
 
-  if (error) return <div>Error: {error}</div>;
+    return (
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="md"
+        scroll="body"
+        slots={{ transition: Slide }}
+        slotProps={{
+          transition: {
+            direction: 'up',
+            onEnter: () => initialFocusRef.current?.focus(),
+          },
+          container: {
+            style: {
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              minHeight: '100dvh',
+              paddingTop: '1rem',
+              boxSizing: 'border-box',
+            },
+          },
+        }}
+      >
+        <DialogContent
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '200px',
+          }}
+        >
+          <Typography>Error while loading data</Typography>
+        </DialogContent>
+      </Dialog>
+    );
+  }
   //TODO: ERROR state
-  //TODO: LOADING state
+
+  const lastUpdate = station ? (Object.values(station.prices)[0]?.last_update ?? null) : null;
 
   return (
     <Dialog
@@ -138,46 +177,53 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
                     <>
                       <Divider sx={{ m: 1 }} />
                       <Box sx={{ height: 170, position: 'relative' }}>
-                        <>
-                          <StationMap
-                            selectedStation={{
-                              station_id: station.id,
-                              station_name: station.name,
-                              address: station.address,
-                              coords: [station.lat, station.long],
-                            }}
-                            onMapReady={() => setMapReady(true)}
+                        <StationMap
+                          selectedStation={{
+                            station_id: station.id,
+                            station_name: station.name,
+                            address: station.address,
+                            coords: [station.lat, station.long],
+                          }}
+                          onMapReady={() => setMapReady(true)}
+                        />
+                        {!mapReady && (
+                          <Skeleton
+                            variant="rectangular"
+                            height="100%"
+                            width="100%"
+                            sx={{ position: 'absolute', top: 0, left: 0, zIndex: 10 }}
                           />
-                          {!mapReady && (
-                            <Skeleton
-                              variant="rectangular"
-                              height="100%"
-                              width="100%"
-                              sx={{ position: 'absolute', top: 0, left: 0, zIndex: 10 }}
-                            />
-                          )}
-                        </>
+                        )}
                       </Box>
                       <Divider sx={{ my: 1 }} />
                     </>
                   )}
-                  <a
+                  <Box
+                    component="a"
                     href={`https://www.google.com/maps?q=${station.lat},${station.long}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ all: 'unset', cursor: 'pointer' }}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                      my: 1,
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        textDecoration: 'underline',
+                      },
+                    }}
                   >
-                    <Box display="flex" alignItems="center" gap={1} my={1}>
-                      <img
-                        src="/map-icons/google-maps-icon.svg"
-                        alt="Open in Google maps"
-                        width={16}
-                        height={16}
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <Typography>{station.address}</Typography>
-                    </Box>
-                  </a>
+                    <img
+                      src="/map-icons/google-maps-icon.svg"
+                      alt="Open in Google Maps"
+                      width={16}
+                      height={16}
+                    />
+                    <Typography>{station.address}</Typography>
+                  </Box>
                 </Box>
 
                 {/* PRICES */}

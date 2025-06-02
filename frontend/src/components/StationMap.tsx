@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngBounds, Marker as LeafletMarker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useSharedContext } from './shared/context';
 import { getStationDetail } from '../services/stationDetailService.ts';
 import { cleanStationName } from '../utils/stationNameCleaner';
@@ -44,7 +44,7 @@ const MapEffect = ({ selectedStation }: { selectedStation: SelectedStation | nul
 const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
   const { userCoords, isMobile } = useSharedContext();
   const [station, setStation] = useState<StationDetail | null>(null);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const markerRef = useRef<LeafletMarker>(null);
 
   const defaultCenter: [number, number] = userCoords
@@ -53,7 +53,11 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
 
   useEffect(() => {
     if (selectedStation) {
-      getStationDetail(selectedStation.station_id).then(setStation).catch(console.error);
+      setIsLoading(true);
+      getStationDetail(selectedStation.station_id)
+        .then(setStation)
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
     } else {
       setStation(null);
     }
@@ -88,7 +92,17 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
         <Marker position={selectedStation.coords} icon={stationIcon} ref={markerRef}>
           {!isMobile ? (
             <Popup>
-              {station ? (
+              {isLoading ? (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minWidth={150}
+                  minHeight={80}
+                >
+                  <CircularProgress size={24} />
+                </Box>
+              ) : station ? (
                 <Box>
                   <Typography variant="subtitle1">
                     {station.brand}, {cleanStationName(station.name, station.brand)}
@@ -148,7 +162,7 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
                   </Box>
                 </Box>
               ) : (
-                <div>Loading...</div>
+                <Typography variant="body2">No data available.</Typography>
               )}
             </Popup>
           ) : (

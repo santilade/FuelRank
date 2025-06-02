@@ -14,6 +14,7 @@ import {
   Slide,
   DialogContent,
   CircularProgress,
+  Skeleton,
 } from '@mui/material';
 import { cleanStationName } from '../utils/stationNameCleaner.ts';
 import StationMap from './StationMap.tsx';
@@ -25,6 +26,7 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isMobile, dialogOpen, setDialogOpen } = useSharedContext();
   const initialFocusRef = useRef<HTMLDivElement>(null);
+  const [mapReady, setMapReady] = useState<boolean>(false);
 
   const handleClose = () => {
     setDialogOpen(false);
@@ -46,6 +48,7 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
 
   useEffect(() => {
     if (dialogOpen) {
+      setMapReady(false);
       document.activeElement instanceof HTMLElement && document.activeElement.blur();
     }
   }, [dialogOpen]);
@@ -134,15 +137,26 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
                   {isMobile && station && (
                     <>
                       <Divider sx={{ m: 1 }} />
-                      <Box sx={{ height: 170 }}>
-                        <StationMap
-                          selectedStation={{
-                            station_id: station.id,
-                            station_name: station.name,
-                            address: station.address,
-                            coords: [station.lat, station.long],
-                          }}
-                        />
+                      <Box sx={{ height: 170, position: 'relative' }}>
+                        <>
+                          <StationMap
+                            selectedStation={{
+                              station_id: station.id,
+                              station_name: station.name,
+                              address: station.address,
+                              coords: [station.lat, station.long],
+                            }}
+                            onMapReady={() => setMapReady(true)}
+                          />
+                          {!mapReady && (
+                            <Skeleton
+                              variant="rectangular"
+                              height="100%"
+                              width="100%"
+                              sx={{ position: 'absolute', top: 0, left: 0, zIndex: 10 }}
+                            />
+                          )}
+                        </>
                       </Box>
                       <Divider sx={{ my: 1 }} />
                     </>

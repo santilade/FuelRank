@@ -94,7 +94,6 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
       </Dialog>
     );
   }
-  //TODO: ERROR state
 
   const lastUpdate = station ? (Object.values(station.prices)[0]?.last_update ?? null) : null;
 

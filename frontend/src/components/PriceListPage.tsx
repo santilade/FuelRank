@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getLatestPrices } from '../services/pricesService.ts';
+import { getStations } from '../services/pricesService.ts';
 import { useSharedContext } from './shared/context.tsx';
 import { haversineDistance } from '../utils/geo.ts';
 import { formatDistance } from '../utils/format.ts';
@@ -14,13 +14,14 @@ import {
   Box,
   Paper,
   Skeleton,
+  Alert,
 } from '@mui/material';
 import StationMap from './StationMap.tsx';
 import StationDetailDialog from './StationDetailDialog.tsx';
 import type { Station, SelectedStation } from '../types/types.ts';
 
 const PriceListPage = () => {
-  const [stationList, setStationList] = useState<Station[]>([]);
+  const [allStationList, setAllStationList] = useState<Station[]>([]);
   const [error, setError] = useState<string | null>(null);
   const {
     fuelType,
@@ -58,24 +59,21 @@ const PriceListPage = () => {
   useEffect(() => {
     setPricesLoading(true);
 
-    getLatestPrices(region ?? undefined)
+    getStations(region ?? undefined)
       .then((response) => {
-        const data = response;
-
-        if (Array.isArray(data)) {
-          setStationList(data);
-          setPricesLoading(false);
+        if (Array.isArray(response)) {
+          setAllStationList(response);
         } else {
-          setPricesLoading(false);
           throw new Error('Wrong answer');
         }
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => setError(err.message))
+      .finally(() => setPricesLoading(false));
   }, [region]);
 
-  const filteredPricelist = fuelType
-    ? stationList.filter((station) => station.fuel_type.toLowerCase() === fuelType)
-    : stationList;
+  const filteredStations = fuelType
+    ? allStationList.filter((station) => station.fuel_type.toLowerCase() === fuelType)
+    : allStationList;
 
   // get user coords
   useEffect(() => {
@@ -91,8 +89,8 @@ const PriceListPage = () => {
     }
   }, []);
 
-  const sortedPriceList = useMemo(() => {
-    const list = [...filteredPricelist];
+  const sortedStations = useMemo(() => {
+    const list = [...filteredStations];
 
     if (closest && userCoords) {
       list.sort((a, b) => {
@@ -104,9 +102,19 @@ const PriceListPage = () => {
       list.sort((a, b) => a.price - b.price);
     }
     return list;
-  }, [filteredPricelist, closest, userCoords]);
+  }, [filteredStations, closest, userCoords]);
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) {
+    console.error(error);
+
+    return (
+      <Box p={2}>
+        <Alert severity="error" sx={{ mb: 2 }}>
+          Error: {error}. Please try reloading
+        </Alert>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -132,7 +140,7 @@ const PriceListPage = () => {
             ? [...Array(10)].map((_, index) => (
                 <Skeleton key={index} variant="rounded" height={70} sx={{ mb: 1 }} />
               ))
-            : sortedPriceList.map((station) => (
+            : sortedStations.map((station) => (
                 <Paper
                   key={`${station.fuel_type}${station.station_id}`}
                   elevation={5}
@@ -143,6 +151,7 @@ const PriceListPage = () => {
                     <ListItemAvatar>
                       <Avatar
                         src={`/logos/${station.brand.toLocaleLowerCase()}.png`}
+                        alt=""
                         variant="rounded"
                       />
                     </ListItemAvatar>

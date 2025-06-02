@@ -3,7 +3,7 @@ import client from '../api/client.ts';
 import type { StationDetail } from '../types/types.ts';
 export const getStationDetail = async (station_id: string): Promise<StationDetail> => {
   try {
-    return client.get(`/stations/${station_id}`);
+    return await client.get(`/stations/${station_id}`);
   } catch (error: any) {
     if (error.response) {
       //server returns status out of 2xx range

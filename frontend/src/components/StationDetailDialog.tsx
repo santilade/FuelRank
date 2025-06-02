@@ -21,7 +21,7 @@ import type { StationDetail } from '../types/types.ts';
 const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   const [station, setStation] = useState<StationDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { isMobile, dialogOpen: dialogOpen, setDialogOpen: setDialogOpen } = useSharedContext(); //TODO: cambiar a dialogstate?
+  const { isMobile, dialogOpen, setDialogOpen } = useSharedContext();
   const initialFocusRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => setDialogOpen(false);

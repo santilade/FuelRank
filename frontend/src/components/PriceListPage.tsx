@@ -36,7 +36,6 @@ const PriceListPage = () => {
   const [selectedStation, setSelectedStation] = useState<SelectedStation | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const [coordsLoading, setCoordsLoading] = useState(true);
 
   //const formatTime = (isoString: string) => {
   //  const date = new Date(isoString);
@@ -84,17 +83,13 @@ const PriceListPage = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setUserCoords(position.coords);
-          setCoordsLoading(false);
         },
         (error) => {
           console.error('Error obtaining device position: ', error);
-          setCoordsLoading(false);
         }
       );
-    } else {
-      setCoordsLoading(false);
     }
-  }, [userCoords]);
+  }, []);
 
   const sortedPriceList = useMemo(() => {
     const list = [...filteredPricelist];
@@ -200,7 +195,7 @@ const PriceListPage = () => {
         {!isMobile && (
           <>
             <StationMap selectedStation={selectedStation} onMapReady={() => setMapReady(true)} />
-            {(!mapReady || coordsLoading) && (
+            {!mapReady && (
               <Skeleton
                 variant="rectangular"
                 height="100%"

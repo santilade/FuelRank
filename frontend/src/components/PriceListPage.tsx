@@ -135,7 +135,7 @@ const PriceListPage = () => {
           height: isMobile ? 'auto' : '100%',
         }}
       >
-        {sortedStations.length > 0 && (
+        {sortedStations.length > 0 && !isMobile && (
           <Typography
             variant="caption"
             color="text.secondary"

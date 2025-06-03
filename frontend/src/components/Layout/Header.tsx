@@ -1,5 +1,7 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import lightLogo from '../../assets/fuel-rank-logo-light.svg';
+import darkLogo from '../../assets/fuel-rank-logo-dark.svg';
 import React, { useState } from 'react';
 import { useSharedContext } from '../../context/context';
 import {
@@ -134,11 +136,7 @@ const Header = ({ title }: HeaderProps) => {
         >
           <Box
             component="img"
-            src={
-              lightMode
-                ? '../../../public/fuel-rank-logo-light.svg'
-                : '../../../public/fuel-rank-logo-dark.svg'
-            }
+            src={lightMode ? lightLogo : darkLogo}
             alt="Fuel Rank Logo"
             sx={{ height: 32 }}
           />

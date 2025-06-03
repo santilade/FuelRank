@@ -120,18 +120,30 @@ const Header = ({ title }: HeaderProps) => {
         sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
       >
         {/* LEFT: title and back button */}
-        <Typography
-          variant={isMobile ? 'subtitle1' : 'h6'}
+        <Box
           component={Link}
           to="/"
           sx={{
+            display: 'flex',
+            alignItems: 'center',
             textDecoration: 'none',
             color: 'inherit',
+            gap: 1,
             whiteSpace: 'nowrap',
           }}
         >
-          {title}
-        </Typography>
+          <Box
+            component="img"
+            src={
+              lightMode
+                ? '../../../public/fuel-rank-logo-light.svg'
+                : '../../../public/fuel-rank-logo-dark.svg'
+            }
+            alt="Fuel Rank Logo"
+            sx={{ height: 32 }}
+          />
+          <Typography variant={isMobile ? 'subtitle1' : 'h6'}>{title}</Typography>
+        </Box>
 
         {/* CENTER desktop: filters  */}
         <Box

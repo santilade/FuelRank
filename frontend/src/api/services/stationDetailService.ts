@@ -1,6 +1,6 @@
-import client from '../api/client.ts';
+import client from '../client.ts';
 
-import type { StationDetail } from '../types/types.ts';
+import type { StationDetail } from '../../types/types.ts';
 export const getStationDetail = async (station_id: string): Promise<StationDetail> => {
   try {
     return await client.get(`/stations/${station_id}`);

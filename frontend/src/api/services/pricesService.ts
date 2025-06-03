@@ -1,5 +1,5 @@
-import client from '../api/client.ts';
-import type { Station } from '../types/types.ts';
+import client from '../client.ts';
+import type { Station } from '../../types/types.ts';
 
 export const getStations = async (region?: string): Promise<Station[]> => {
   const baseUrl = `/prices?fuel=GAS&fuel=DIESEL`;

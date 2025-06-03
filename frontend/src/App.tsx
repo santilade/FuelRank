@@ -1,9 +1,9 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './theme';
-import { SharedProvider, useSharedContext } from './components/shared/context';
+import { SharedProvider, useSharedContext } from './context/context';
 import PriceListPage from './components/PriceListPage';
 import NotFoundPage from './components/NotFoundPage';
-import Layout from './components/shared/Layout';
+import Layout from './components/Layout/Layout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function AppContent() {

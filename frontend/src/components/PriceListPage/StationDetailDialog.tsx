@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSharedContext } from './shared/context.tsx';
-import { getStationDetail } from '../services/stationDetailService.ts';
+import { useSharedContext } from '../../context/context.tsx';
+import { getStationDetail } from '../../api/services/stationDetailService.ts';
 import {
   Avatar,
   Box,
@@ -16,9 +16,9 @@ import {
   CircularProgress,
   Skeleton,
 } from '@mui/material';
-import { cleanStationName } from '../utils/stationNameCleaner.ts';
+import { cleanStationName } from '../../utils/stationNameCleaner.ts';
 import StationMap from './StationMap.tsx';
-import type { StationDetail } from '../types/types.ts';
+import type { StationDetail } from '../../types/types.ts';
 
 const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
   const [station, setStation] = useState<StationDetail | null>(null);

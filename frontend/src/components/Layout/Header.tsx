@@ -1,7 +1,7 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import React, { useState } from 'react';
-import { useSharedContext } from './context';
+import { useSharedContext } from '../../context/context';
 import {
   Alert,
   AppBar,
@@ -20,10 +20,7 @@ import {
   type SelectChangeEvent,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-
-type HeaderProps = {
-  title: string;
-};
+import type { HeaderProps } from '../../types/types';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,

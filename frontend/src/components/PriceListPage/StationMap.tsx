@@ -3,10 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngBounds, Marker as LeafletMarker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { useSharedContext } from './shared/context';
-import { getStationDetail } from '../services/stationDetailService.ts';
-import { cleanStationName } from '../utils/stationNameCleaner';
-import type { StationDetail, StationMapsProps, SelectedStation } from '../types/types.ts';
+import { useSharedContext } from '../../context/context.tsx';
+import { getStationDetail } from '../../api/services/stationDetailService.ts';
+import { cleanStationName } from '../../utils/stationNameCleaner.ts';
+import type { StationDetail, StationMapsProps, SelectedStation } from '../../types/types.ts';
 
 const userIcon = new Icon({
   iconUrl: '/map-icons/userIcon.svg',

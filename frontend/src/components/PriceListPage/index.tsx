@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getStations } from '../services/pricesService.ts';
-import { useSharedContext } from './shared/context.tsx';
-import { haversineDistance } from '../utils/geo.ts';
-import { formatDistance } from '../utils/format.ts';
-import { cleanStationName } from '../utils/stationNameCleaner.ts';
+import { getStations } from '../../api/services/pricesService.ts';
+import { useSharedContext } from '../../context/context.tsx';
+import { haversineDistance } from '../../utils/geo.ts';
+import { formatDistance } from '../../utils/format.ts';
+import { cleanStationName } from '../../utils/stationNameCleaner.ts';
 import {
   List,
   ListItemButton,
@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import StationMap from './StationMap.tsx';
 import StationDetailDialog from './StationDetailDialog.tsx';
-import type { Station, SelectedStation } from '../types/types.ts';
+import type { Station, SelectedStation } from '../../types/types.ts';
 
 const PriceListPage = () => {
   const [allStationList, setAllStationList] = useState<Station[]>([]);

@@ -1,12 +1,7 @@
 import { Box } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
-import type { ReactNode } from 'react';
-
-type LayoutProps = {
-  title: string;
-  children: ReactNode;
-};
+import type { LayoutProps } from '../../types/types';
 
 const Layout = ({ title, children }: LayoutProps) => {
   return (

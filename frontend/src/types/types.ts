@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type FuelPrice = {
   price: number;
   discount: number | null;
@@ -46,4 +48,13 @@ export type StationMapsProps = {
     coords: [number, number];
   } | null;
   onMapReady: () => void;
+};
+
+export type HeaderProps = {
+  title: string;
+};
+
+export type LayoutProps = {
+  title: string;
+  children: ReactNode;
 };

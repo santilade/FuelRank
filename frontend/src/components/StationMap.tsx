@@ -35,6 +35,8 @@ const MapEffect = ({ selectedStation }: { selectedStation: SelectedStation | nul
       map.fitBounds(bounds, { padding: [50, 50] });
     } else if (userCoords) {
       map.setView([userCoords.latitude, userCoords.longitude], 13);
+    } else if (selectedStation) {
+      map.setView(selectedStation.coords, 13);
     }
   }, [userCoords, selectedStation, map]);
 

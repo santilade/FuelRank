@@ -52,7 +52,7 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
       document.activeElement instanceof HTMLElement && document.activeElement.blur();
     }
   }, [dialogOpen]);
-
+  //TODO:  componente alert en error
   if (error) {
     console.error(error);
 

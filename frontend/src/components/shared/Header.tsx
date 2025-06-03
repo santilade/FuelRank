@@ -78,9 +78,6 @@ const Header = ({ title }: HeaderProps) => {
     if (newValue !== null) {
       setClosest(newValue);
     }
-
-    if (closest == false) {
-    }
   };
 
   const regionHandleChange = (e: SelectChangeEvent) => {

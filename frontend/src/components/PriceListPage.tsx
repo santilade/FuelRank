@@ -135,6 +135,15 @@ const PriceListPage = () => {
           height: isMobile ? 'auto' : '100%',
         }}
       >
+        {sortedStations.length > 0 && (
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ px: 2, pt: 1, display: 'block' }}
+          >
+            Last update: {new Date(sortedStations[0].last_update).toLocaleString()}
+          </Typography>
+        )}
         <List>
           {pricesLoading
             ? [...Array(10)].map((_, index) => (

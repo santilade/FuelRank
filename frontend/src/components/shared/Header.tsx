@@ -1,10 +1,12 @@
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSharedContext } from './context';
 import {
+  Alert,
   AppBar,
   styled,
+  Snackbar,
   ToggleButtonGroup,
   ToggleButton,
   Typography,
@@ -58,7 +60,9 @@ const Header = ({ title }: HeaderProps) => {
     region,
     setRegion,
     pricesLoading,
+    userCoords,
   } = useSharedContext();
+  const [showCoordsAlert, setShowCoordsAlert] = useState(false);
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
 
@@ -67,9 +71,15 @@ const Header = ({ title }: HeaderProps) => {
   };
 
   const closestHandleChange = (_event: React.MouseEvent<HTMLElement>, newValue: boolean) => {
-    setClosest(newValue);
+    if (newValue === true && !userCoords) {
+      setShowCoordsAlert(true);
+      return;
+    }
     if (newValue !== null) {
       setClosest(newValue);
+    }
+
+    if (closest == false) {
     }
   };
 
@@ -220,7 +230,10 @@ const Header = ({ title }: HeaderProps) => {
             <InputLabel>Order</InputLabel>
             <Select
               value={closest.toString()}
-              onChange={(e) => setClosest(e.target.value === 'true')}
+              onChange={(e) => {
+                const value = e.target.value === 'true';
+                closestHandleChange(e as any, value);
+              }}
               label="Order"
             >
               <MenuItem value="true">Closest</MenuItem>
@@ -231,6 +244,16 @@ const Header = ({ title }: HeaderProps) => {
           <RegionSelector region={region} onChange={regionHandleChange} />
         </Box>
       )}
+      <Snackbar
+        open={showCoordsAlert}
+        autoHideDuration={5000}
+        onClose={() => setShowCoordsAlert(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={() => setShowCoordsAlert(false)} severity="warning" sx={{ width: '100%' }}>
+          Location access required to sort by proximity. Please enable location.
+        </Alert>
+      </Snackbar>
     </StyledAppBar>
   );
 };

@@ -2,6 +2,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './theme';
 import { SharedProvider, useSharedContext } from './components/shared/context';
 import PriceListPage from './components/PriceListPage';
+import NotFoundPage from './components/NotFoundPage';
 import Layout from './components/shared/Layout';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ function AppContent() {
       <Layout title="FuelRank">
         <Routes>
           <Route path="/" element={<PriceListPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </ThemeProvider>

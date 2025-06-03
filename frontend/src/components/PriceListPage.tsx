@@ -131,6 +131,7 @@ const PriceListPage = () => {
       <Box
         sx={{
           flex: isMobile ? '100%' : '30%',
+          maxWidth: { xs: '100%', sm: 400 },
           overflow: 'auto',
           height: isMobile ? 'auto' : '100%',
         }}
@@ -204,7 +205,7 @@ const PriceListPage = () => {
       </Box>
       <Box
         sx={{
-          flexBasis: isMobile ? '0%' : '70%',
+          flex: 1,
           height: '100%',
           overflow: 'hidden',
           position: 'relative',

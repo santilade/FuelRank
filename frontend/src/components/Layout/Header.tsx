@@ -115,6 +115,12 @@ const Header = ({ title }: HeaderProps) => {
     </FormControl>
   );
 
+  const reload = () => {
+    if (location.pathname === '/') {
+      window.location.reload();
+    }
+  };
+
   return (
     <StyledAppBar position="static" elevation={0}>
       <StyledToolBar
@@ -123,6 +129,7 @@ const Header = ({ title }: HeaderProps) => {
       >
         {/* LEFT: title and back button */}
         <Box
+          onClick={reload}
           component={Link}
           to="/"
           sx={{

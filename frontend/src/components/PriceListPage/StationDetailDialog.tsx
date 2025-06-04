@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSharedContext } from '../../context/context.tsx';
 import { getStationDetail } from '../../api/services/stationDetailService.ts';
 import {
@@ -95,7 +95,9 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
     );
   }
 
-  const lastUpdate = station ? (Object.values(station.prices)[0]?.last_update ?? null) : null;
+  const lastUpdate = useMemo(() => {
+    return station ? (Object.values(station.prices)[0]?.last_update ?? null) : null;
+  }, [station]);
 
   return (
     <Dialog

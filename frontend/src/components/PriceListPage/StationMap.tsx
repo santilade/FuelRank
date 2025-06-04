@@ -50,7 +50,7 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
   const markerRef = useRef<LeafletMarker>(null);
 
   const defaultCenter = useMemo<[number, number]>(() => {
-    return userCoords ? [userCoords.latitude, userCoords.longitude] : [64.1423306, -21.9275197]; // Reykjavik
+    return userCoords ? [userCoords.latitude, userCoords.longitude] : [64.1423306, -21.9275197]; // Reykjavik coords
   }, [userCoords]);
 
   useEffect(() => {

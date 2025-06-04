@@ -1,4 +1,3 @@
-// utils/handleApiError.ts
 export const handleApiError = (error: any): never => {
   if (error.response) {
     const status = error.response.status;

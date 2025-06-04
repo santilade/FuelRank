@@ -1,123 +1,171 @@
 # FuelRank - Frontend
 
 ## Project Structure
+
 ```
 frontend/
 ├── public/
 │   └── logos/                # PNG images of fuel brand logos (n1, orkan, olis, etc.)
 ├── src/
-│   ├── api/                  # API request module
-│   ├── assets/               # Static resources (fonts, decorative images)
+│   ├── api/                  # API client, services, and error handler
+│   │   ├── client.ts
+│   │   ├── services/
+│   │   │   ├── pricesService.ts
+│   │   │   └── stationDetailService.ts
+│   │   └── utils/
+│   │       └── handleApiError.ts
+│   ├── assets/               # Static assets like SVG logos
 │   ├── components/
-│   │   ├── priceList/        # Fuel price listing page
-│   │   │   ├── PriceListPage.tsx
-│   │   │   └── service.ts
-│   │   └── shared/
-│   │       ├── Layout.tsx
-│   │       ├── Header.tsx
-│   │       └── context.tsx   # Global context (theme and filter)
-│   ├── utils/
-│   │   └── geo.ts            # haversineDistance function for geolocation
-│   ├── App.tsx               # Main app entry
-│   ├── index.tsx             # ReactDOM render
-│   ├── theme/                # Light/Dark themes
-│   │   ├── light.ts
-│   │   ├── dark.ts
-│   │   └── index.ts
-├── .env.local
-├── vite.config.ts
+│   │   ├── Layout/           # App shell: Header, Footer, Layout
+│   │   ├── PriceListPage/    # Price list, map, and detail dialog
+│   │   └── NotFoundPage/     # 404 fallback
+│   ├── context/              # Global shared state with React Context
+│   ├── theme/                # Light and dark MUI theme definitions
+│   ├── types/                # TypeScript shared types
+│   ├── utils/                # Utility functions (distance, formatting, name cleanup)
+│   ├── App.tsx               # Main app component with routing and theming
+│   ├── main.tsx              # React DOM bootstrap
+│   └── index.css             # Global styles
+├── .env.local                # API base URL configuration
+├── vite.config.ts            # Vite configuration
+
 ```
 
-
 ## Tech Stack
-- **Language**: React (TypeScript)
+
+- **Language**: TypeScript
 - **React + TypeScript**
 - **Vite** as bundler
 - **Material UI v5** (`@mui/material`, `@mui/icons-material`)
-- **Context API** for global state (`lightMode`, `fuelType`)
-- **Styled Components** (MUI styled API)
----
+- **Context API** for global state
+- **Axios** for HTTP requests
+- **Leaflet** (`react-leaflet`) for map rendering
 
 ## Dynamic Theme (Light/Dark)
 
-- Two themes defined in `src/theme/light.ts` and `src/theme/dark.ts`
-- Theme toggling via `IconButton` (`LightModeIcon`, `DarkModeIcon`)
-- Theme controlled via `SharedContext`
----
+- Light and Dark modes defined in:
+  - `theme/light.ts`
+  - `theme/dark.ts`
+- Applied via `ThemeProvider` in `AppContent`
+- Toggled in `Header` using `LightModeIcon` / `DarkModeIcon`
+- Persisted in `localStorage`
+- Controlled globally through `SharedContext`
 
-## Fuel Type Filter
+## Routing
 
-- Controlled globally from the `Header` using `ToggleButtonGroup`
-- Values are `"gas"` and `"diesel"`
-- Updates global `fuelType` context
-- `PriceListPage` filters the stations based on selected value
+Defined in `App.tsx` using `react-router-dom`:
 
----
+- `/`: Home - fuel price list
+- `*`: Fallback - NotFoundPage
 
-## Sorting Mode: Cheapest vs Closest
-- Toggle added in `Header` with two buttons: `"Cheapest"` and `"Closest"`
+## Global State (SharedContext)
 
-- Global state `closest` (boolean) determines sorting mode:
+Located at `context/context.tsx` and used app-wide via `useSharedContext()`.
 
-  - `false`: sorts by price
+Managed states include:
 
-  - `true`: sorts by distance (requires geolocation)
+- `lightMode`: boolean for theme
+- `fuelType`: `'gasoline' | 'diesel' | null`
+- `region`: selected region code or `null`
+- `closest`: boolean (sort mode)
+- `userCoords`: user's geolocation
+- `dialogOpen`: detail dialog visibility
+- `pricesLoading`: loading indicator
+- `isMobile`: auto-detected via screen size
 
-### User Location & Distance Calculation
-- User's geolocation obtained via Geolocation API on page load
-- Coordinates stored in global context (`userCoords`)
-- Stations are sorted by proximity when`"Closest"` is selected
-- Distance is calculated using Haversine formula (`utils/geo.ts`)
-- Formatted as readable string (`formatDistance()` in `utils/format.ts`)
-- Distance is displayed next to each station entry
+## Fuel Sorting Modes
 
----
+Controlled from `Header`:
 
-## Global Context (`SharedContext`)
+- Fuel Type Toggle (`ToggleButtonGroup`)
+  - Values: `gasoline`, `diesel`
+- Sorting Toggle:
+  - `Closest`: sort by user distance
+  - `Cheapest`: sort by price
+- Region Filter: dropdown `Select`
+  - Filters stations server-side by region param
 
-Located in `src/components/shared/context.tsx`
+## Geolocation & Map
 
-```ts
-type SharedContextType = {{
-  lightMode: boolean;
-  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
-  fuelType: string | null;
-  setFuelType: React.Dispatch<React.SetStateAction<string | null>>;
-  userCoords: GeolocationCoordinates | null;
-  setUserCoords: React.Dispatch<React.SetStateAction<GeolocationCoordinates | null>>;
-  closest: boolean;
-  setClosest: React.Dispatch<React.SetStateAction<boolean>>;
-}};
-```
-
-Provided via `<SharedProvider>` and consumed with `useSharedContext()`.
-
----
+- User’s position is requested via Geolocation API and coordinates saved in global context
+- Distance is calculated using Haversine formula (utils/geo.ts)
+- StationMap:
+  - Uses Leaflet, highlights both user and station markers and auto-zooms to fit both
+- Distance formatting: utils/format.ts
 
 ## Key Components
-### `<Header.tsx>`
-- Displays the title and buttons to toggle theme and fuel type.
-- Uses `ToggleButtonGroup`, `IconButton`, `AppBar`, `Toolbar`.
-### `<Layout.tsx>`
-- Defines the base layout.
-- Wraps `Header` and applies responsive `Box` layout.
-### `<PriceListPage.tsx>`
-- Renders the fuel price list (`List`, `ListItem`, `Avatar`)
-- Filters list by `fuelType` if set
-- Accesses context data
 
-## App.tsx
-Renders:
-```ts
-<SharedProvider>
-  <AppContent />  // Contains ThemeProvider, Layout and the page
-</SharedProvider>
-```
+### `<Layout.tsx>`
+
+Shell layout including `Header`, `children`, `Footer`
+
+#### `<Header.tsx>`
+
+- Displays logo and title
+- Handles theme toggle, fuel type selection, sorting mode (price vs. distance), and region filtering
+- Mobile layout uses `Select` elements instead of `ToggleButtonGroup`
+
+#### `<Footer.tsx>`
+
+- Email, GitHub, LinkedIn links
+
 ---
 
-### Additional Notes
-- Brand logos are stored in `public/logos/` and accessed via relative paths (/logos/n1.png)
-- Data is fetched via `service.ts` (HTTP requests)
-- Theme and fuel type state can be extended with `localStorage` for persistence
-- Utility functions for geolocation and formatting are in utils/
+### `<PriceListPage.tsx>`
 
+- Fetches and filters fuel prices
+- Sorts results based on mode
+- Renders list of `Paper` items with station name, price, distance, and fuel type
+- On mobile opens `StationDetailDialog` on click
+
+#### `<StationDetailDialog.tsx>`
+
+- Optimized for mobile modal display
+- Fetches detailed station data
+- Shows address, Google Maps link, map, and fuel prices
+
+#### `<StationMap.tsx>`
+
+- Displays interactive Leaflet map with user + station markers
+- Loads station info inside map popup (only in desktop)
+- Styled using Material UI and responsive layout
+
+---
+
+### `<NotFoundPage.tsx>`
+
+Friendly 404 page with a “Back to Home” button
+
+---
+
+## API Integration
+
+All requests go through Axios `client.ts`:
+
+- Base URL set via `.env.local` → `VITE_API_BASE_URL`
+- Global response interceptor returns `.data`
+
+### Endpoints:
+
+`GET /prices?fuel=GAS&fuel=DIESEL[&region=...]`
+→ Used in `pricesService.ts`
+
+`GET /stations/:id`
+→ Used in `stationDetailService.ts`
+
+### Error Handling:
+
+Centralized in `utils/handleApiError.ts`, provides user-friendly errors for HTTP/Network issues
+
+## Deployment Note
+
+Vite uses `import.meta.env` for environment variables, add `VITE_API_BASE_URL` in `.env.local`.
+
+### Additional Notes
+
+- Brand logos are stored in `public/logos/` and accessed via relative paths (/logos/n1.png)
+- Project is fully typed with TypeScript
+- Utility functions are abstracted and reusable
+- Responsive support is automatic using useMediaQuery
+- Theme preferences persist via localStorage
+- Folder structure encourages modularity and separation of concerns

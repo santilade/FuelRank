@@ -92,7 +92,7 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
       )}
       {selectedStation && (
         <Marker position={selectedStation.coords} icon={stationIcon} ref={markerRef}>
-          {!isMobile ? (
+          {!isMobile && (
             <Popup>
               {isLoading ? (
                 <Box
@@ -166,10 +166,6 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
               ) : (
                 <Typography variant="body2">No data available.</Typography>
               )}
-            </Popup>
-          ) : (
-            <Popup>
-              <Box>{selectedStation.station_name}</Box>
             </Popup>
           )}
         </Marker>

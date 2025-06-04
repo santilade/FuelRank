@@ -136,7 +136,7 @@
       "name": "Orkan Vestmannaeyjar",
       "address": "Faxastígur 35, 900 Vestmannaeyjabær",
       "longitude": -20.277122,
-      "latitude": 63.440520,
+      "latitude": 63.44052,
       "region": "Suðurland",
       "url": null
     },
@@ -196,7 +196,7 @@
       "name": "Orkan Salavegur",
       "address": "Salavegur 1, 201 Kópavogur",
       "longitude": -21.859746,
-      "latitude": 64.093740,
+      "latitude": 64.09374,
       "region": "Höfuðborgarsvæðið",
       "url": null
     },
@@ -215,7 +215,7 @@
       "brand": "orkan",
       "name": "Orkan Miðvangur, Egilsstaðir",
       "address": "Miðvangur 13, 700 Egilsstaðir",
-      "longitude": -14.406120,
+      "longitude": -14.40612,
       "latitude": 65.263143,
       "region": "Austurland",
       "url": null
@@ -225,7 +225,7 @@
       "brand": "orkan",
       "name": "Orkan Sunnumörk, Hveragerði",
       "address": "Sunnumörk 2, 810 Hveragerði",
-      "longitude": -21.191710,
+      "longitude": -21.19171,
       "latitude": 63.995461,
       "region": "Suðurland",
       "url": null
@@ -235,7 +235,7 @@
       "brand": "orkan",
       "name": "Orkan Fáskrúðsfjörður",
       "address": "Búðavegur 60, 750 Fáskrúðsfjörður",
-      "longitude": -14.028390,
+      "longitude": -14.02839,
       "latitude": 64.932633,
       "region": "Austurland",
       "url": null
@@ -255,7 +255,7 @@
       "brand": "orkan",
       "name": "Orkan Húsafell",
       "address": "Húsafell, 311 Borgarnes",
-      "longitude": -20.868080,
+      "longitude": -20.86808,
       "latitude": 64.699305,
       "region": "Vesturland",
       "url": null
@@ -295,7 +295,7 @@
       "brand": "orkan",
       "name": "Orkan Miklabraut við Kringlu",
       "address": "Orkan Miklabraut við Kringlu, 108 Reykjavík",
-      "longitude": -21.893110,
+      "longitude": -21.89311,
       "latitude": 64.132091,
       "region": "Höfuðborgarsvæðið",
       "url": null
@@ -335,8 +335,8 @@
       "brand": "orkan",
       "name": "Orkan Kjarnagata, Akureyri",
       "address": "Kjarnagötu, 600 Akureyri",
-      "longitude": -18.110050,
-      "latitude": 65.669040,
+      "longitude": -18.11005,
+      "latitude": 65.66904,
       "region": "Norðurland eystra",
       "url": null
     },
@@ -425,7 +425,7 @@
       "brand": "orkan",
       "name": "Orkan Miklabraut við Lyfjaval",
       "address": "Miklabraut 101 108, 108 Reykjavík",
-      "longitude": -21.892930,
+      "longitude": -21.89293,
       "latitude": 64.132694,
       "region": "Höfuðborgarsvæðið",
       "url": null
@@ -475,7 +475,7 @@
       "brand": "orkan",
       "name": "Orkan Sandgerði",
       "address": "Strandgata 15, 245 Sandgerði",
-      "longitude": -22.704830,
+      "longitude": -22.70483,
       "latitude": 64.036048,
       "region": "Suðurnes",
       "url": null
@@ -666,7 +666,7 @@
       "name": "Orkan Einhella",
       "address": "Einhella 1a, 221 Hafnarfjörður",
       "longitude": -21.990638,
-      "latitude":64.040198,
+      "latitude": 64.040198,
       "region": "Höfuðborgarsvæðið",
       "url": null
     },
@@ -685,7 +685,7 @@
       "brand": "orkan",
       "name": "Orkan Árskógssandur",
       "address": "Öldugata, Árskógssandur, Dalvíkurbyggð, Norðurland eystra, 630",
-      "longitude": -18.354700,
+      "longitude": -18.3547,
       "latitude": 65.944132,
       "region": "Norðurland eystra",
       "url": null
@@ -705,7 +705,7 @@
       "brand": "orkan",
       "name": "Orkan Vesturlandsvegur",
       "address": "Orkan, Vesturlandsvegur, 110 Reykjavík",
-      "longitude": -21.804160,
+      "longitude": -21.80416,
       "latitude": 64.123859,
       "region": "Höfuðborgarsvæðið",
       "url": null
@@ -738,6 +738,16 @@
       "longitude": -18.088646,
       "latitude": 65.690391,
       "region": "Norðurland eystra",
+      "url": null
+    },
+    {
+      "id": "OR8074",
+      "brand": "orkan",
+      "name": "Orkan Selfoss rafhleðsla",
+      "address": "Orkan Selfoss rafhleðsla",
+      "longitude": null,
+      "latitude": null,
+      "region": null,
       "url": null
     }
   ]

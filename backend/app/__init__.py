@@ -1,5 +1,6 @@
 from app.settings import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, HOSTNAME_DB
 from flask import Flask
+from flask_cors import CORS
 from .db import db
 from app.api import init_api
 from app.utils.scheduler import start_scheduler
@@ -18,6 +19,8 @@ def create_app():
     db.init_app(app)
 
     init_api(app)
+    # TODO: restric origins in deploy
+    CORS(app)
 
     start_scheduler(app)
 

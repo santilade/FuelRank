@@ -157,7 +157,7 @@ const StationDetailDialog = ({ stationId }: { stationId: string | null }) => {
                 />
               }
               title={
-                <Typography variant="h5">
+                <Typography variant="h5" ref={initialFocusRef} tabIndex={-1}>
                   {cleanStationName(station.name, station.brand)}
                 </Typography>
               }

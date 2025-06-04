@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getStations } from '../../api/services/pricesService.ts';
 import { useSharedContext } from '../../context/context.tsx';
 import { haversineDistance } from '../../utils/geo.ts';
@@ -43,17 +43,20 @@ const PriceListPage = () => {
   //  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   //};
 
-  const handleStationClick = (station: Station) => {
-    setSelectedStation({
-      station_id: station.station_id,
-      station_name: cleanStationName(station.station_name, station.brand),
-      address: station.address,
-      coords: [station.lat, station.long],
-    });
+  const handleStationClick = useCallback(
+    (station: Station) => {
+      setSelectedStation({
+        station_id: station.station_id,
+        station_name: cleanStationName(station.station_name, station.brand),
+        address: station.address,
+        coords: [station.lat, station.long],
+      });
 
-    setSelectedStationId(station.station_id);
-    setDialogOpen(true);
-  };
+      setSelectedStationId(station.station_id);
+      setDialogOpen(true);
+    },
+    [setDialogOpen]
+  );
 
   // get data
   useEffect(() => {
@@ -77,16 +80,25 @@ const PriceListPage = () => {
 
   // get user coords
   useEffect(() => {
+    let mounted = true;
+
     if (!userCoords && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setUserCoords(position.coords);
+          if (mounted) {
+            setUserCoords(position.coords);
+          }
         },
         (error) => {
-          console.error('Error obtaining device position: ', error);
+          if (mounted) {
+            console.error('Error obtaining device position: ', error);
+          }
         }
       );
     }
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const sortedStations = useMemo(() => {
@@ -152,7 +164,7 @@ const PriceListPage = () => {
               ))
             : sortedStations.map((station) => (
                 <Paper
-                  key={`${station.fuel_type}${station.station_id}`}
+                  key={`${station.fuel_type}-${station.station_id}`}
                   elevation={5}
                   square={false}
                   sx={{ mb: 1 }}

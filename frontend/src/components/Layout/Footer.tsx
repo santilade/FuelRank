@@ -1,4 +1,4 @@
-import { Box, Icon, IconButton, Link } from '@mui/material';
+import { Box, IconButton, Link } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -18,17 +18,15 @@ const Footer = () => {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Icon>
-          <EmailIcon fontSize="small" />
-        </Icon>
+        <EmailIcon fontSize="small" />
         <Link href="mailto:fuelr@pm.me" target="_blank" rel="noopener noreferrer">
           fuelr@pm.me
         </Link>
       </Box>
-      <Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <Link
           href="https://github.com/Ivarsky/FuelRank/blob/main/README.md"
-          target="blank"
+          target="_blank"
           rel="noopener noreferrer"
         >
           About

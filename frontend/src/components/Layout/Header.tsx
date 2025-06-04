@@ -21,7 +21,7 @@ import {
   Box,
   type SelectChangeEvent,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { HeaderProps } from '../../types/types';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -62,6 +62,7 @@ const Header = ({ title }: HeaderProps) => {
     userCoords,
   } = useSharedContext();
   const [showCoordsAlert, setShowCoordsAlert] = useState(false);
+  const navigate = useNavigate();
 
   const toggleTheme = () => setLightMode((prev: boolean) => !prev);
 
@@ -117,7 +118,7 @@ const Header = ({ title }: HeaderProps) => {
 
   const reload = () => {
     if (location.pathname === '/') {
-      window.location.reload();
+      navigate(0);
     }
   };
 

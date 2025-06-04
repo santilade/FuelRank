@@ -19,22 +19,26 @@ type SharedContextType = {
   setPricesLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const throwFn = () => {
+  throw new Error('SharedContext: no provider found.');
+};
+
 const defaultContext: SharedContextType = {
   lightMode: false,
-  setLightMode: () => {},
+  setLightMode: throwFn,
   fuelType: null,
-  setFuelType: () => {},
+  setFuelType: throwFn,
   userCoords: null,
-  setUserCoords: () => {},
+  setUserCoords: throwFn,
   closest: false,
-  setClosest: () => {},
+  setClosest: throwFn,
   isMobile: false,
   region: null,
-  setRegion: () => {},
+  setRegion: throwFn,
   dialogOpen: false,
-  setDialogOpen: () => {},
+  setDialogOpen: throwFn,
   pricesLoading: false,
-  setPricesLoading: () => {},
+  setPricesLoading: throwFn,
 };
 
 export const SharedContext = createContext<SharedContextType>(defaultContext);

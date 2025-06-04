@@ -41,12 +41,7 @@ export type SelectedStation = {
 };
 
 export type StationMapsProps = {
-  selectedStation: {
-    station_id: string;
-    station_name: string;
-    address: string;
-    coords: [number, number];
-  } | null;
+  selectedStation: SelectedStation | null;
   onMapReady: () => void;
 };
 

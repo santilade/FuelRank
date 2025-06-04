@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Icon, LatLngBounds, Marker as LeafletMarker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -49,9 +49,9 @@ const StationMap = ({ selectedStation, onMapReady }: StationMapsProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const markerRef = useRef<LeafletMarker>(null);
 
-  const defaultCenter: [number, number] = userCoords
-    ? [userCoords.latitude, userCoords.longitude]
-    : [64.1423306, -21.9275197]; // Reykjavik coords
+  const defaultCenter = useMemo<[number, number]>(() => {
+    return userCoords ? [userCoords.latitude, userCoords.longitude] : [64.1423306, -21.9275197]; // Reykjavik
+  }, [userCoords]);
 
   useEffect(() => {
     if (selectedStation) {

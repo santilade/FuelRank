@@ -29,7 +29,7 @@
 
 ## Roadmap
 
-- [ ] Build a React-based frontend (filtering, map view, etc.)
+- [ ] Deployment
 - [ ] Improve static data accuracy (e.g. geocoding verification)
 
 ## License
